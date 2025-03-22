@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Azure</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url("/images/Parcours.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #fff;
+        }
+        th {
+            font-weight: bold;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 0;
+        }
+        .projets-container {
+            display: flex;
+            gap: 20px;
+        }
+        .projets {
+            position: relative;
+            flex: 1;
+        }
+        .projets img {
+            width: 100%;
+            height: auto;
+        }
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .projets:hover .layer {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="page_projets">
+        <div class="container">
+            <div class="row">
+                <h2 id="nom_proj">Azure AD</h2>
+                <!-- Introduction -->
+                <div>
+                    <br>
+                </div>
+                <!-- Description -->
+                <div>
+                    <h3>Description</h3>
+                    <p>Azure Active Directory (Azure AD) est un service 
+                        de gestion des identités et des accès (IAM) basé 
+                        sur le cloud, développé par Microsoft. Il permet 
+                        aux organisations de gérer les utilisateurs, les 
+                        groupes, les permissions et les politiques de sécurité 
+                        pour accéder aux applications et aux ressources, que ce 
+                        soit en local ou dans le cloud. Azure AD prend en charge 
+                        l'authentification multifacteur (MFA), l'authentification 
+                        unique (SSO), et la synchronisation avec des annuaires locaux 
+                        comme Active Directory. Il est largement utilisé pour sécuriser 
+                        l'accès aux services Microsoft 365, Azure, et à des milliers 
+                        d'applications SaaS tierces. Grâce à ses fonctionnalités avancées 
+                        de sécurité et de conformité, Azure AD est un outil essentiel pour 
+                        les entreprises modernes cherchant à protéger leurs données et à 
+                        simplifier la gestion des identités.
+                    </p>
+                    <br>
+                </div>
+                <!-- Ressources -->
+                <div>
+                    <h3>Ressources</h3>
+                    <p>Voici les projets où cette compétence a été utilisée :</p>
+                    <div>
+                        <br/>
+                    </div>
+                    <div class="projets-container">
+                        <div class="projets">
+                            <a href="/Projets/pdf/Azure.pdf">
+                                <img src="/images/Azure.jpg" alt="Azure">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

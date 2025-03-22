@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Python</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url("/images/Parcours.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #fff;
+        }
+        th {
+            font-weight: bold;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 0;
+        }
+        .projets-container {
+            display: flex;
+            gap: 20px;
+        }
+        .projets {
+            position: relative;
+            flex: 1;
+        }
+        .projets img {
+            width: 100%;
+            height: auto;
+        }
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .projets:hover .layer {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="page_projets">
+        <div class="container">
+            <div class="row">
+                <h2 id="nom_proj">Python</h2>
+                <!-- Introduction -->
+                <div>
+                    <br>
+                </div>
+                <!-- Description -->
+                <div>
+                    <h3>Description</h3>
+                    <p>Python est un langage de programmation polyvalent et largement utilisé, 
+                        apprécié pour sa simplicité et sa lisibilité. Créé par Guido van Rossum
+                         en 1991, il permet d'écrire un code clair et concis, facilitant ainsi la 
+                         maintenance et la collaboration. Interprété, il ne nécessite pas de compilation 
+                         préalable et est souvent recommandé aux débutants grâce à sa syntaxe intuitive. 
+                         Python est utilisé dans divers domaines, tels que le développement web, l'analyse de données, 
+                         l'intelligence artificielle, et l'automatisation. Il dispose d'une riche collection de 
+                         bibliothèques et de frameworks, comme Django, Flask, NumPy, pandas, TensorFlow, et 
+                         scikit-learn, et bénéficie d'une communauté active offrant de nombreuses ressources. 
+                         Compatible avec plusieurs systèmes d'exploitation, Python est un choix populaire pour
+                          les projets nécessitant l'interopérabilité et est adapté à une multitude de tâches
+                          et d'applications, en faisant un outil indispensable pour les développeurs du monde entier.
+                    </p>
+                    <br>
+                </div>
+                <!-- Ressources -->
+                <div>
+                    <h3>Ressources</h3>
+                    <p>Voici les projets où cette compétence a été utilisée :</p>
+                    <div>
+                        <br/>
+                    </div>
+                    <div class="projets-container">
+                        <div class="projets">
+                            <a href="/Projets/pdf/SAE_23.pdf">
+                                <img src="/images/SAE_23.jpg" alt="SAE_23">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

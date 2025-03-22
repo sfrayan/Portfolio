@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Infrastructures de sécurité</title>		
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url("Parcours.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #fff;
+        }
+        th {
+            font-weight: bold;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 0;
+        }
+        .projets {
+            position: relative;
+        }
+        .projets img {
+            width: 100%;
+            height: auto;
+        }
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .projets:hover .layer {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="page_projets">
+        <div class="container">
+            <div class="row">
+                <h2 id="nom_proj">Compte Rendu Infrastructures de sécurité</h2>
+                <!-- Introduction -->
+                <div>
+                    <table>
+                        <tr>
+                            <th>Cadre</th>
+                            <td>Cours : « R401 : Infrastructures de sécurité »</td>
+                        </tr>
+                        <tr>
+                            <th>Groupe</th>
+                            <td>Monogroupe</td>
+                        </tr>
+                        <tr>
+                            <th>Durée</th>
+                            <td>1 journée</td>
+                        </tr>
+                        <tr>
+                            <th>Statut</th>
+                            <td>Terminé</td>
+                        </tr>
+                    </table>
+                    <br>
+                </div>
+                <!-- Description -->
+                <div>
+                    <h3>Description</h3>
+                    <p> Ce TP pratique vise à vous initier aux outils et techniques de surveillance 
+                        et de sécurisation des systèmes d'information. À travers des exercices concrets, 
+                        vous manipulerez des outils tels que Snort (pour la détection et la prévention d'intrusions), 
+                        Fail2ban (pour bloquer les attaques par force brute), et Nmap (pour le balayage réseau). 
+                        Vous configurerez des interfaces réseau, des routes, et mettrez en place des règles de filtrage 
+                        dynamique avec iptables pour protéger un serveur web contre des requêtes malveillantes. 
+                        Ce TP vous permettra de comprendre comment ces outils interagissent pour détecter et contrer 
+                        des menaces en temps réel, tout en vous offrant une expérience pratique essentielle pour la 
+                        sécurisation des infrastructures réseau.
+                    </p>
+                    <br>
+                </div>
+                <!-- Ressources -->
+                <div>
+                    <h3>Ressources</h3>
+                </div>
+                <div class="projets">
+                    <a href="pdf/R401.pdf">
+                        <img src="/images/R401.jpg" alt="R401">
+                        <div class="layer"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

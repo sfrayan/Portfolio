@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Wireshark</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url("/images/Parcours.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #fff;
+        }
+        th {
+            font-weight: bold;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 0;
+        }
+        .projets-container {
+            display: flex;
+            gap: 20px;
+        }
+        .projets {
+            position: relative;
+            flex: 1;
+        }
+        .projets img {
+            width: 100%;
+            height: auto;
+        }
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .projets:hover .layer {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="page_projets">
+        <div class="container">
+            <div class="row">
+                <h2 id="nom_proj">Wireshark</h2>
+                <!-- Introduction -->
+                <div>
+                    <br>
+                </div>
+                <!-- Description -->
+                <div>
+                    <h3>Description</h3>
+                    <p>Wireshark est un outil puissant de capture et d'analyse de paquets réseau,
+                        permettant aux utilisateurs de surveiller et de diagnostiquer le trafic sur divers
+                        types de réseaux, tels qu'Ethernet et Wi-Fi. Il supporte une vaste gamme de protocoles,
+                        offrant une analyse détaillée des communications réseau, et propose des fonctionnalités
+                        avancées de filtrage et de recherche pour cibler des paquets spécifiques. Grâce à son
+                         interface graphique, Wireshark visualise les données capturées sous forme de graphiques
+                         et de statistiques, facilitant ainsi l'identification des tendances et des anomalies.
+                         Utilisé par les administrateurs réseau pour la surveillance et le dépannage, par les
+                         développeurs pour le débogage des applications réseau, et par les professionnels de la
+                         sécurité pour l'analyse des attaques, Wireshark est un outil indispensable pour quiconque
+                         travaille dans le domaine des réseaux informatiques.
+                    </p>
+                    <br>
+                </div>
+                <!-- Ressources -->
+                <div>
+                    <h3>Ressources</h3>
+                    <p>Voici les projets où cette compétence a été utilisée :</p>
+                    <div>
+                        <br/>
+                    </div>
+                    <div class="projets-container">
+                        <div class="projets">
+                            <a href="/Projets/pdf/SAE_24.pdf">
+                                <img src="/images/SAE_24.jpg" alt="SAE_24">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                        <div class="projets">
+                            <a href="/Projets/pdf/SAE_Pentesting.pdf">
+                                <img src="/images/SAE_Pentesting.jpg" alt="SAE_Pentesting">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                        <div class="projets">
+                            <a href="/Projets/pdf/SAE_23.pdf">
+                                <img src="/images/SAE_23.jpg" alt="SAE_23">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
