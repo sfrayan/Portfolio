@@ -3,155 +3,285 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Python - Langage Polyvalent</title>
-    <meta name="description" content="Python - Langage de programmation polyvalent pour web, data science et IA">
+    <title>Python</title>
+    <meta name="description" content="Compétence en Python - Scripting et Automation">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body {
-            background-image: url("../images/Parcours.jpg");
-            background-size: cover;
-            background-position: center;
-            color: #fff;
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
+        
+        body {
+            background: linear-gradient(135deg, #1e40af 0%, #fbbf24 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
         .container {
-            max-width: 960px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
         }
-        .row {
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.6s ease;
+        }
+        
+        .logo {
+            font-size: 80px;
             margin-bottom: 20px;
+            display: inline-block;
+            animation: bounceIn 0.8s ease;
         }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #fbbf24, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .content-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(251, 191, 36, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+        }
+        
         h2 {
-            margin-top: 0;
-            font-size: 2.5rem;
-        }
-        h3 {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            color: #00d4ff;
-        }
-        p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        .projets-container {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #fbbf24;
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            align-items: center;
+            gap: 15px;
         }
-        .projets {
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+            color: #fcd34d;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .projets-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .project-card {
             position: relative;
-            flex: 1;
-            min-width: 250px;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
             transition: all 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 1/1;
         }
-        .projets:hover {
+        
+        .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(251, 191, 36, 0.3);
         }
-        .projets-placeholder {
+        
+        .project-image {
             width: 100%;
-            height: 280px;
-            background: linear-gradient(135deg, #366494 0%, #3776ab 50%, #366494 100%);
-            border-radius: 12px;
+            height: 100%;
+            background: linear-gradient(135deg, #1e40af, #fbbf24);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3rem;
             position: relative;
             overflow: hidden;
         }
-        .projets-placeholder::before {
+        
+        .project-image::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .projets-text {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-        }
-        .projets-text h4 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #00d4ff;
-        }
-        .layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(233, 69, 96, 0.3), rgba(0, 212, 255, 0.3));
+            background: rgba(251, 191, 36, 0.1);
             opacity: 0;
             transition: opacity 0.3s ease;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: bold;
-            font-size: 1.1rem;
         }
-        .projets:hover .layer {
+        
+        .project-card:hover .project-image::before {
             opacity: 1;
         }
-        a {
-            text-decoration: none;
-            color: inherit;
+        
+        .project-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.9));
+            padding: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .project-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .project-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .project-type {
+            font-size: 0.9rem;
+            color: #fbbf24;
+        }
+        
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .skill-item {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: rgba(251, 191, 36, 0.6);
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounceIn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .content-section { padding: 25px; }
+            .projets-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
-        <div class="container">
-            <div class="row">
-                <h2 id="nom_proj">🐍 Python</h2>
-                <div><br></div>
-                <div>
-                    <h3>Description</h3>
-                    <p>Python est un langage de programmation polyvalent et largement utilisé, apprécié pour sa simplicité et sa lisibilité. Créé par Guido van Rossum en 1991, il permet d'écrire un code clair et concis, facilitant ainsi la maintenance et la collaboration. Interprété, il ne nécessite pas de compilation préalable et est souvent recommandé aux débutants grâce à sa syntaxe intuitive.</p>
-                    <p>Python est utilisé dans divers domaines, tels que le développement web, l'analyse de données, l'intelligence artificielle, et l'automatisation. Il dispose d'une riche collection de bibliothèques et de frameworks, comme Django, Flask, NumPy, pandas, TensorFlow, et scikit-learn.</p>
-                    <br>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🐍</div>
+            <h1>Python</h1>
+            <p class="subtitle">Scripting, Automation & Développement</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>📋 Description</h2>
+            <p>
+                Python est un langage de programmation haute niveau, réputé pour sa simplicité et sa versatilité. Excellent pour 
+                le scripting, l'automation, l'analyse de données et le développement web, Python permet de développer rapidement 
+                des solutions efficaces grâce à sa riche écosystème de bibliothèques. Ma maîtrise inclut les frameworks modernes 
+                (FastAPI, Flask), la gestion de données avancée (NumPy, Pandas), et l'intégration d'API complexes.
+            </p>
+        </div>
+        
+        <div class="content-section">
+            <h2>🏆 Compétences Associées</h2>
+            <div class="skills-list">
+                <div class="skill-item">Scripting & Automation</div>
+                <div class="skill-item">Web Development</div>
+                <div class="skill-item">Data Analysis</div>
+                <div class="skill-item">Machine Learning</div>
+                <div class="skill-item">FastAPI & Flask</div>
+                <div class="skill-item">Cybersecurity Tools</div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>📚 Projets & Ressources</h2>
+            <p>Projets mettant en avant cette compétence :</p>
+            <div class="projets-container">
+                <div class="project-card">
+                    <div class="project-image">🪨</div>
+                    <div class="project-content">
+                        <div class="project-name">Tirelire</div>
+                        <div class="project-type">Backend & APIs</div>
+                    </div>
                 </div>
-                <div>
-                    <h3>📋 Projets Associés</h3>
-                    <p>Voici les projets où cette compétence a été utilisée :</p>
-                    <div class="projets-container">
-                        <div class="projets">
-                            <a href="../Projets/pdf/SAE_23.pdf">
-                                <div class="projets-placeholder">
-                                    <div class="projets-text">
-                                        <span>🌓</span>
-                                        <h4>SAE 23</h4>
-                                        <span style="font-size: 0.8rem; color: #00d4ff;">Projet Python</span>
-                                    </div>
-                                </div>
-                                <div class="layer">Cliquez pour voir le projet →</div>
-                            </a>
-                        </div>
+                <div class="project-card">
+                    <div class="project-image">🍖</div>
+                    <div class="project-content">
+                        <div class="project-name">FastFoodBike</div>
+                        <div class="project-type">Production APIs</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🚀</div>
+                    <div class="project-content">
+                        <div class="project-name">AI Agents Dashboard</div>
+                        <div class="project-type">FastAPI Backend</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        
+        <div class="content-section">
+            <h3>Niveaux de Maîtrise</h3>
+            <p>
+                <strong>Avancé :</strong> Développement complet d'applications, création d'APIs RESTful, gestion de données 
+                complexes, optimisation des performances, et déploiement production-ready.
+            </p>
+        </div>
+    </div>
 </body>
 </html>
