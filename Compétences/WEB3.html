@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>C++</title>
-    <meta name="description" content="Compétence en C++ - Programmation Système et Performances">
+    <meta name="description" content="Compétence en C++ - Programmation Systèmes">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1f2937 100%);
+            background: linear-gradient(135deg, #00589b 0%, #1f2937 100%);
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
@@ -41,7 +41,7 @@
         
         h1 {
             font-size: 3rem;
-            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            background: linear-gradient(135deg, #00589b, #00aeff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -67,15 +67,15 @@
         
         .content-section:hover {
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(96, 165, 250, 0.5);
+            border-color: rgba(0, 88, 155, 0.5);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 88, 155, 0.2);
         }
         
         h2 {
             font-size: 1.8rem;
             margin-bottom: 20px;
-            color: #60a5fa;
+            color: #00aeff;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -84,7 +84,7 @@
         h3 {
             font-size: 1.4rem;
             margin: 25px 0 15px 0;
-            color: #a78bfa;
+            color: #00aeff;
         }
         
         p {
@@ -113,13 +113,13 @@
         
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(96, 165, 250, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 88, 155, 0.3);
         }
         
         .project-image {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #3b82f6, #1f2937);
+            background: linear-gradient(135deg, #00589b, #1f2937);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -136,7 +136,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(96, 165, 250, 0.1);
+            background: rgba(0, 88, 155, 0.1);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -170,7 +170,7 @@
         
         .project-type {
             font-size: 0.9rem;
-            color: #60a5fa;
+            color: #00aeff;
         }
         
         .skills-list {
@@ -181,8 +181,8 @@
         }
         
         .skill-item {
-            background: rgba(96, 165, 250, 0.1);
-            border: 1px solid rgba(96, 165, 250, 0.3);
+            background: rgba(0, 88, 155, 0.1);
+            border: 1px solid rgba(0, 88, 155, 0.3);
             padding: 15px;
             border-radius: 10px;
             text-align: center;
@@ -190,31 +190,19 @@
         }
         
         .skill-item:hover {
-            background: rgba(96, 165, 250, 0.2);
-            border-color: rgba(96, 165, 250, 0.6);
+            background: rgba(0, 88, 155, 0.2);
+            border-color: rgba(0, 88, 155, 0.6);
             transform: scale(1.05);
         }
         
         @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         @keyframes bounceIn {
@@ -234,30 +222,28 @@
         <div class="header">
             <div class="logo">⚙️</div>
             <h1>C++</h1>
-            <p class="subtitle">Programmation Système & Développement Haute Performance</p>
+            <p class="subtitle">Programmation Systèmes</p>
         </div>
         
         <div class="content-section">
             <h2>📋 Description</h2>
             <p>
-                C++ est un langage de programmation puissant et polyvalent, offrant des performances 
-                exceptionnelles et un contrôle bas niveau du système. Combinant les paradigmes de programmation 
-                procédurale, orientée objet et générique, C++ permet de développer des applications haute 
-                performance critiques pour le temps réel, les systèmes embarqués et les applications graphiques 
-                intensives. Sa maîtrise inclut la gestion avancée de la mémoire, l'optimisation des performances, 
-                et les patterns de design modernes (C++11, C++17, C++20).
+                C++ est un langage de programmation compilé, hautes performances, permettant l'accès direct au matériel et la gestion fine de la mémoire. 
+                Idéal pour développer des applications critiques en termes de performance, des systèmes d'exploitation, des moteurs graphiques et des outils 
+                de sécurité avancés. Sa combinaison de programmation orientée objet et procédurale en fait un langage flexible adapté aux défis complexes. 
+                En cybersécurité, C++ est utilisé pour créer des outils de pentesting, des détecteurs de malwares et des frameworks d'exploitation haute performance.
             </p>
         </div>
         
         <div class="content-section">
             <h2>🏆 Compétences Associées</h2>
             <div class="skills-list">
-                <div class="skill-item">Programmation Système</div>
-                <div class="skill-item">Gestion Mémoire Avancée</div>
+                <div class="skill-item">Programmation POO</div>
+                <div class="skill-item">Gestion Mémoire</div>
+                <div class="skill-item">Systèmes d'Exploitation</div>
+                <div class="skill-item">Performances</div>
+                <div class="skill-item">Manipulation Bas Niveau</div>
                 <div class="skill-item">STL & Templates</div>
-                <div class="skill-item">Optimisation Performances</div>
-                <div class="skill-item">Programmation Multithreadée</div>
-                <div class="skill-item">Design Patterns</div>
             </div>
         </div>
         
@@ -266,30 +252,24 @@
             <p>Projets mettant en avant cette compétence :</p>
             <div class="projets-container">
                 <div class="project-card">
-                    <div class="project-image">
-                        <span>🔧</span>
-                    </div>
+                    <div class="project-image">🎮</div>
                     <div class="project-content">
-                        <div class="project-name">Systèmes Embarqués</div>
-                        <div class="project-type">Arduino & IoT</div>
+                        <div class="project-name">Systèmes Hautes Perfs</div>
+                        <div class="project-type">Applications Critiques</div>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image">
-                        <span>⚡</span>
-                    </div>
+                    <div class="project-image">🛡️</div>
                     <div class="project-content">
-                        <div class="project-name">Applications Temps Réel</div>
-                        <div class="project-type">Performance Critical</div>
+                        <div class="project-name">Tools Sécurité</div>
+                        <div class="project-type">Reverse Engineering</div>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image">
-                        <span>🎮</span>
-                    </div>
+                    <div class="project-image">⚡</div>
                     <div class="project-content">
-                        <div class="project-name">Graphics & Gaming</div>
-                        <div class="project-type">3D Rendering</div>
+                        <div class="project-name">Exploitation</div>
+                        <div class="project-type">Buffer Overflow</div>
                     </div>
                 </div>
             </div>
@@ -298,8 +278,8 @@
         <div class="content-section">
             <h3>Niveaux de Maîtrise</h3>
             <p>
-                <strong>Avancé :</strong> Programmation orientée objet, gestion complète des ressources (RAII), 
-                métaprogrammation par templates, optimisation bas niveau, architecture logicielle scalable.
+                <strong>Intermédiaire :</strong> POO, pointeurs, gestion mémoire, compilation multi-plateforme, 
+                utilisation de la STL, optimisation de code, intégration avec des bibliothèques externes.
             </p>
         </div>
     </div>
