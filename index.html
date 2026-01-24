@@ -387,59 +387,35 @@
             background: linear-gradient(135deg, rgba(15, 52, 96, 0.5) 0%, rgba(22, 33, 62, 0.5) 100%);
         }
 
-        .tab-titles {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+        .skills-container {
+            margin-top: 2rem;
         }
 
-        .tab-links {
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            font-weight: 500;
+        .skill-category {
+            margin-bottom: 3rem;
         }
 
-        .tab-links:hover {
-            background: rgba(0, 212, 255, 0.1);
-            border-color: var(--success);
-            transform: translateY(-2px);
+        .skill-category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
         }
 
-        .tab-links.active-link {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-color: var(--accent-light);
-            color: white;
-        }
-
-        .tab-contents {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tab-contents.active-tab {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .skill-category-title i {
+            font-size: 1.3rem;
         }
 
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
+            margin-bottom: 2rem;
         }
 
         .skill-card {
@@ -476,11 +452,60 @@
             font-weight: 600;
         }
 
+        .skill-card a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .skill-card a:hover {
+            color: var(--success);
+        }
+
         .skill-description {
             font-size: 0.85rem;
             color: rgba(234, 234, 234, 0.7);
             margin-top: 0.5rem;
             line-height: 1.4;
+        }
+
+        .skills-stats {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .skills-stats h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--success);
+        }
+
+        .stats-line {
+            display: flex;
+            justify-content: space-around;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-text {
+            font-size: 0.9rem;
+            color: rgba(234, 234, 234, 0.7);
         }
 
         /* ===== PROJETS ===== */
@@ -856,6 +881,10 @@
             section {
                 padding: 2rem 1rem;
             }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
         }
 
         @media (max-width: 480px) {
@@ -873,12 +902,12 @@
                 justify-content: center;
             }
 
-            .tab-titles {
-                grid-template-columns: 1fr;
-            }
-
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .stats-line {
+                gap: 1rem;
             }
         }
     </style>
@@ -888,7 +917,6 @@
     <header id="home">
         <nav>
             <a href="#home" class="nav-icon" aria-label="Retour à l'accueil" aria-current="page">
-                <!-- <i class="fas fa-rocket" style="font-size: 30px; color: #00d4ff;"></i> -->
                 <img src="gifs/LOGO RSF.gif" alt="logo">
             </a>
             <div class="main-navlinks">
@@ -935,8 +963,7 @@
             <div class="presentation-row">
                 <div class="presentation-col-1">
                     <div style="width: 100px; height: 100px; margin: 0 auto; background: linear-gradient(135deg, #e94560, #ff6b6b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
-                        <!-- <i class="fas fa-user-circle"></i> -->
-                         <img src="gifs/LOGO RSF.gif" alt="logo">
+                        <img src="gifs/LOGO RSF.gif" alt="logo">
                     </div>
                 </div>
                 <div class="presentation-col-2">
@@ -1003,7 +1030,7 @@
                 <div class="parcours-section">
                     <h3><i class="fa-solid fa-briefcase"></i> Expérience Professionnelle</h3>
                     
-<div class="parcours-item">
+                    <div class="parcours-item">
                         <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🌊</div>
                         <p><strong>SFI SmartOcean Research Project</strong></p>
                         <p>Western Norway University of Applied Science</p>
@@ -1034,7 +1061,8 @@
             </div>
         </div>
     </section>
-<!-- ===== CERTIFICATIONS ===== -->
+
+    <!-- ===== CERTIFICATIONS ===== -->
     <section id="certifications" style="background: var(--bg-light); color: var(--text-dark);">
         <div class="container">
             <h2 class="sub-title">Certifications</h2>
@@ -1070,184 +1098,258 @@
     <!-- ===== COMPÉTENCES ===== -->
     <section id="competences">
         <div class="container">
-            <h2 class="sub-title">Compétences</h2>
+            <h2 class="sub-title">Mes 30 Compétences</h2>
             
-            <div class="tab-titles">
-                <p class="tab-links active-link" onclick="switchTab(event, 'admin')">
-                    <i class="fas fa-network-wired"></i> Administration Réseaux
-                </p>
-                <p class="tab-links" onclick="switchTab(event, 'dev')">
-                    <i class="fas fa-code"></i> Développement
-                </p>
-                <p class="tab-links" onclick="switchTab(event, 'sys')">
-                    <i class="fas fa-laptop"></i> Systèmes d'Exploitation
-                </p>
-                <p class="tab-links" onclick="switchTab(event, 'sec')">
-                    <i class="fas fa-shield-alt"></i> Cybersécurité
-                </p>
-                <p class="tab-links" onclick="switchTab(event, 'mon')">
-                    <i class="fas fa-eye"></i> Monitoring
-                </p>
-            </div>
+            <div class="skills-container">
+                <!-- ADMIN RÉSEAUX -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-network-wired"></i> Administration Réseaux (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔍</div>
+                            <p><a href="Compétences/WEB.html">Wireshark</a></p>
+                            <div class="skill-description">Analyse de trafic réseau</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔐</div>
+                            <p><a href="Compétences/WEB25.html">FreeRADIUS</a></p>
+                            <div class="skill-description">Authentification RADIUS</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">☁️</div>
+                            <p><a href="Compétences/WEB11.html">Azure</a></p>
+                            <div class="skill-description">Cloud Computing</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🎯</div>
+                            <p><a href="Compétences/WEB21.html">DHCP/DNS</a></p>
+                            <div class="skill-description">Services réseau</div>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Administration Réseaux -->
-            <div id="admin" class="tab-contents active-tab">
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🔍</div>
-                        <p><a href="Compétences/WEB.html">Wireshark</a></p>
-                        <div class="skill-description">Analyse de trafic réseau</div>
+                <!-- DÉVELOPPEMENT WEB & BACKEND -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-code"></i> Développement Web & Backend (7)
                     </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🐍</div>
-                        <p><a href="Compétences/WEB2.html">Python</a></p>
-                        <div class="skill-description">Scripting et automation</div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📄</div>
+                            <p><a href="Compétences/WEB4.html">HTML5</a></p>
+                            <div class="skill-description">Markup & Structure</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🎨</div>
+                            <p><a href="Compétences/WEB5.html">CSS3</a></p>
+                            <div class="skill-description">Styling & Animations</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">⚡</div>
+                            <p><a href="Compétences/WEB6.html">JavaScript</a></p>
+                            <div class="skill-description">Interactivité & DOM</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">⚛️</div>
+                            <p><a href="Compétences/WEB18.html">React</a></p>
+                            <div class="skill-description">Frameworks & Components</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🚀</div>
+                            <p><a href="Compétences/WEB24.html">Node.js/Express</a></p>
+                            <div class="skill-description">Backend & API REST</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐍</div>
+                            <p><a href="Compétences/WEB2.html">Python</a></p>
+                            <div class="skill-description">Scripting & automation</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">⚙️</div>
+                            <p><a href="Compétences/WEB3.html">C++</a></p>
+                            <div class="skill-description">Programmation systèmes</div>
+                        </div>
                     </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">⚙️</div>
-                        <p><a href="Compétences/WEB3.html">C++</a></p>
-                        <div class="skill-description">Programmation systèmes</div>
+                </div>
+
+                <!-- BASES DE DONNÉES -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-database"></i> Bases de Données (3)
                     </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🔐</div>
-                        <p><a href="Compétences/WEB25.html">FreeRADIUS</a></p>
-                        <div class="skill-description">Authentification RADIUS</div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🗄️</div>
+                            <p><a href="Compétences/WEB26.html">MongoDB</a></p>
+                            <div class="skill-description">NoSQL Database</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐘</div>
+                            <p><a href="Compétences/WEB27.html">PostgreSQL</a></p>
+                            <div class="skill-description">SQL Database</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📦</div>
+                            <p><a href="Compétences/WEB22.html">MySQL</a></p>
+                            <div class="skill-description">Relational Database</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEVOPS & INFRASTRUCTURE -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-server"></i> DevOps & Infrastructure (3)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐳</div>
+                            <p><a href="Compétences/WEB28.html">Docker</a></p>
+                            <div class="skill-description">Containerization</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📦</div>
+                            <p><a href="Compétences/WEB29.html">Git</a></p>
+                            <div class="skill-description">Version Control</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🤖</div>
+                            <p><a href="Compétences/WEB7.html">Arduino</a></p>
+                            <div class="skill-description">IoT & Microcontrôleurs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SYSTÈMES D'EXPLOITATION -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-laptop"></i> Systèmes d'Exploitation (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🪟</div>
+                            <p><a href="Compétences/WEB8.html">Windows</a></p>
+                            <div class="skill-description">Administration & AD</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐧</div>
+                            <p><a href="Compétences/WEB9.html">Linux</a></p>
+                            <div class="skill-description">Ubuntu, CentOS</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔄</div>
+                            <p><a href="Compétences/WEB19.html">Scripting Bash</a></p>
+                            <div class="skill-description">Automation Scripts</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔒</div>
+                            <p><a href="Compétences/WEB20.html">PowerShell</a></p>
+                            <div class="skill-description">Windows Automation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIMULATION RÉSEAU -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-network-wired"></i> Simulation Réseau (1)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔀</div>
+                            <p><a href="Compétences/WEB10.html">Cisco Packet Tracer</a></p>
+                            <div class="skill-description">Simulation réseau</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CYBERSÉCURITÉ & PENTESTING -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-shield-alt"></i> Cybersécurité & Pentesting (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📦</div>
+                            <p><a href="Compétences/WEB12.html">Scapy</a></p>
+                            <div class="skill-description">Crafting de paquets</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🎯</div>
+                            <p><a href="Compétences/WEB13.html">Metasploit</a></p>
+                            <div class="skill-description">Pentesting & Exploitation</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔎</div>
+                            <p><a href="Compétences/WEB17.html">Nessus</a></p>
+                            <div class="skill-description">Vulnerability Assessment</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔐</div>
+                            <p><a href="Compétences/WEB23.html">OpenSSL</a></p>
+                            <div class="skill-description">Cryptographie & Certificats</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MONITORING & DÉTECTION -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-eye"></i> Monitoring & Détection (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📊</div>
+                            <p><a href="Compétences/WEB14.html">Zabbix</a></p>
+                            <div class="skill-description">Monitoring d'infrastructure</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🚨</div>
+                            <p><a href="Compétences/WEB15.html">Snort</a></p>
+                            <div class="skill-description">Détection d'intrusions</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔐</div>
+                            <p><a href="Compétences/WEB16.html">Fail2ban</a></p>
+                            <div class="skill-description">Protection contre brute force</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🛡️</div>
+                            <p><a href="Compétences/WEB30.html">Wazuh</a></p>
+                            <div class="skill-description">XDR & Threat Detection</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Développement -->
-            <div id="dev" class="tab-contents">
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">📄</div>
-                        <p><a href="Compétences/WEB4.html">HTML5</a></p>
-                        <div class="skill-description">Markup & Structure</div>
+            <!-- STATISTIQUES COMPÉTENCES -->
+            <div class="skills-stats">
+                <h3>Résumé des Compétences</h3>
+                <div class="stats-line">
+                    <div class="stat-item">
+                        <div class="stat-number">30</div>
+                        <div class="stat-text">Technologies</div>
                     </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🎨</div>
-                        <p><a href="Compétences/WEB5.html">CSS3</a></p>
-                        <div class="skill-description">Styling & Animations</div>
+                    <div class="stat-item">
+                        <div class="stat-number">9</div>
+                        <div class="stat-text">Catégories</div>
                     </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">⚡</div>
-                        <p><a href="Compétences/WEB6.html">JavaScript</a></p>
-                        <div class="skill-description">Interactivité & DOM</div>
+                    <div class="stat-item">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-text">Ans d'expérience</div>
                     </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">⚛️</div>
-                        <p><a href="Compétences/WEB18.html">React</a></p>
-                        <div class="skill-description">Frameworks & Components</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🚀</div>
-                        <p><a href="Compétences/WEB24.html">Node.js/Express</a></p>
-                        <div class="skill-description">Backend & API REST</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🤖</div>
-                        <p><a href="Compétences/WEB7.html">Arduino</a></p>
-                        <div class="skill-description">IoT & Microcontrôleurs</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🗄️</div>
-                        <p><a href="Compétences/WEB26.html">MongoDB</a></p>
-                        <div class="skill-description">NoSQL Database</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🐘</div>
-                        <p><a href="Compétences/WEB27.html">PostgreSQL</a></p>
-                        <div class="skill-description">SQL Database</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🐳</div>
-                        <p><a href="Compétences/WEB28.html">Docker</a></p>
-                        <div class="skill-description">Containerization</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">📦</div>
-                        <p><a href="Compétences/WEB29.html">Git</a></p>
-                        <div class="skill-description">Version Control</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Systèmes d'Exploitation -->
-            <div id="sys" class="tab-contents">
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🪟</div>
-                        <p><a href="Compétences/WEB8.html">Windows</a></p>
-                        <div class="skill-description">Administration & AD</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🐧</div>
-                        <p><a href="Compétences/WEB9.html">Linux</a></p>
-                        <div class="skill-description">Ubuntu, CentOS</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🔀</div>
-                        <p><a href="Compétences/WEB10.html">Cisco Packet Tracer</a></p>
-                        <div class="skill-description">Simulation réseau</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cybersécurité -->
-            <div id="sec" class="tab-contents">
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">☁️</div>
-                        <p><a href="Compétences/WEB11.html">Azure</a></p>
-                        <div class="skill-description">Cloud Computing</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">📦</div>
-                        <p><a href="Compétences/WEB12.html">Scapy</a></p>
-                        <div class="skill-description">Crafting de paquets</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🎯</div>
-                        <p><a href="Compétences/WEB13.html">Metasploit</a></p>
-                        <div class="skill-description">Pentesting & Exploitation</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Monitoring -->
-            <div id="mon" class="tab-contents">
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">📊</div>
-                        <p><a href="Compétences/WEB14.html">Zabbix</a></p>
-                        <div class="skill-description">Monitoring d'infrastructure</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🚨</div>
-                        <p><a href="Compétences/WEB15.html">Snort</a></p>
-                        <div class="skill-description">Détection d'intrusions</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🔐</div>
-                        <p><a href="Compétences/WEB16.html">Fail2ban</a></p>
-                        <div class="skill-description">Protection contre brute force</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🔎</div>
-                        <p><a href="Compétences/WEB17.html">Nessus</a></p>
-                        <div class="skill-description">Vulnerability Assessment</div>
-                    </div>
-                    <div class="skill-card">
-                        <div style="font-size: 2rem;">🛡️</div>
-                        <p><a href="Compétences/WEB30.html">Wazuh</a></p>
-                        <div class="skill-description">XDR & Threat Detection</div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-text">Engagé</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== STATISTIQUES ===== -->
+    <!-- ===== STATISTIQUES GÉNÉRALES ===== -->
     <section id="stats">
         <div class="container">
             <h2 class="sub-title">Statistiques</h2>
@@ -1257,7 +1359,7 @@
                     <div class="stat-label">Projets Réalisés</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">20+</div>
+                    <div class="stat-number">30</div>
                     <div class="stat-label">Compétences Maîtrisées</div>
                 </div>
                 <div class="stat-card">
@@ -1726,24 +1828,6 @@
             });
         });
 
-        // Gestion des onglets de compétences
-        function switchTab(event, tabName) {
-            event.preventDefault();
-            
-            const contents = document.querySelectorAll('.tab-contents');
-            contents.forEach(content => {
-                content.classList.remove('active-tab');
-            });
-
-            const links = document.querySelectorAll('.tab-links');
-            links.forEach(link => {
-                link.classList.remove('active-link');
-            });
-
-            document.getElementById(tabName).classList.add('active-tab');
-            event.target.closest('.tab-links').classList.add('active-link');
-        }
-
         // Smooth scroll pour les ancres
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1772,7 +1856,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.project-card, .hobby-card, .parcours-item, .stat-card').forEach(el => {
+        document.querySelectorAll('.project-card, .hobby-card, .parcours-item, .stat-card, .skill-category').forEach(el => {
             observer.observe(el);
         });
 
