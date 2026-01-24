@@ -391,6 +391,26 @@
             }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
         /* ===== SECTIONS GÉNÉRALES ===== */
         section {
             padding: 4rem 2rem;
@@ -1347,26 +1367,910 @@
         </div>
     </section>
 
-    <!-- Include rest of sections from original file -->
-    <!-- PARCOURS, COMPÉTENCES, PROJETS, LOISIRS, CONTACT, FOOTER sections remain the same -->
+    <!-- ===== PARCOURS ===== -->
+    <section id="parcours">
+        <div class="container">
+            <h2 class="sub-title">Parcours</h2>
+            <div class="parcours-grid">
+                <div class="parcours-section">
+                    <h3><i class="fa-solid fa-school"></i> Formation Académique</h3>
+                    
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🎓</div>
+                        <p><strong>EFREI Paris PGE - ING Apprentissage</strong></p>
+                        <p>Majeure Réseaux et Sécurité</p>
+                        <p style="color: var(--accent); font-weight: 600;">2026 - 2029</p>
+                    </div>
 
-</body>
-<script>
-    // Navigation responsive
-    const hamburger = document.querySelector('.hamburger');
-    const navlinks = document.querySelector('.navlinks-container');
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">📚</div>
+                        <p><strong>Bachelor Universitaire de Technologie</strong></p>
+                        <p>R&T Parcours Cybersécurité - IUTV</p>
+                        <p style="color: var(--accent); font-weight: 600;">2023 - 2026</p>
+                    </div>
 
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('open');
-        navlinks.classList.toggle('open');
-    });
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">💻</div>
+                        <p><strong>Diplôme Universitaire</strong></p>
+                        <p>Technicien d'Administration Réseaux</p>
+                        <p style="color: var(--accent); font-weight: 600;">2023</p>
+                    </div>
 
-    // Fermer le menu quand on clique sur un lien
-    document.querySelectorAll('.navlinks-container a').forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('open');
-            navlinks.classList.remove('open');
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🔬</div>
+                        <p><strong>Baccalauréat Scientifique</strong></p>
+                        <p>Spécialité Physique-Chimie</p>
+                        <p style="color: var(--accent); font-weight: 600;">2019</p>
+                    </div>
+                </div>
+
+                <div class="parcours-section">
+                    <h3><i class="fa-solid fa-briefcase"></i> Expérience Professionnelle</h3>
+                    
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🌊</div>
+                        <p><strong>SFI SmartOcean Research Project</strong></p>
+                        <p>Western Norway University of Applied Science</p>
+                        <p>Développement de composants logiciels pour la plateforme de services SmartOcean, centre pour l'innovation basée sur la recherche.</p>
+                        <p>Travail sur les systèmes de capteurs sous-marins basés sur la communication acoustique intégrés aux services cloud computing.</p>
+                        <p>Développement sur la solution cloud en temps réel pour les séries temporelles de données historiques.</p>
+                        <p style="color: var(--accent); font-weight: 600;">Mars - Juin 2026</p>
+                    </div>
+
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">💻</div>
+                        <p><strong>Développeur Plateforme Client</strong></p>
+                        <p>Stage - Kolchy, Paris</p>
+                        <p>Participation à toutes les étapes du projet : analyse, conception, développement, tests</p>
+                        <p>Réalisation d'un espace client sécurisé (Next.js, API, hébergement cloud)</p>
+                        <p>Travail en équipe agile avec communication étroite avec les équipes produit</p>
+                        <p style="color: var(--accent); font-weight: 600;">Avril - Juin 2025</p>
+                    </div>
+
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🏢</div>
+                        <p><strong>Stage - Salvia Développement</strong></p>
+                        <p>Formatage et inventaire du parc informatique</p>
+                        <p>Gestion des systèmes d'exploitation et configuration hardware</p>
+                        <p style="color: var(--accent); font-weight: 600;">Juin 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CERTIFICATIONS ===== -->
+    <section id="certifications" style="background: var(--bg-light); color: var(--text-dark);">
+        <div class="container">
+            <h2 class="sub-title">Certifications</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); border-left: 4px solid #e94560; transition: all 0.3s ease;" class="cert-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #e94560;">🔐</div>
+                    <h3 style="color: #e94560; margin-bottom: 1rem; font-size: 1.2rem;">Google Cybersecurity Certificate</h3>
+                    <p style="color: rgba(22, 33, 62, 0.7); margin-bottom: 1rem; line-height: 1.6;">
+                        Formation complète en cybersécurité couvrant Python, Linux, SQL, SIEM et IDS
+                    </p>
+                    <p style="color: var(--accent); font-weight: 600;">2025</p>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); border-left: 4px solid #e94560; transition: all 0.3s ease;" class="cert-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #e94560;">💼</div>
+                    <h3 style="color: #e94560; margin-bottom: 1rem; font-size: 1.2rem;">Google IT Support Certificate</h3>
+                    <p style="color: rgba(22, 33, 62, 0.7); margin-bottom: 1rem; line-height: 1.6;">
+                        Certification couvrant les systèmes d'exploitation, réseau et sécurité informatique
+                    </p>
+                    <p style="color: var(--accent); font-weight: 600;">2025</p>
+                </div>
+            </div>
+            <style>
+                .cert-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 15px 40px rgba(233, 69, 96, 0.2);
+                    border-left-color: #00d4ff;
+                }
+            </style>
+        </div>
+    </section>
+
+    <!-- ===== COMPÉTENCES ===== -->
+    <section id="competences">
+        <div class="container">
+            <h2 class="sub-title">Mes 30 Compétences</h2>
+            
+            <div class="skills-container">
+                <!-- ADMIN RÉSEAUX -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-network-wired"></i> Administration Réseaux (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔍</div>
+                            <p><a href="Compétences/WIRESHARK.html">Wireshark</a></p>
+                            <div class="skill-description">Analyse de trafic réseau</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔐</div>
+                            <p><a href="Compétences/FREERADIUS.html">FreeRADIUS</a></p>
+                            <div class="skill-description">Authentification RADIUS</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">☁️</div>
+                            <p><a href="Compétences/AZURE.html">Azure</a></p>
+                            <div class="skill-description">Cloud Computing</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🎯</div>
+                            <p><a href="Compétences/DHCP-DNS.html">DHCP/DNS</a></p>
+                            <div class="skill-description">Services réseau</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DÉVELOPPEMENT WEB & BACKEND -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-code"></i> Développement Web & Backend (7)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📄</div>
+                            <p><a href="Compétences/HTML5.html">HTML5</a></p>
+                            <div class="skill-description">Markup & Structure</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🎨</div>
+                            <p><a href="Compétences/CSS3.html">CSS3</a></p>
+                            <div class="skill-description">Styling & Animations</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">⚡</div>
+                            <p><a href="Compétences/JAVASCRIPT.html">JavaScript</a></p>
+                            <div class="skill-description">Interactivité & DOM</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">⚛️</div>
+                            <p><a href="Compétences/REACT.html">React</a></p>
+                            <div class="skill-description">Frameworks & Components</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🚀</div>
+                            <p><a href="Compétences/NODEJS.html">Node.js/Express</a></p>
+                            <div class="skill-description">Backend & API REST</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐍</div>
+                            <p><a href="Compétences/PYTHON.html">Python</a></p>
+                            <div class="skill-description">Scripting & automation</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">⚙️</div>
+                            <p><a href="Compétences/CPP.html">C++</a></p>
+                            <div class="skill-description">Programmation systèmes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BASES DE DONNÉES -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-database"></i> Bases de Données (3)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🗄️</div>
+                            <p><a href="Compétences/MONGODB.html">MongoDB</a></p>
+                            <div class="skill-description">NoSQL Database</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐘</div>
+                            <p><a href="Compétences/POSTGRESQL.html">PostgreSQL</a></p>
+                            <div class="skill-description">SQL Database</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📦</div>
+                            <p><a href="Compétences/MYSQL.html">MySQL</a></p>
+                            <div class="skill-description">Relational Database</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEVOPS & INFRASTRUCTURE -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-server"></i> DevOps & Infrastructure (3)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐳</div>
+                            <p><a href="Compétences/DOCKER.html">Docker</a></p>
+                            <div class="skill-description">Containerization</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📦</div>
+                            <p><a href="Compétences/GIT.html">Git</a></p>
+                            <div class="skill-description">Version Control</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🤖</div>
+                            <p><a href="Compétences/ARDUINO.html">Arduino</a></p>
+                            <div class="skill-description">IoT & Microcontrôleurs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SYSTÈMES D'EXPLOITATION -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-laptop"></i> Systèmes d'Exploitation (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🪟</div>
+                            <p><a href="Compétences/WINDOWS.html">Windows</a></p>
+                            <div class="skill-description">Administration & AD</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🐧</div>
+                            <p><a href="Compétences/LINUX.html">Linux</a></p>
+                            <div class="skill-description">Ubuntu, CentOS</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔄</div>
+                            <p><a href="Compétences/BASH.html">Scripting Bash</a></p>
+                            <div class="skill-description">Automation Scripts</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔒</div>
+                            <p><a href="Compétences/POWERSHELL.html">PowerShell</a></p>
+                            <div class="skill-description">Windows Automation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIMULATION RÉSEAU -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-network-wired"></i> Simulation Réseau (1)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔀</div>
+                            <p><a href="Compétences/CISCO-PACKET-TRACER.html">Cisco Packet Tracer</a></p>
+                            <div class="skill-description">Simulation réseau</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CYBERSÉCURITÉ & PENTESTING -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-shield-alt"></i> Cybersécurité & Pentesting (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📦</div>
+                            <p><a href="Compétences/SCAPY.html">Scapy</a></p>
+                            <div class="skill-description">Crafting de paquets</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🎯</div>
+                            <p><a href="Compétences/METASPLOIT.html">Metasploit</a></p>
+                            <div class="skill-description">Pentesting & Exploitation</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔎</div>
+                            <p><a href="Compétences/NESSUS.html">Nessus</a></p>
+                            <div class="skill-description">Vulnerability Assessment</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔐</div>
+                            <p><a href="Compétences/OPENSSL.html">OpenSSL</a></p>
+                            <div class="skill-description">Cryptographie & Certificats</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MONITORING & DÉTECTION -->
+                <div class="skill-category">
+                    <div class="skill-category-title">
+                        <i class="fas fa-eye"></i> Monitoring & Détection (4)
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">📊</div>
+                            <p><a href="Compétences/ZABBIX.html">Zabbix</a></p>
+                            <div class="skill-description">Monitoring d'infrastructure</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🚨</div>
+                            <p><a href="Compétences/SNORT.html">Snort</a></p>
+                            <div class="skill-description">Détection d'intrusions</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🔐</div>
+                            <p><a href="Compétences/FAIL2BAN.html">Fail2ban</a></p>
+                            <div class="skill-description">Protection contre brute force</div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="font-size: 2rem;">🛡️</div>
+                            <p><a href="Compétences/WAZUH.html">Wazuh</a></p>
+                            <div class="skill-description">XDR & Threat Detection</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATISTIQUES COMPÉTENCES -->
+            <div class="skills-stats">
+                <h3>Résumé des Compétences</h3>
+                <div class="stats-line">
+                    <div class="stat-item">
+                        <div class="stat-number">30</div>
+                        <div class="stat-text">Technologies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">9</div>
+                        <div class="stat-text">Catégories</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-text">Ans d'expérience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-text">Engagé</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATISTIQUES GÉNÉRALES ===== -->
+    <section id="stats">
+        <div class="container">
+            <h2 class="sub-title">Statistiques</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Projets Réalisés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30</div>
+                    <div class="stat-label">Compétences Maîtrisées</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Années d'Expérience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Motivation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJETS ===== -->
+    <section id="projets">
+        <div class="container">
+            <h2 class="sub-title">Mes Projets</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-gamepad" style="color: #e94560;"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Quiz Master</h3>
+                        <p>Application web interactive de quiz multijoueur avec modes Solo/Duel, catégories de questions, niveaux de difficulté et classement en temps réel.</p>
+                        <div class="project-tags">
+                            <span class="tag">Vanilla JS</span>
+                            <span class="tag">HTML5/CSS3</span>
+                            <span class="tag">localStorage</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                        <a href="Projets/quiz-master.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-code" style="color: #00d4ff;"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>FizzBuzz</h3>
+                        <p>Implémentation classique du kata FizzBuzz avec plusieurs langages de programmation et approches algorithmes. Démontre les bonnes pratiques et patterns de code.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Algorithms</span>
+                            <span class="tag">Code Kata</span>
+                        </div>
+                        <a href="Projets/fizzbuzz.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-piggy-bank" style="color: #e94560;"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Tirelire</h3>
+                        <p>App collaborative de partage de dépenses avec multi-devises, receipt splitting drag-drop et support iOS/Android. PWA production-ready.</p>
+                        <div class="project-tags">
+                            <span class="tag">React 18+</span>
+                            <span class="tag">PWA</span>
+                            <span class="tag">Capacitor</span>
+                            <span class="tag">Multi-Devises</span>
+                        </div>
+                        <a href="Projets/tirelire.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-utensils" style="color: #e94560;"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>FastFoodBike</h3>
+                        <p>Plateforme complète de livraison de nourriture avec 37 API endpoints, paiements Stripe/Razorpay, notifications email et SMS.</p>
+                        <div class="project-tags">
+                            <span class="tag">Node.js/Express</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Stripe</span>
+                            <span class="tag">Production</span>
+                        </div>
+                        <a href="Projets/FastFoodBike.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-brain" style="color: #00d4ff;"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>AI Agents Dashboard</h3>
+                        <p>Plateforme de monitoring et gestion des agents IA avec interface moderne, gestion d'état centralisée et APIs RESTful production-ready.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Python/FastAPI</span>
+                            <span class="tag">Real-time</span>
+                            <span class="tag">AI Orchestration</span>
+                        </div>
+                        <a href="Projets/ai-agents-dashboard.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>SAE R502 - Architecture Réseau</h3>
+                        <p>Conception et simulation d'une architecture réseau complète en Cisco Packet Tracer. Intègre OSPF, VLAN, sécurité avancée et redondance.</p>
+                        <div class="project-tags">
+                            <span class="tag">Cisco</span>
+                            <span class="tag">OSPF</span>
+                            <span class="tag">Networking</span>
+                            <span class="tag">Sécurité</span>
+                        </div>
+                        <a href="Projets/SAE-R502.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>SAE501 - Architecture Wi-Fi Sécurisée</h3>
+                        <p>Infrastructure d'authentification RADIUS centralisée pour chaîne multi-sites. WPA-Enterprise sécurisée, gestion utilisateurs, monitoring et détection d'anomalies.</p>
+                        <div class="project-tags">
+                            <span class="tag">FreeRADIUS</span>
+                            <span class="tag">WPA-Enterprise</span>
+                            <span class="tag">Monitoring</span>
+                            <span class="tag">Sécurité</span>
+                        </div>
+                        <a href="Projets/SAE501.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>PENTESTING-SUITE</h3>
+                        <p>Framework professionnel de sécurité informatique pour tests de pénétration complets. Reconnaissance avancée, moteur d'exploitation, rapports professionnels automatisés.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Pentesting</span>
+                            <span class="tag">Exploitation</span>
+                            <span class="tag">Framework</span>
+                        </div>
+                        <a href="Projets/PENTESTING-SUITE.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Réponse à l'Appel d'Offres</h3>
+                        <p>Analyse de cahier des charges et propositions de solutions informatiques optimisées.</p>
+                        <div class="project-tags">
+                            <span class="tag">Infrastructure</span>
+                            <span class="tag">Networking</span>
+                        </div>
+                        <a href="Projets/SAE_303.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Service d'Annuaire Azure</h3>
+                        <p>Déploiement et configuration d'Active Directory en environnement cloud Azure.</p>
+                        <div class="project-tags">
+                            <span class="tag">Cloud</span>
+                            <span class="tag">Azure</span>
+                        </div>
+                        <a href="Projets/Azure.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Sécurité des Réseaux</h3>
+                        <p>Mise en place de pare-feu, VPN et règles de sécurité avancées.</p>
+                        <div class="project-tags">
+                            <span class="tag">Firewall</span>
+                            <span class="tag">VPN</span>
+                        </div>
+                        <a href="Projets/R410.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Infrastructures de Sécurité</h3>
+                        <p>Architecture complète de systèmes sécurisés avec authentification multi-niveaux.</p>
+                        <div class="project-tags">
+                            <span class="tag">Architecture</span>
+                            <span class="tag">Sécurité</span>
+                        </div>
+                        <a href="Projets/R401.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Attaques MITM</h3>
+                        <p>Démonstration et mitigation d'attaques Man-in-the-Middle sur réseau local.</p>
+                        <div class="project-tags">
+                            <span class="tag">Hacking</span>
+                            <span class="tag">MITM</span>
+                        </div>
+                        <a href="Projets/SAE_24.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Infrastructure Entreprise</h3>
+                        <p>Solution informatique complète pour PME : serveurs, stockage, réseau.</p>
+                        <div class="project-tags">
+                            <span class="tag">Infrastructure</span>
+                            <span class="tag">Déploiement</span>
+                        </div>
+                        <a href="Projets/SAE_23.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>ESP32 IoT</h3>
+                        <p>Projets de domotique et IoT avec microcontrôleurs ESP32 et capteurs.</p>
+                        <div class="project-tags">
+                            <span class="tag">IoT</span>
+                            <span class="tag">Arduino</span>
+                        </div>
+                        <a href="Projets/esp32.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Infinite Think</h3>
+                        <p>Plateforme éducative d'apprentissage collaboratif et partage de connaissances.</p>
+                        <div class="project-tags">
+                            <span class="tag">Éducation</span>
+                            <span class="tag">Web</span>
+                        </div>
+                        <a href="Projets/infiniteThink.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Cyberattaque Conforama</h3>
+                        <p>Analyse détaillée de la fuite de données Conforama et recommandations.</p>
+                        <div class="project-tags">
+                            <span class="tag">Analyse</span>
+                            <span class="tag">Sécurité</span>
+                        </div>
+                        <a href="Projets/conforama.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Sensibilisation Phishing</h3>
+                        <p>Vidéo de sensibilisation aux attaques par phishing et bonnes pratiques.</p>
+                        <div class="project-tags">
+                            <span class="tag">Sensibilisation</span>
+                            <span class="tag">Sécurité</span>
+                        </div>
+                        <a href="Projets/phishing.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-ethernet"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Câble RJ45</h3>
+                        <p>Sertissage et réalisation de câbles réseau aux normes professionnelles.</p>
+                        <div class="project-tags">
+                            <span class="tag">Networking</span>
+                            <span class="tag">Pratique</span>
+                        </div>
+                        <a href="Projets/rj45.html" class="project-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LOISIRS ===== -->
+    <section id="hobbies">
+        <div class="container">
+            <h2 class="sub-title">Mes Loisirs</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-shuttle-space"></i>
+                    </div>
+                    <h3><a href="videos/star_citizen.mp4">Jeux Vidéo</a></h3>
+                    <p>Passionné par Star Citizen et les jeux de simulation immersive. Exploration d'univers virtuels complexes et gestion de stratégies.</p>
+                    <a href="https://robertsspaceindustries.com/star-citizen/">Découvrir Star Citizen</a>
+                </div>
+
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>Domotique</h3>
+                    <p>Enthousiaste de domotique avec ESPHome. Configuration d'écosystèmes d'automatisation résidentiels et IoT.</p>
+                    <a href="https://esphome.io/">En savoir plus</a>
+                </div>
+
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Veille Informatique</h3>
+                    <p>Suivi constant des dernières tendances en cybersécurité, cloud computing et innovations technologiques.</p>
+                    <a href="https://fr.wikipedia.org/wiki/Veille_informatique">En savoir plus</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="sub-title">Me Contacter</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong><br>
+                            <a href="mailto:rayan-saidfarah@outlook.fr" style="color: var(--success); text-decoration: none;">rayan-saidfarah@outlook.fr</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Téléphone</strong><br>
+                            <a href="tel:+33783353113" style="color: var(--success); text-decoration: none;">+33 (7) 83 35 31 13</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Localisation</strong><br>
+                            <span style="color: rgba(234, 234, 234, 0.8);">Île-de-France, France</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong style="display: block; margin-bottom: 1rem;">Réseaux Sociaux</strong>
+                        <div class="social-icons">
+                            <a href="https://www.linkedin.com/in/rayan-said-farah-1832602ba/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/sfrayan" target="_blank" rel="noopener noreferrer" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="cv.pdf.png" download class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i class="fas fa-download"></i> Télécharger mon CV
+                    </a>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contactForm" action="https://formspree.io/f/xaqenqdd" method="POST">
+                        <div class="form-group">
+                            <label for="nom">Votre Nom</label>
+                            <input type="text" id="nom" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Votre Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sujet">Sujet</label>
+                            <input type="text" id="sujet" name="subject" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Envoyer le Message
+                        </button>
+                        <div id="form-status" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <h3>Merci pour votre visite ! 🚀</h3>
+        <p>© 2026 Rayan Said Farah | Ingénieur Réseau & Cybersécurité | Tous droits réservés</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Menu hamburger
+        const hamburger = document.querySelector('.hamburger');
+        const navlinksContainer = document.querySelector('.navlinks-container');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            navlinksContainer.classList.toggle('open');
         });
-    });
-</script>
+
+        // Fermer le menu au clic sur un lien
+        document.querySelectorAll('.navlinks-container a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                navlinksContainer.classList.remove('open');
+            });
+        });
+
+        // Smooth scroll pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card, .hobby-card, .parcours-item, .stat-card, .skill-category').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Gestion du formulaire de contact avec Formspree
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('form-status');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                formStatus.innerHTML = '<span style="color: var(--success);">⏳ Envoi en cours...</span>';
+                
+                try {
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: new FormData(contactForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        formStatus.innerHTML = '<span style="color: var(--success);">✅ Message envoyé avec succès ! Je vous répondrai dans les 24h.</span>';
+                        contactForm.reset();
+                        setTimeout(() => {
+                            formStatus.innerHTML = '';
+                        }, 5000);
+                    } else {
+                        throw new Error('Erreur lors de l\'envoi');
+                    }
+                } catch (error) {
+                    formStatus.innerHTML = '<span style="color: var(--danger);">❌ Erreur lors de l\'envoi. Veuillez réessayer.</span>';
+                    console.error('Erreur:', error);
+                }
+            });
+        }
+    </script>
+</body>
 </html>
