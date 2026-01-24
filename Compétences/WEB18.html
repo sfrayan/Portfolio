@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Wazuh</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url("../images/Parcours.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #fff;
+        }
+        th {
+            font-weight: bold;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 0;
+        }
+        .projets-container {
+            display: flex;
+            gap: 20px;
+        }
+        .projets {
+            position: relative;
+            flex: 1;
+        }
+        .projets img {
+            width: 100%;
+            height: auto;
+        }
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .projets:hover .layer {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="page_projets">
+        <div class="container">
+            <div class="row">
+                <h2 id="nom_proj">Wazuh</h2>
+                <!-- Introduction -->
+                <div>
+                    <br>
+                </div>
+                <!-- Description -->
+                <div>
+                    <h3>Description</h3>
+                    <p>Wazuh est une plateforme open-source de sécurité unifiée pour la détection des menaces, la conformité et la réponse aux incidents. Basée sur le monitoring avancé, elle combine la détection des intrusions, l'analyse d'intégrité des fichiers, la gestion des vulnérabilités et les tests de conformité (PCI-DSS, CIS, HIPAA). Wazuh assure la surveillance en temps réel de milliers d'agents distribués sur l'ensemble de l'infrastructure IT. Son architecture modulaire et scalable permet de traiter des volumes massifs de données de sécurité. Avec son interface web Kibana, elle offre une visibilité complète sur les menaces, permettant une détection rapide des anomalies et une réponse immédiate. Wazuh est particulièrement utilisée pour le monitoring de postes de travail, serveurs, conteneurs et appareils cloud.
+                    </p>
+                    <br>
+                </div>
+                <!-- Ressources -->
+                <div>
+                    <h3>Ressources</h3>
+                    <p>Voici les projets où cette compétence a été utilisée :</p>
+                    <div>
+                        <br/>
+                    </div>
+                    <div class="projets-container">
+                        <div class="projets">
+                            <a href="../Projets/SAE501.html">
+                                <img src="../images/SAE501.jpg" alt="SAE501">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                        <div class="projets">
+                            <a href="../Projets/PENTESTING-SUITE.html">
+                                <img src="../images/PENTESTING-SUITE.jpg" alt="PENTESTING-SUITE">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
