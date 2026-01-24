@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MongoDB</title>
-    <meta name="description" content="">
+    <title>MongoDB - Base de Données NoSQL</title>
+    <meta name="description" content="MongoDB - Base de données NoSQL document orientée">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -26,36 +26,73 @@
         }
         h2 {
             margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
+            font-size: 2.5rem;
         }
         h3 {
-            margin-top: 0;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #00d4ff;
         }
         p {
-            margin-bottom: 0;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
         .projets-container {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
         .projets {
             position: relative;
             flex: 1;
+            min-width: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
         }
-        .projets img {
+        .projets:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3);
+        }
+        .projets-placeholder {
             width: 100%;
-            height: auto;
+            height: 280px;
+            background: linear-gradient(135deg, #0f3460 0%, #1a5c7a 50%, #0f3460 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .projets-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .projets-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .projets-text h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #00d4ff;
         }
         .layer {
             position: absolute;
@@ -63,12 +100,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.3), rgba(0, 212, 255, 0.3));
             opacity: 0;
             transition: opacity 0.3s ease;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         .projets:hover .layer {
             opacity: 1;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
 </head>
@@ -76,7 +124,7 @@
     <section id="page_projets">
         <div class="container">
             <div class="row">
-                <h2 id="nom_proj">MongoDB</h2>
+                <h2 id="nom_proj">🗄️ MongoDB</h2>
                 <!-- Introduction -->
                 <div>
                     <br>
@@ -84,21 +132,25 @@
                 <!-- Description -->
                 <div>
                     <h3>Description</h3>
-                    <p>MongoDB est une base de données NoSQL orientée documents open source qui stocke les données au format BSON (Binary JSON). Contrairement aux bases de données relationnelles traditionnelles, MongoDB offre une flexibilité de schéma permettant de stocker des structures de données complexes et hétérogènes sans migration de schéma. MongoDB supporte les requêtes flexibles, l'indexation avancée, l'agrégation puissante et les transactions ACID (depuis la version 4.0). Elle est conçue pour la scalabilité horizontale avec le sharding automatique, permettant de distribuer les données sur plusieurs serveurs. MongoDB inclut un service géré (MongoDB Atlas) pour la haute disponibilité et le backup automatique. Elle est largement utilisée pour les applications web et mobiles, l'analyse de données, le stockage de contenu et les systèmes en temps réel. MongoDB s'intègre facilement avec Node.js via Mongoose, avec Python via PyMongo, et supporte les drivers officiels pour la plupart des langages de programmation. Son écosystème riche et sa communauté active en font une solution idéale pour les projets modernes nécessitant de la flexibilité et de la scalabilité.</p>
+                    <p>MongoDB est une base de données NoSQL orientée documents open source qui stocke les données au format BSON (Binary JSON). Contrairement aux bases de données relationnelles traditionnelles, MongoDB offre une flexibilité de schéma permettant de stocker des structures de données complexes et hétérogènes sans migration de schéma.</p>
+                    <p>MongoDB supporte les requêtes flexibles, l'indexation avancée, l'agrégation puissante et les transactions ACID (depuis la version 4.0). Elle est conçue pour la scalabilité horizontale avec le sharding automatique, permettant de distribuer les données sur plusieurs serveurs.</p>
                     <br>
                 </div>
                 <!-- Ressources -->
                 <div>
-                    <h3>Ressources</h3>
+                    <h3>📋 Projets Associés</h3>
                     <p>Voici les projets où cette compétence a été utilisée :</p>
-                    <div>
-                        <br/>
-                    </div>
                     <div class="projets-container">
                         <div class="projets">
                             <a href="../Projets/FastFoodBike.html">
-                                <img src="../images/FastFoodBike.jpg" alt="FastFoodBike">
-                                <div class="layer"></div>
+                                <div class="projets-placeholder">
+                                    <div class="projets-text">
+                                        <span>🍵</span>
+                                        <h4>FastFoodBike</h4>
+                                        <span style="font-size: 0.8rem; color: #00d4ff;">Plateforme de Livraison</span>
+                                    </div>
+                                </div>
+                                <div class="layer">Cliquez pour voir le projet →</div>
                             </a>
                         </div>
                     </div>

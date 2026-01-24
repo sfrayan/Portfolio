@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Docker</title>
-    <meta name="description" content="">
+    <title>Docker - Containerisation</title>
+    <meta name="description" content="Docker - Plateforme de containerisation pour applications">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -26,36 +26,73 @@
         }
         h2 {
             margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
+            font-size: 2.5rem;
         }
         h3 {
-            margin-top: 0;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #00d4ff;
         }
         p {
-            margin-bottom: 0;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
         .projets-container {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
         .projets {
             position: relative;
             flex: 1;
+            min-width: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
         }
-        .projets img {
+        .projets:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3);
+        }
+        .projets-placeholder {
             width: 100%;
-            height: auto;
+            height: 280px;
+            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 50%, #0d47a1 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .projets-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .projets-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .projets-text h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #00d4ff;
         }
         .layer {
             position: absolute;
@@ -63,12 +100,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.3), rgba(0, 212, 255, 0.3));
             opacity: 0;
             transition: opacity 0.3s ease;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         .projets:hover .layer {
             opacity: 1;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
 </head>
@@ -76,7 +124,7 @@
     <section id="page_projets">
         <div class="container">
             <div class="row">
-                <h2 id="nom_proj">Docker</h2>
+                <h2 id="nom_proj">🐳 Docker</h2>
                 <!-- Introduction -->
                 <div>
                     <br>
@@ -84,21 +132,25 @@
                 <!-- Description -->
                 <div>
                     <h3>Description</h3>
-                    <p>Docker est une plateforme de containerisation open source qui encapsule les applications et leurs dépendances dans des conteneurs légers et portables. Les conteneurs Docker garantissent la cohérence entre les environnements de développement, test et production en isolant l'application, les bibliothèques, et les configurations dans une unité autocontenue. Docker utilise les images pour déployer rapidement plusieurs instances d'une application sans surcharge d'un hyperviseur. Il offre Docker Compose pour orchestrer multi-conteneurs, Docker Hub pour partager les images, et s'intègre avec les systèmes de CI/CD modernes. Docker permet une scalabilité horizontale facile, une gestion efficace des ressources et une déploiement rapide. Il est largement adopté dans les architectures microservices et le cloud computing, avec une compatibilité avec Kubernetes pour l'orchestration à grande échelle. Docker simplifie le workflow des développeurs, réduit les problèmes de dépendances et accélère les cycles de déploiement. Des entreprises comme Netflix, Uber, Spotify, et des milliers d'autres utilisent Docker pour containeriser leurs applications en production.</p>
+                    <p>Docker est une plateforme de containerisation open source qui encapsule les applications et leurs dépendances dans des conteneurs légers et portables. Les conteneurs Docker garantissent la cohérence entre les environnements de développement, test et production en isolant l'application, les bibliothèques, et les configurations dans une unité autocontenue.</p>
+                    <p>Docker utilise les images pour déployer rapidement plusieurs instances d'une application sans surcharge d'un hyperviseur. Il offre Docker Compose pour orchestrer multi-conteneurs, Docker Hub pour partager les images, et s'intègre avec les systèmes de CI/CD modernes.</p>
                     <br>
                 </div>
                 <!-- Ressources -->
                 <div>
-                    <h3>Ressources</h3>
+                    <h3>📋 Projets Associés</h3>
                     <p>Voici les projets où cette compétence a été utilisée :</p>
-                    <div>
-                        <br/>
-                    </div>
                     <div class="projets-container">
                         <div class="projets">
                             <a href="../Projets/FastFoodBike.html">
-                                <img src="../images/FastFoodBike.jpg" alt="FastFoodBike">
-                                <div class="layer"></div>
+                                <div class="projets-placeholder">
+                                    <div class="projets-text">
+                                        <span>🐳</span>
+                                        <h4>FastFoodBike</h4>
+                                        <span style="font-size: 0.8rem; color: #00d4ff;">Plateforme de Livraison</span>
+                                    </div>
+                                </div>
+                                <div class="layer">Cliquez pour voir le projet →</div>
                             </a>
                         </div>
                     </div>
