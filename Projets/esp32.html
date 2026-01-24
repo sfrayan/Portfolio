@@ -1,123 +1,352 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>ESP32</title>		
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 - Programmation Microprocesseur</title>
     <style>
-        body {
-            background-image: url("../images/Parcours.jpg");
-            background-size: cover;
-            background-position: center;
-            color: #fff;
+        :root {
+            --color-primary: #2180f7;
+            --color-primary-hover: #1a6dd9;
+            --color-bg: #0f1419;
+            --color-surface: #161b22;
+            --color-border: #30363d;
+            --color-text: #e6edf3;
+            --color-text-secondary: #8b949e;
+            --color-success: #3fb950;
+            --color-warning: #d29922;
+            --radius: 8px;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
+        
+        html {
+            scroll-behavior: smooth;
         }
-        .row {
-            margin-bottom: 20px;
+        
+        body {
+            background: linear-gradient(135deg, var(--color-bg) 0%, #0d111b 100%);
+            color: var(--color-text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
         }
-        h2 {
-            margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
-        }
-        h3 {
-            margin-top: 0;
-        }
-        p {
-            margin-bottom: 0;
-        }
-        .projets {
-            position: relative;
-        }
-        .projets img {
-            width: 100%;
-            height: auto;
-        }
-        .layer {
+        
+        .skip-nav {
             position: absolute;
-            top: 0;
+            top: -40px;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            background: var(--color-primary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
         }
-        .projets:hover .layer {
-            opacity: 1;
+        
+        .skip-nav:focus {
+            top: 0;
+        }
+        
+        header {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+        }
+        
+        nav a:hover {
+            color: var(--color-primary);
+            background: rgba(33, 128, 247, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #58a6ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .project-meta {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .meta-item h3 {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .meta-item p {
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-border);
+            color: var(--color-primary);
+        }
+        
+        .section p {
+            color: var(--color-text);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .resources {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--color-bg);
+            border-radius: var(--radius);
+            margin: 1rem 0;
+            text-decoration: none;
+            color: var(--color-text);
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-border);
+        }
+        
+        .resource-item:hover {
+            background: rgba(33, 128, 247, 0.1);
+            border-color: var(--color-primary);
+            transform: translateX(4px);
+        }
+        
+        .resource-icon {
+            font-size: 2rem;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .resource-info h3 {
+            margin: 0;
+            color: var(--color-primary);
+            font-size: 1rem;
+        }
+        
+        .resource-info p {
+            margin: 0.25rem 0 0 0;
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status.completed {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--color-success);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: rgba(33, 128, 247, 0.1);
+            transform: translateX(-4px);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .section h2 {
+                font-size: 1.5rem;
+            }
+            
+            nav {
+                gap: 0.5rem;
+            }
+            
+            nav a {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
+    <a href="#main" class="skip-nav">Aller au contenu</a>
+    
+    <header>
         <div class="container">
-            <div class="row">
-                <h2 id="nom_proj">Compte Rendu Micropocesseur</h2>
-                <!-- Introduction -->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Cadre</th>
-                            <td>Cours : « SAE : Découvrir un dispositif de tranmission »</td>
-                        </tr>
-                        <tr>
-                            <th>Groupe</th>
-                            <td>Monogroupe</td>
-                        </tr>
-                        <tr>
-                            <th>Durée</th>
-                            <td>1,5 semaines</td>
-                        </tr>
-                        <tr>
-                            <th>Statut</th>
-                            <td>Terminé</td>
-                        </tr>
-                    </table>
-                    <br>
-                </div>
-                <!-- Description -->
-                <div>
-                    <h3>Description</h3>
-                    <p>L'objectif de ce projet était de programmer un ESP32 avec Arduino 
-                        pour lui téléverser un code permettant de transmettre des instructions 
-                        en langage binaire, afin de reproduire le comportement d'un microprocesseur 
-                        et d'en acquérir une meilleure compréhension.
-                    </p>
-                    <br>
-                </div>
-                <!-- Ressources -->
-                <div>
-                    <h3>Ressources</h3>
-                </div>
-                <div class="projets-container">
-                    <div class="projets">
-                        <a href="../Projets/pdf/SAE13_GR3_SAID_FARAH_RAYAN.pdf">
-                            <img src="../images/esp32" alt="esp32">
-                            <div class="layer"></div>
-                        </a>
-                    </div>
-                </div>
+            <nav>
+                <a href="../index.html" class="logo">Portfolio</a>
+                <a href="../index.html">← Retour aux projets</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main id="main" class="container">
+        <div class="breadcrumb">
+            <a href="../index.html">Accueil</a> / Projets / ESP32
+        </div>
+        
+        <h1>ESP32</h1>
+        <p class="subtitle">Programmation d'un microprocesseur avec Arduino</p>
+        
+        <div class="project-meta">
+            <div class="meta-item">
+                <h3>Contexte</h3>
+                <p>SAE : Découvrir un dispositif de transmission</p>
+            </div>
+            <div class="meta-item">
+                <h3>Équipe</h3>
+                <p>Monogroupe</p>
+            </div>
+            <div class="meta-item">
+                <h3>Durée</h3>
+                <p>1,5 semaines</p>
+            </div>
+            <div class="meta-item">
+                <h3>Statut</h3>
+                <p><span class="status completed">✓ Terminé</span></p>
             </div>
         </div>
-    </section>
+        
+        <div class="section">
+            <h2>🖥️ Description</h2>
+            <p>
+                L'objectif de ce projet était de programmer un ESP32 avec Arduino pour lui téléverser
+                un code permettant de transmettre des instructions en langage binaire, afin de reproduire
+                le comportement d'un microprocesseur et d'en acquérir une meilleure compréhension.
+            </p>
+            <p>
+                Ce projet m'a permis d'explorer les concepts fondamentaux de la programmation embarquée,
+                la communication en série, et la manipulation des instructions au niveau binaire.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>⚙️ Apprentissages</h2>
+            <ul style="margin-left: 2rem; color: var(--color-text);">
+                <li>Programmation en C/C++ sur microcontrôleur</li>
+                <li>Utilisation de l'IDE Arduino</li>
+                <li>Communication série et transmission de données</li>
+                <li>Manipulation du langage binaire et hexadécimal</li>
+                <li>Débogage et test de code embarqué</li>
+            </ul>
+        </div>
+        
+        <div class="section resources">
+            <h2>📚 Ressources</h2>
+            <a href="../Projets/pdf/SAE13_GR3_SAID_FARAH_RAYAN.pdf" class="resource-item">
+                <div class="resource-icon">📄</div>
+                <div class="resource-info">
+                    <h3>Rapport complet</h3>
+                    <p>Documentation du projet et résultats des tests</p>
+                </div>
+            </a>
+        </div>
+        
+        <a href="../index.html" class="back-link">← Retour aux projets</a>
+    </main>
 </body>
 </html>

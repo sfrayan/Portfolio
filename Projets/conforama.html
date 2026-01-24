@@ -1,167 +1,344 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Conforama</title>		
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conforama - Analyse de cyberattaque</title>
     <style>
-        body {
-            background-image: url("../images/Parcours.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: #fff;
+        :root {
+            --color-primary: #2180f7;
+            --color-primary-hover: #1a6dd9;
+            --color-bg: #0f1419;
+            --color-surface: #161b22;
+            --color-border: #30363d;
+            --color-text: #e6edf3;
+            --color-text-secondary: #8b949e;
+            --color-success: #3fb950;
+            --color-warning: #d29922;
+            --radius: 8px;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
+        
+        html {
+            scroll-behavior: smooth;
         }
-        .row {
-            margin-bottom: 20px;
+        
+        body {
+            background: linear-gradient(135deg, var(--color-bg) 0%, #0d111b 100%);
+            color: var(--color-text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
         }
-        h2 {
-            margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
-        }
-        h3 {
-            margin-top: 0;
-        }
-        p {
-            margin-bottom: 0;
-        }
-        .projets {
-            position: relative;
-        }
-        .projets img {
-            width: 100%;
-            height: auto;
-        }
-        .layer {
+        
+        .skip-nav {
             position: absolute;
-            top: 0;
+            top: -40px;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            background: var(--color-primary);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
         }
-        .projets:hover .layer {
-            opacity: 1;
+        
+        .skip-nav:focus {
+            top: 0;
+        }
+        
+        header {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+        }
+        
+        nav a:hover {
+            color: var(--color-primary);
+            background: rgba(33, 128, 247, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #58a6ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .project-meta {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .meta-item h3 {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .meta-item p {
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-border);
+            color: var(--color-primary);
+        }
+        
+        .section p {
+            color: var(--color-text);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .resources {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .resource-item {
+            display: block;
+            text-decoration: none;
+            color: var(--color-text);
+            margin: 1.5rem 0;
+        }
+        
+        .resource-item img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-item:hover img {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(33, 128, 247, 0.3);
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status.completed {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--color-success);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: rgba(33, 128, 247, 0.1);
+            transform: translateX(-4px);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .section h2 {
+                font-size: 1.5rem;
+            }
+            
+            nav {
+                gap: 0.5rem;
+            }
+            
+            nav a {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
+    <a href="#main" class="skip-nav">Aller au contenu</a>
+    
+    <header>
         <div class="container">
-            <div class="row">
-                <h2 id="nom_proj">Rapport Cyberattaque Conforama</h2>
-                <!-- Introduction -->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Cadre</th>
-                            <td>Cours : « Expression & Culture »</td>
-                        </tr>
-                        <tr>
-                            <th>Groupe</th>
-                            <td>Equipe de 3</td>
-                        </tr>
-                        <tr>
-                            <th>Durée</th>
-                            <td>3 semaines</td>
-                        </tr>
-                        <tr>
-                            <th>Statut</th>
-                            <td>Terminé</td>
-                        </tr>
-                    </table>
-                    <br>
-                </div>
-                <!-- Description -->
-                <div>
-                    <h3>Description</h3>
-                    <p>Le but principal de ce projet était de réaliser un rapport détaillé 
-                        sur une cyberattaque spécifique, en mettant en lumière ses conséquences 
-                        néfastes. De plus, il était important d'analyser et de présenter les 
-                        mesures prises par les entreprises pour renforcer leur sécurité face à de telles attaques.
-
-                        Dans ce rapport, j'ai procédé à une analyse approfondie de la cyberattaque, 
-                        en examinant ses origines, ses méthodes et les dommages qu'elle a causés. 
-                        J'ai également mis en évidence les conséquences directes et indirectes sur 
-                        les entreprises touchées, en mettant l'accent sur les pertes financières, 
-                        la réputation endommagée et les risques potentiels pour la confidentialité des données sensibles.
-                        
-                        Ensuite, j'ai abordé de manière exhaustive les mesures de sécurité mises 
-                        en place par les entreprises pour prévenir de telles attaques à l'avenir. 
-                        J'ai décrit les protocoles de sécurité renforcés, les stratégies de détection 
-                        et de réponse, ainsi que les investissements dans la sensibilisation et la formation des employés.
-                        
-                        Grâce à ce rapport approfondi, nous avons pu fournir une analyse complète 
-                        de la cyberattaque, de ses conséquences et des mesures de sécurité adoptées 
-                        par les entreprises. Il a ainsi permis de sensibiliser les lecteurs à l'importance 
-                        de la sécurité informatique et de les informer sur les meilleures pratiques
-                        à mettre en œuvre pour se protéger face aux cybermenaces croissantes.
-                    </p>
-                    <br>
-                </div>
-                <!-- Contribution -->	
-                <div>
-                    <h3>Ma contribution</h3>
-                </div>
-                <div>
-                    <p>J'ai été chargé de la partie du rapport consacrée à l'"Historique des attaques" 
-                        du groupe ALPHV. Mon rôle principal a été de retracer leurs méfaits passés et 
-                        d'analyser les méthodes qu'ils ont utilisées.
-
-                        J'ai examiné les incidents notables, en mettant 
-                        en évidence les cibles, les dommages causés et les conséquences pour les victimes. 
-                        J'ai également analysé les motifs possibles derrière ces attaques, en tenant 
-                        compte des facteurs tels que le vol de données sensibles, le sabotage, le chantage,
-                        ou encore l'espionnage industriel.
-                        
-                        En ce qui concerne les méthodes utilisées par le groupe ALPHV, j'ai étudié leurs
-                        techniques d'intrusion, de contournement des défenses de sécurité, ainsi que leur 
-                        modus operandi spécifique. J'ai examiné les outils et les logiciels malveillants 
-                        qu'ils ont employés, ainsi que les vulnérabilités exploitées pour réussir leurs attaques.
-                        
-                        Mon objectif a été de fournir une analyse détaillée et objective de l'historique 
-                        des attaques du groupe ALPHV, en mettant en évidence les schémas et les tendances 
-                        récurrentes. Cette section du rapport permet ainsi de mieux comprendre les modèles
-                        de comportement de ce groupe et d'aider à renforcer les mesures de sécurité pour 
-                        prévenir de futures attaques.
-                    </p>
-                    <br>
-                </div>
-                <!-- Ressources -->
-                <div>
-                    <h3>Ressources</h3>
-                </div>
-                <div class="projets">
-                    <a href="../Projets/pdf/rapportcyberattaquev4.0.pdf">
-                        <img src="../images/rapport_conforama.jpeg" alt="conforama">
-                        <div class="layer"></div>
-                    </a>
-                </div>
+            <nav>
+                <a href="../index.html" class="logo">Portfolio</a>
+                <a href="../index.html">← Retour aux projets</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main id="main" class="container">
+        <div class="breadcrumb">
+            <a href="../index.html">Accueil</a> / Projets / Conforama
+        </div>
+        
+        <h1>Rapport Cyberattaque Conforama</h1>
+        <p class="subtitle">Analyse détaillée d'une cyberattaque majeure et mesures de sécurité</p>
+        
+        <div class="project-meta">
+            <div class="meta-item">
+                <h3>Contexte</h3>
+                <p>Cours « Expression & Culture »</p>
+            </div>
+            <div class="meta-item">
+                <h3>Équipe</h3>
+                <p>3 personnes</p>
+            </div>
+            <div class="meta-item">
+                <h3>Durée</h3>
+                <p>3 semaines</p>
+            </div>
+            <div class="meta-item">
+                <h3>Statut</h3>
+                <p><span class="status completed">✓ Terminé</span></p>
             </div>
         </div>
-    </section>
+        
+        <div class="section">
+            <h2>🔐 Description</h2>
+            <p>
+                Le but principal de ce projet était de réaliser un rapport détaillé sur une cyberattaque
+                spécifique, en mettant en lumière ses conséquences néfastes. De plus, il était important
+                d'analyser et de présenter les mesures prises par les entreprises pour renforcer leur
+                sécurité face à de telles attaques.
+            </p>
+            <p>
+                Ce rapport approfondi a permis de sensibiliser les lecteurs à l'importance de la sécurité
+                informatique et de les informer sur les meilleures pratiques à mettre en œuvre pour se
+                protéger face aux cybermenaces croissantes.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>💼 Ma contribution</h2>
+            <p>
+                J'ai été chargé de la partie du rapport consacrée à l'« Historique des attaques » du
+                groupe ALPHV. Mon rôle principal a été de retracer leurs méfaits passés et d'analyser
+                les méthodes qu'ils ont utilisées.
+            </p>
+            <p>
+                J'ai examiné les incidents notables, en mettant en évidence les cibles, les dommages
+                causés et les conséquences pour les victimes. J'ai également analysé les motifs possibles
+                derrière ces attaques, en tenant compte des facteurs tels que le vol de données sensibles,
+                le sabotage, le chantage, ou encore l'espionnage industriel.
+            </p>
+            <p>
+                Concernant les méthodes utilisées par le groupe ALPHV, j'ai étudié leurs techniques
+                d'intrusion, de contournement des défenses de sécurité, ainsi que leur modus operandi
+                spécifique. J'ai fourni une analyse détaillée et objective des schémas et tendances
+                récurrentes pour aider à renforcer les mesures de sécurité.
+            </p>
+        </div>
+        
+        <div class="section resources">
+            <h2>📚 Ressources</h2>
+            <p>Rapport complet avec analyse détaillée :</p>
+            <a href="../Projets/pdf/rapportcyberattaquev4.0.pdf" class="resource-item">
+                <img src="../images/rapport_conforama.jpeg" alt="Rapport cyberattaque Conforama - Groupe ALPHV">
+            </a>
+        </div>
+        
+        <a href="../index.html" class="back-link">← Retour aux projets</a>
+    </main>
 </body>
 </html>
