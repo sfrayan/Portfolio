@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Docker</title>
-    <meta name="description" content="">
+    <title>Sécurité Applicative & OWASP</title>
+    <meta name="description" content="Sécurité Applicative - Protection des applications web">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -26,36 +26,73 @@
         }
         h2 {
             margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
+            font-size: 2.5rem;
         }
         h3 {
-            margin-top: 0;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #00d4ff;
         }
         p {
-            margin-bottom: 0;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
         .projets-container {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
         .projets {
             position: relative;
             flex: 1;
+            min-width: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
         }
-        .projets img {
+        .projets:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3);
+        }
+        .projets-placeholder {
             width: 100%;
-            height: auto;
+            height: 280px;
+            background: linear-gradient(135deg, #92400e 0%, #d97706 50%, #92400e 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .projets-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .projets-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .projets-text h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #00d4ff;
         }
         .layer {
             position: absolute;
@@ -63,12 +100,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.3), rgba(0, 212, 255, 0.3));
             opacity: 0;
             transition: opacity 0.3s ease;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         .projets:hover .layer {
             opacity: 1;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
 </head>
@@ -76,36 +124,28 @@
     <section id="page_projets">
         <div class="container">
             <div class="row">
-                <h2 id="nom_proj">Docker</h2>
-                <!-- Introduction -->
-                <div>
-                    <br>
-                </div>
-                <!-- Description -->
+                <h2 id="nom_proj">🔐 Sécurité Applicative</h2>
+                <div><br></div>
                 <div>
                     <h3>Description</h3>
-                    <p>Docker est une plateforme de containerisation légère et open-source qui permet d'empaqueter les applications et leurs dépendances dans des conteneurs isolés et portables. Docker améliore significativement la productivité des développeurs en garantissant la cohérence des environnements de développement, test et production. Les avantages majeurs incluent la sécurité, l'isolement des processus, la scalabilité horizontale, et l'enchâînement facile avec Docker Compose. Docker s'intègre parfaitement avec Kubernetes pour l'orchestration de conteneurs à grande échelle, et avec CI/CD pipelines pour l'automatisation du déploiement. Docker supporte tous les langages de programmation et frameworks modernes : Node.js, Python, Java, Go, etc. Docker est utilisé par Netflix, Spotify, PayPal, Uber et la majorité des entreprises tech pour le déploiement et l'orchestration d'applications microservices.
-                    </p>
+                    <p>La sécurité applicative concerne la protection des applications web et mobiles contre les vulnérabilités de code. L'OWASP (Open Web Application Security Project) fournit le Top 10 des vulnérabilités les plus critiques comme l'injection SQL, le cross-site scripting (XSS), et les authentifications faibles.</p>
+                    <p>Les pratiques de sécurité incluent le input validation, l'output encoding, le secure authentication, la gestion sécurisée des sessions, et le testing de sécurité. Implémenter la sécurité dès la phase de conception (secure by design) est crucial.</p>
                     <br>
                 </div>
-                <!-- Ressources -->
                 <div>
-                    <h3>Ressources</h3>
+                    <h3>📋 Projets Associés</h3>
                     <p>Voici les projets où cette compétence a été utilisée :</p>
-                    <div>
-                        <br/>
-                    </div>
                     <div class="projets-container">
                         <div class="projets">
-                            <a href="../Projets/FastFoodBike.html">
-                                <img src="../images/FastFoodBike.jpg" alt="FastFoodBike">
-                                <div class="layer"></div>
-                            </a>
-                        </div>
-                        <div class="projets">
-                            <a href="../Projets/ai-agents-dashboard.html">
-                                <img src="../images/ai-agents.jpg" alt="AI Agents Dashboard">
-                                <div class="layer"></div>
+                            <a href="../Projets/pdf/SAE_Pentesting.pdf">
+                                <div class="projets-placeholder">
+                                    <div class="projets-text">
+                                        <span>🔍</span>
+                                        <h4>Pentesting</h4>
+                                        <span style="font-size: 0.8rem; color: #00d4ff;">Tests de Sécurité</span>
+                                    </div>
+                                </div>
+                                <div class="layer">Cliquez pour voir le projet →</div>
                             </a>
                         </div>
                     </div>

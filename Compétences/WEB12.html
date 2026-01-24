@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Scapy</title>
-    <meta name="description" content="">
+    <title>Active Directory - Gestion d'Identité</title>
+    <meta name="description" content="Active Directory - Annuaire et gestion centralisée d'identités">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -26,36 +26,73 @@
         }
         h2 {
             margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
+            font-size: 2.5rem;
         }
         h3 {
-            margin-top: 0;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #00d4ff;
         }
         p {
-            margin-bottom: 0;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
         .projets-container {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
         .projets {
             position: relative;
             flex: 1;
+            min-width: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
         }
-        .projets img {
+        .projets:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3);
+        }
+        .projets-placeholder {
             width: 100%;
-            height: auto;
+            height: 280px;
+            background: linear-gradient(135deg, #0078d4 0%, #50e6ff 50%, #0078d4 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .projets-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .projets-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .projets-text h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #00d4ff;
         }
         .layer {
             position: absolute;
@@ -63,12 +100,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.3), rgba(0, 212, 255, 0.3));
             opacity: 0;
             transition: opacity 0.3s ease;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         .projets:hover .layer {
             opacity: 1;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
 </head>
@@ -76,40 +124,28 @@
     <section id="page_projets">
         <div class="container">
             <div class="row">
-                <h2 id="nom_proj">Scapy</h2>
-                <!-- Introduction -->
-                <div>
-                    <br>
-                </div>
-                <!-- Description -->
+                <h2 id="nom_proj">👥 Active Directory</h2>
+                <div><br></div>
                 <div>
                     <h3>Description</h3>
-                    <p>
-                        Scapy est un puissant outil Python utilisé pour la manipulation 
-                        de paquets réseau, permettant aux utilisateurs de créer, envoyer, 
-                        capturer et analyser du trafic réseau de manière programmatique. 
-                        Il offre une grande flexibilité pour interagir avec les protocoles réseau, 
-                        ce qui en fait un outil privilégié pour les tests de sécurité, l'analyse 
-                        de réseaux et le développement de protocoles. Scapy permet de générer des 
-                        paquets personnalisés, de simuler des attaques réseau, de tester des 
-                        configurations de pare-feu ou encore de diagnostiquer des problèmes réseau. 
-                        Grâce à sa simplicité d'utilisation et à ses capacités étendues, Scapy est 
-                        un outil incontournable pour les administrateurs réseau, les pentesters et les chercheurs en sécurité.
-                    </p>
+                    <p>Active Directory (AD) est un service d'annuaire centralisé développé par Microsoft pour la gestion des identités et des accès dans les environnements Windows. Il permet de gérer les utilisateurs, les groupes, les ordinateurs, et les appareils dans une infrastructure IT entière.</p>
+                    <p>AD fournit l'authentification, l'autorisé, les stratégies de groupe (Group Policy), et l'authentification unique (SSO) pour les utilisateurs du domaine. Il est essentiel pour les organisations souhaitant gérer centralement leurs ressources informatiques et appliquer des politiques de sécurité uniformes.</p>
                     <br>
                 </div>
-                <!-- Ressources -->
                 <div>
-                    <h3>Ressources</h3>
+                    <h3>📋 Projets Associés</h3>
                     <p>Voici les projets où cette compétence a été utilisée :</p>
-                    <div>
-                        <br/>
-                    </div>
                     <div class="projets-container">
                         <div class="projets">
-                            <a href="../Projets/pdf/SAE_Pentesting.pdf">
-                                <img src="../images/SAE_Pentesting.jpg" alt="SAE_Pentesting">
-                                <div class="layer"></div>
+                            <a href="../Projets/pdf/InfinityThink.pdf">
+                                <div class="projets-placeholder">
+                                    <div class="projets-text">
+                                        <span>💉</span>
+                                        <h4>InfinityThink</h4>
+                                        <span style="font-size: 0.8rem; color: #00d4ff;">Gestion des Identités</span>
+                                    </div>
+                                </div>
+                                <div class="layer">Cliquez pour voir le projet →</div>
                             </a>
                         </div>
                     </div>

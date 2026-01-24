@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Snort</title>
-    <meta name="description" content="">
+    <title>Nextcloud - Collaboration Cloud</title>
+    <meta name="description" content="Nextcloud - Plateforme de synchronisation et partage de fichiers">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -26,36 +26,73 @@
         }
         h2 {
             margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
+            font-size: 2.5rem;
         }
         h3 {
-            margin-top: 0;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #00d4ff;
         }
         p {
-            margin-bottom: 0;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
         .projets-container {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
         .projets {
             position: relative;
             flex: 1;
+            min-width: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
         }
-        .projets img {
+        .projets:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.3);
+        }
+        .projets-placeholder {
             width: 100%;
-            height: auto;
+            height: 280px;
+            background: linear-gradient(135deg, #0082c9 0%, #0ea5e9 50%, #0082c9 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .projets-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .projets-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .projets-text h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #00d4ff;
         }
         .layer {
             position: absolute;
@@ -63,12 +100,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.3), rgba(0, 212, 255, 0.3));
             opacity: 0;
             transition: opacity 0.3s ease;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         .projets:hover .layer {
             opacity: 1;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
 </head>
@@ -76,40 +124,28 @@
     <section id="page_projets">
         <div class="container">
             <div class="row">
-                <h2 id="nom_proj">Snort</h2>
-                <!-- Introduction -->
-                <div>
-                    <br>
-                </div>
-                <!-- Description -->
+                <h2 id="nom_proj">☁️ Nextcloud</h2>
+                <div><br></div>
                 <div>
                     <h3>Description</h3>
-                    <p>
-                        Snort est un système de détection et de prévention d'intrusions (IDS/IPS) 
-                        open-source largement utilisé pour surveiller et analyser le trafic réseau 
-                        en temps réel. Il permet de détecter des activités suspectes ou malveillantes, 
-                        telles que des attaques par déni de service (DoS), des scans de ports ou des 
-                        tentatives d'exploitation de vulnérabilités, en se basant sur des règles configurables. 
-                        Snort fonctionne en inspectant les paquets réseau et en les comparant à une base de 
-                        règles prédéfinies ou personnalisées pour déclencher des alertes ou bloquer le trafic 
-                        indésirable. Grâce à sa flexibilité et à sa puissance, Snort est un outil essentiel 
-                        pour les administrateurs réseau et les professionnels de la sécurité souhaitant protéger 
-                        leurs infrastructures contre les menaces externes et internes.
-                    </p>
+                    <p>Nextcloud est une plateforme open-source de synchronisation et de partage de fichiers, permettant aux utilisateurs de stocker, synchroniser et partager des données de manière sécurisée. Basée sur PHP et MySQL, elle peut être auto-hébergée pour une contrôle total des données.</p>
+                    <p>Nextcloud offre des fonctionnalités avancées comme la synchronisation automatique, la gestion des versions de fichiers, le partage sécurisé, la collaboration en temps réel, et l'intégration avec d'autres services. Elle est une alternative privacy-friendly à Dropbox ou Google Drive.</p>
                     <br>
                 </div>
-                <!-- Ressources -->
                 <div>
-                    <h3>Ressources</h3>
+                    <h3>📋 Projets Associés</h3>
                     <p>Voici les projets où cette compétence a été utilisée :</p>
-                    <div>
-                        <br/>
-                    </div>
                     <div class="projets-container">
                         <div class="projets">
-                            <a href="../Projets/pdf/R401.pdf">
-                                <img src="../images/R401.jpg" alt="R401">
-                                <div class="layer"></div>
+                            <a href="../Projets/pdf/InfinityThink.pdf">
+                                <div class="projets-placeholder">
+                                    <div class="projets-text">
+                                        <span>💉</span>
+                                        <h4>InfinityThink</h4>
+                                        <span style="font-size: 0.8rem; color: #00d4ff;">Stockage Partagé</span>
+                                    </div>
+                                </div>
+                                <div class="layer">Cliquez pour voir le projet →</div>
                             </a>
                         </div>
                     </div>
