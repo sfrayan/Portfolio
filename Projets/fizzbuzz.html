@@ -1,337 +1,498 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>FizzBuzz</title>		
-    <meta name="description" content="Projet FizzBuzz - Implémentation du kata classique en Python et JavaScript">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FizzBuzz - Kata Algorithmique | Rayan Said Farah</title>
+    <meta name="description" content="FizzBuzz - Implémentation classique du kata FizzBuzz avec plusieurs langages. Démontre les bonnes pratiques et patterns de code.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-            color: #eaeaea;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
+            --warning: #ffd700;
+            --danger: #ff4757;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
         }
-        .container {
-            max-width: 960px;
+
+        header {
+            position: relative;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .project-header {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
         }
-        .row {
-            margin-bottom: 30px;
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
         }
-        h2 {
-            margin-top: 0;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+
+        .back-link:hover {
+            gap: 1rem;
+            color: var(--accent-light);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--success));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        h3 {
-            margin-top: 0;
-            color: #00d4ff;
-            font-size: 1.5rem;
-            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
-            padding-bottom: 10px;
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(234, 234, 234, 0.8);
+            margin-bottom: 1.5rem;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        th {
-            font-weight: 600;
-            background: rgba(233, 69, 96, 0.1);
-            color: #ff6b6b;
-        }
-        p {
-            margin-bottom: 15px;
-            line-height: 1.8;
-            color: rgba(234, 234, 234, 0.9);
-        }
-        .code-block {
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 4px solid #00d4ff;
-            padding: 15px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-            margin: 15px 0;
-        }
-        .tags {
+
+        .project-badges {
             display: flex;
-            gap: 10px;
+            gap: 1rem;
             flex-wrap: wrap;
-            margin: 20px 0;
+            margin: 1.5rem 0;
         }
-        .tag {
-            background: rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
-            padding: 6px 12px;
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
             border-radius: 20px;
             font-size: 0.9rem;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            margin: 10px 0;
+            color: var(--success);
         }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+
+        .badge.interactive {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: var(--accent);
+            color: var(--accent-light);
         }
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid #00d4ff;
-            color: #00d4ff;
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        .btn-secondary:hover {
-            background: rgba(0, 212, 255, 0.1);
+
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(233, 69, 96, 0.1);
         }
-        .features {
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
+
         .feature-card {
             background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
+            padding: 1.5rem;
             border-radius: 8px;
-            border: 1px solid rgba(233, 69, 96, 0.3);
+            border-left: 4px solid var(--accent);
             transition: all 0.3s ease;
         }
+
         .feature-card:hover {
             background: rgba(0, 212, 255, 0.1);
-            border-color: #00d4ff;
-            transform: translateY(-5px);
+            transform: translateX(5px);
+            border-left-color: var(--success);
         }
-        .feature-card h4 {
-            color: #ff6b6b;
-            margin-top: 0;
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
+
         .feature-card p {
-            margin-bottom: 0;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            color: rgba(234, 234, 234, 0.7);
         }
-        .back-button {
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .tech-item strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            font-size: 0.85rem;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: #00d4ff;
-            text-decoration: none;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
+            gap: 0.5rem;
         }
-        .back-button:hover {
-            gap: 12px;
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--success);
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            text-align: center;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            .features-grid,
+            .tech-stack {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
-        <div class="container">
-            <a href="../index.html#projets" class="back-button">
-                ← Retour au Portfolio
+    <header>
+        <div class="project-header">
+            <a href="../index.html#projets" class="back-link">
+                <i class="fas fa-arrow-left"></i> Retour aux Projets
             </a>
-            
-            <div class="row">
-                <h2>FizzBuzz</h2>
-                
-                <!-- Informations Générales -->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Type</th>
-                            <td>Code Kata - Exercice de Programmation</td>
-                        </tr>
-                        <tr>
-                            <th>Langages</th>
-                            <td>Python, JavaScript, C++</td>
-                        </tr>
-                        <tr>
-                            <th>Statut</th>
-                            <td>✅ Terminé</td>
-                        </tr>
-                        <tr>
-                            <th>Difficulté</th>
-                            <td>Facile - Intermédiaire</td>
-                        </tr>
-                    </table>
-                    <br>
-                </div>
-                
-                <!-- Description -->
-                <div>
-                    <h3>📝 Description</h3>
-                    <p>
-                        FizzBuzz est un kata de programmation classique qui consiste à afficher les nombres de 1 à 100, 
-                        en remplaçant :
-                    </p>
-                    <ul>
-                        <li>Les multiples de 3 par "Fizz"</li>
-                        <li>Les multiples de 5 par "Buzz"</li>
-                        <li>Les multiples de 15 par "FizzBuzz"</li>
-                    </ul>
-                    <p>
-                        Bien que simple en apparence, ce kata offre une excellente opportunité pour explorer différentes 
-                        approches algorithmiques et démontrer les bonnes pratiques de programmation. Ce projet contient 
-                        plusieurs implémentations dans différents langages de programmation.
-                    </p>
-                </div>
-                <br>
-                
-                <!-- Objectifs -->
-                <div>
-                    <h3>🎯 Objectifs</h3>
-                    <p>Ce projet vise à :</p>
-                    <ul>
-                        <li><strong>Maîtriser les structures de contrôle</strong> - Boucles et conditions</li>
-                        <li><strong>Pratiquer la logique algorithmique</strong> - Opérateurs modulo et conditions multiples</li>
-                        <li><strong>Démontrer la polyglottie</strong> - Implémentations en Python et JavaScript</li>
-                        <li><strong>Appliquer les bonnes pratiques</strong> - Code lisible, documenté et performant</li>
-                        <li><strong>Optimiser les performances</strong> - Différentes approches pour améliorer l'efficacité</li>
-                    </ul>
-                </div>
-                <br>
-                
-                <!-- Technos -->
-                <div>
-                    <h3>⚙️ Technologies & Langages</h3>
-                    <div class="tags">
-                        <span class="tag">Python 3</span>
-                        <span class="tag">JavaScript (ES6+)</span>
-                        <span class="tag">C++</span>
-                        <span class="tag">Algorithms</span>
-                        <span class="tag">Code Kata</span>
-                        <span class="tag">Best Practices</span>
-                    </div>
-                </div>
-                <br>
-                
-                <!-- Approches Implémentées -->
-                <div>
-                    <h3>💡 Approches Implémentées</h3>
-                    <div class="features">
-                        <div class="feature-card">
-                            <h4>Approche Classique</h4>
-                            <p>Implémentation directe avec conditions if-else. Simple et facile à comprendre.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>Approche Optimisée</h4>
-                            <p>Réduction du nombre de comparaisons grâce à la vérification du modulo 15 en premier.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>Approche Fonctionnelle</h4>
-                            <p>Utilisation de map, filter et functions lambda pour une approche plus déclarative.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>Approche Dictionary/Map</h4>
-                            <p>Utilisation de structures de données pour mapper les conditions aux outputs.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>Approche Ternaire</h4>
-                            <p>Opérateurs ternaires pour une syntaxe plus compacte et élégante.</p>
-                        </div>
-                        <div class="feature-card">
-                            <h4>Approche avec Générateur</h4>
-                            <p>Utilisation de générateurs Python pour une consommation de mémoire optimale.</p>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                
-                <!-- Exemple de Code -->
-                <div>
-                    <h3>💻 Exemple d'Implémentation (Python)</h3>
-                    <div class="code-block">
-for i in range(1, 101):
-    output = ""
-    if i % 3 == 0:
-        output += "Fizz"
-    if i % 5 == 0:
-                        output += "Buzz"
-    print(output if output else i)
-                    </div>
-                </div>
-                <br>
-                
-                <!-- Exemple JavaScript -->
-                <div>
-                    <h3>💻 Exemple d'Implémentation (JavaScript)</h3>
-                    <div class="code-block">
-for (let i = 1; i <= 100; i++) {
-    let output = "";
-    if (i % 3 === 0) output += "Fizz";
-    if (i % 5 === 0) output += "Buzz";
-    console.log(output || i);
-}
-                    </div>
-                </div>
-                <br>
-                
-                <!-- Ressources -->
-                <div>
-                    <h3>📚 Ressources</h3>
-                    <p>
-                        Explorez le code source complet et toutes les implémentations disponibles sur le dépôt GitHub :
-                    </p>
-                    <a href="https://github.com/sfrayan/FizzBuzz" target="_blank" rel="noopener noreferrer" class="btn">
-                        🔗 Voir le Repo GitHub
-                    </a>
-                    <a href="https://github.com/sfrayan/FizzBuzz" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-                        ⭐ Star sur GitHub
-                    </a>
-                </div>
-                <br>
-                
-                <!-- Apprentissages -->
-                <div>
-                    <h3>🎓 Apprentissages Clés</h3>
-                    <ul>
-                        <li><strong>Logique conditionnelle</strong> - Maîtrise des conditions multiples et imbriquées</li>
-                        <li><strong>Opérateurs arithmétiques</strong> - Utilisation efficace du modulo</li>
-                        <li><strong>Performance</strong> - Optimisation du nombre de comparaisons</li>
-                        <li><strong>Lisibilité du code</strong> - Balance entre performance et clarté</li>
-                        <li><strong>Polyglottie</strong> - Différences et similitudes entre langages</li>
-                        <li><strong>Paradigmes</strong> - Programmation procédurale, fonctionnelle, orientée objet</li>
-                    </ul>
-                </div>
-                <br>
-                
-                <!-- Conclusion -->
-                <div>
-                    <h3>✨ Conclusion</h3>
-                    <p>
-                        FizzBuzz est bien plus qu'un simple exercice. C'est une démonstration de comment un problème 
-                        apparemment trivial peut être résolu de multiples façons, chacune illustrant différents concepts 
-                        de programmation. Ce kata est idéal pour les entretiens techniques, l'apprentissage des langages 
-                        et l'amélioration des compétences en résolution de problèmes.
-                    </p>
-                </div>
+            <h1>
+                <i class="fas fa-code"></i> FizzBuzz
+            </h1>
+            <p class="subtitle">Kata Algorithmique Multi-Langage</p>
+            <div class="project-badges">
+                <span class="badge interactive">
+                    <i class="fas fa-calculator"></i> ALGORITHME
+                </span>
+                <span class="badge">
+                    <i class="fas fa-code"></i> Python/JavaScript
+                </span>
+                <span class="badge">
+                    <i class="fas fa-book"></i> Code Kata
+                </span>
+                <span class="badge">
+                    <i class="fas fa-open-source-initiative"></i> MIT License
+                </span>
             </div>
         </div>
-    </section>
+    </header>
+
+    <div class="content">
+        <!-- APERÇU -->
+        <section>
+            <h2><i class="fas fa-bullseye"></i> Aperçu du Projet</h2>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                <strong>FizzBuzz</strong> est un kata de programmation classique implémenté en plusieurs langages. Ce projet démontre les bonnes pratiques de code, les patterns de conception et les approches algorithmiques dans différents contextes.
+            </p>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                Le kata FizzBuzz est un excellent exercice pour pratiquer la logique de programmation, les boucles, les conditions et la gestion des nombres.
+            </p>
+        </section>
+
+        <!-- DESCRIPTION TECHNIQUE -->
+        <section>
+            <h2><i class="fas fa-gears"></i> Description Technique</h2>
+            <p style="margin-bottom: 1rem;">
+                FizzBuzz implémente un programme qui affiche les nombres de 1 à 100 avec les règles suivantes:
+            </p>
+            <ul class="features-list">
+                <li>Pour les nombres divisibles par 3: affiche "Fizz"</li>
+                <li>Pour les nombres divisibles par 5: affiche "Buzz"</li>
+                <li>Pour les nombres divisibles par 3 ET 5: affiche "FizzBuzz"</li>
+                <li>Pour tous les autres: affiche le nombre</li>
+            </ul>
+        </section>
+
+        <!-- IMPLÉMENTATIONS -->
+        <section>
+            <h2><i class="fas fa-clone"></i> Implémentations Multiples</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-python"></i> Python</h3>
+                    <p>Implémentation élégante et Pythonique du kata avec gestion des cas limites</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-js-square"></i> JavaScript</h3>
+                    <p>Version ES6+ avec approches fonctionnelles et orientées objet</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-line"></i> Comparaison</h3>
+                    <p>Analyse des différentes approches et leurs performances</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PATTERNS -->
+        <section>
+            <h2><i class="fas fa-puzzle-piece"></i> Patterns & Approches</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-loop"></i> Boucles Classiques</h3>
+                    <p>Approche traditionnelle avec for/while loops</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-function"></i> Programmation Fonctionnelle</h3>
+                    <p>Utilisation de map, filter, reduce</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-cube"></i> Orientée Objet</h3>
+                    <p>Classes et héritage pour une structure modulaire</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-brain"></i> Ternaires & Conditions</h3>
+                    <p>Optimisation avec opérateurs ternaires</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STACK TECHNIQUE -->
+        <section>
+            <h2><i class="fas fa-code"></i> Stack Technique</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <strong>Langage 1</strong>
+                    <p>Python 3.8+</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Langage 2</strong>
+                    <p>JavaScript ES6+</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Concepts</strong>
+                    <p>Algorithmes & Logique</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Paradigmes</strong>
+                    <p>Impératif, Fonctionnel, OO</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPLÉMENTATION PRINCIPALE -->
+        <section>
+            <h2><i class="fas fa-file-code"></i> Implémentation Principale (Python)</h2>
+            <div class="code-block">
+<pre>def fizzbuzz(n):
+    """Génère la séquence FizzBuzz jusqu'à n"""
+    result = []
+    for i in range(1, n + 1):
+        if i % 15 == 0:
+            result.append("FizzBuzz")
+        elif i % 3 == 0:
+            result.append("Fizz")
+        elif i % 5 == 0:
+            result.append("Buzz")
+        else:
+            result.append(str(i))
+    return result
+
+# Utilisation
+print('\n'.join(fizzbuzz(100)))</pre>
+            </div>
+        </section>
+
+        <!-- AMÉLIORATIONS -->
+        <section>
+            <h2><i class="fas fa-lightbulb"></i> Variantes & Améliorations</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-gear"></i> Configurable</h3>
+                    <p>Support de règles personnalisées (diviseur, texte)</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-tachometer-alt"></i> Performance</h3>
+                    <p>Optimisations pour grandes plages de nombres</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-check-circle"></i> Tests</h3>
+                    <p>Suite de tests unitaires complète</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-scroll"></i> Documentation</h3>
+                    <p>Docstrings et commentaires détaillés</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- APPRENTISSAGE -->
+        <section>
+            <h2><i class="fas fa-graduation-cap"></i> Points d'Apprentissage</h2>
+            <ul class="features-list">
+                <li>Maîtrise des boucles et conditions</li>
+                <li>Opérateur modulo et divisibilité</li>
+                <li>Différentes approches algorithmiques</li>
+                <li>Comparaison entre langages de programmation</li>
+                <li>Optimisation et lisibilité du code</li>
+                <li>Tests unitaires et validation</li>
+            </ul>
+        </section>
+
+        <!-- CTA -->
+        <section style="text-align: center;">
+            <h2><i class="fas fa-link"></i> Explorez le Projet</h2>
+            <p style="margin-bottom: 2rem; color: rgba(234, 234, 234, 0.7);">
+                Consultez les implémentations complètes, exécutez le code ou contribuez!
+            </p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="https://github.com/sfrayan/fizzbuzz" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub Repository
+                </a>
+                <a href="https://github.com/sfrayan/fizzbuzz/blob/main/README.md" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-book"></i> Documentation
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Rayan Said Farah | FizzBuzz - Kata Algorithmique | MIT License</p>
+    </footer>
 </body>
 </html>
