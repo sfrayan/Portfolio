@@ -1,0 +1,192 @@
+{
+  "webp-config": {
+    "version": "1.0.0",
+    "description": "Configuration for WebP image conversion and optimization",
+    "settings": {
+      "quality": 80,
+      "method": 6,
+      "alpha-quality": 100,
+      "lossless": false,
+      "near-lossless": false,
+      "preprocessing": 2,
+      "exact": false
+    },
+    "images": [
+      {
+        "name": "CV Preview Image",
+        "source": "images/cv.pdf.png",
+        "output": "images/cv.webp",
+        "quality": 80,
+        "type": "portrait",
+        "responsive": true,
+        "sizes": [
+          {
+            "width": 400,
+            "output": "images/cv-mobile.webp"
+          },
+          {
+            "width": 800,
+            "output": "images/cv-tablet.webp"
+          },
+          {
+            "width": 1200,
+            "output": "images/cv-desktop.webp"
+          }
+        ]
+      },
+      {
+        "name": "Profile Picture",
+        "source": "images/profile.png",
+        "output": "images/profile.webp",
+        "quality": 85,
+        "type": "portrait",
+        "responsive": true,
+        "sizes": [
+          {
+            "width": 150,
+            "output": "images/profile-sm.webp"
+          },
+          {
+            "width": 300,
+            "output": "images/profile-md.webp"
+          },
+          {
+            "width": 600,
+            "output": "images/profile-lg.webp"
+          }
+        ]
+      },
+      {
+        "name": "Project Screenshots",
+        "source": "images/projects/*.png",
+        "output": "images/projects/",
+        "quality": 78,
+        "type": "screenshot",
+        "responsive": true
+      },
+      {
+        "name": "Company Logos",
+        "source": "images/logos/*.png",
+        "output": "images/logos/",
+        "quality": 90,
+        "type": "logo",
+        "responsive": false,
+        "lossless": true
+      }
+    ],
+    "optimization-levels": {
+      "aggressive": {
+        "quality": 65,
+        "method": 6,
+        "preprocessing": 3,
+        "description": "Maximum compression, good for small thumbnails"
+      },
+      "balanced": {
+        "quality": 80,
+        "method": 6,
+        "preprocessing": 2,
+        "description": "Recommended for most use cases"
+      },
+      "high-quality": {
+        "quality": 90,
+        "method": 5,
+        "preprocessing": 1,
+        "description": "Best quality, larger file size"
+      },
+      "lossless": {
+        "quality": 100,
+        "lossless": true,
+        "method": 6,
+        "description": "Perfect quality, best for logos and text"
+      }
+    },
+    "batch-processing": {
+      "enabled": true,
+      "parallel": 4,
+      "retry-on-error": true,
+      "max-retries": 3,
+      "timeout": 30000
+    },
+    "output-settings": {
+      "preserve-originals": true,
+      "create-backup": true,
+      "generate-report": true,
+      "report-format": "json"
+    },
+    "size-targets": {
+      "profile-image": {
+        "max-size-kb": 150,
+        "target-size-kb": 100
+      },
+      "cv-preview": {
+        "max-size-kb": 500,
+        "target-size-kb": 300
+      },
+      "project-screenshot": {
+        "max-size-kb": 300,
+        "target-size-kb": 200
+      },
+      "logo": {
+        "max-size-kb": 50,
+        "target-size-kb": 30
+      }
+    },
+    "cli-commands": {
+      "convert-single": "cwebp -q 80 -m 6 input.png -o output.webp",
+      "convert-batch": "for f in *.png; do cwebp -q 80 -m 6 \"$f\" -o \"${f%.png}.webp\"; done",
+      "convert-with-backup": "for f in *.png; do cp \"$f\" \"$f.backup\"; cwebp -q 80 -m 6 \"$f\" -o \"${f%.png}.webp\"; done",
+      "optimize-aggressive": "cwebp -q 65 -m 6 -preprocessing 3 input.png -o output.webp",
+      "optimize-lossless": "cwebp -lossless -m 6 input.png -o output.webp"
+    },
+    "npm-scripts": {
+      "install-tools": "npm install -D sharp imagemin imagemin-webp imagemin-mozjpeg",
+      "convert-images": "node scripts/convert-images.js",
+      "optimize-all": "npm run convert-images && npm run minify-css && npm run minify-js",
+      "validate-sizes": "node scripts/validate-image-sizes.js"
+    },
+    "expected-savings": {
+      "cv.pdf.png": {
+        "original-size-mb": 2.4,
+        "webp-size-mb": 0.3,
+        "reduction-percent": 87.5,
+        "estimated-bandwidth-saved-per-visitor-kb": 2100
+      },
+      "profile.png": {
+        "original-size-kb": 450,
+        "webp-size-kb": 120,
+        "reduction-percent": 73.3,
+        "estimated-bandwidth-saved-per-visitor-kb": 330
+      },
+      "total-estimated": {
+        "original-size-mb": 4.5,
+        "webp-size-mb": 0.8,
+        "reduction-percent": 82.2,
+        "bandwidth-saved-per-100-visitors-mb": 370
+      }
+    },
+    "browser-support": {
+      "webp-support": "98% of modern browsers",
+      "fallback-format": "PNG/JPEG",
+      "implementation": "picture element with source tags",
+      "progressive-enhancement": true
+    },
+    "quality-recommendations": {
+      "profile-images": "85-90 (high quality, portrait)",
+      "large-preview-images": "75-80 (balanced quality and size)",
+      "thumbnails": "70-75 (aggressive compression)",
+      "logos": "100 lossless (perfect quality)",
+      "screenshots": "75-80 (balanced)"
+    },
+    "monitoring": {
+      "track-file-sizes": true,
+      "monitor-load-times": true,
+      "measure-core-web-vitals": true,
+      "tools": [
+        "Google PageSpeed Insights",
+        "GTmetrix",
+        "WebPageTest",
+        "Chrome DevTools Lighthouse"
+      ]
+    }
+  }
+}
