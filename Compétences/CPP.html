@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #00589b 0%, #1f2937 100%);
+            background: linear-gradient(135deg, #00599c 0%, #1f2937 100%);
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
@@ -41,7 +41,7 @@
         
         h1 {
             font-size: 3rem;
-            background: linear-gradient(135deg, #00589b, #00aeff);
+            background: linear-gradient(135deg, #00599c, #0084c8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -67,15 +67,15 @@
         
         .content-section:hover {
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 88, 155, 0.5);
+            border-color: rgba(0, 89, 156, 0.5);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 88, 155, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 89, 156, 0.2);
         }
         
         h2 {
             font-size: 1.8rem;
             margin-bottom: 20px;
-            color: #00aeff;
+            color: #0084c8;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -84,7 +84,7 @@
         h3 {
             font-size: 1.4rem;
             margin: 25px 0 15px 0;
-            color: #00aeff;
+            color: #0084c8;
         }
         
         p {
@@ -95,84 +95,6 @@
             text-align: justify;
         }
         
-        .projets-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .project-card {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            aspect-ratio: 1/1;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 88, 155, 0.3);
-        }
-        
-        .project-image {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #00589b, #1f2937);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .project-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 88, 155, 0.1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .project-card:hover .project-image::before {
-            opacity: 1;
-        }
-        
-        .project-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.9));
-            padding: 20px;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .project-card:hover .project-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .project-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .project-type {
-            font-size: 0.9rem;
-            color: #00aeff;
-        }
-        
         .skills-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -181,8 +103,8 @@
         }
         
         .skill-item {
-            background: rgba(0, 88, 155, 0.1);
-            border: 1px solid rgba(0, 88, 155, 0.3);
+            background: rgba(0, 89, 156, 0.1);
+            border: 1px solid rgba(0, 89, 156, 0.3);
             padding: 15px;
             border-radius: 10px;
             text-align: center;
@@ -190,8 +112,8 @@
         }
         
         .skill-item:hover {
-            background: rgba(0, 88, 155, 0.2);
-            border-color: rgba(0, 88, 155, 0.6);
+            background: rgba(0, 89, 156, 0.2);
+            border-color: rgba(0, 89, 156, 0.6);
             transform: scale(1.05);
         }
         
@@ -209,12 +131,6 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
-        
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .content-section { padding: 25px; }
-            .projets-container { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -228,58 +144,26 @@
         <div class="content-section">
             <h2>📋 Description</h2>
             <p>
-                C++ est un langage de programmation compilé, hautes performances, permettant l'accès direct au matériel et la gestion fine de la mémoire. 
-                Idéal pour développer des applications critiques en termes de performance, des systèmes d'exploitation, des moteurs graphiques et des outils 
-                de sécurité avancés. Sa combinaison de programmation orientée objet et procédurale en fait un langage flexible adapté aux défis complexes. 
-                En cybersecurité, C++ est utilisé pour créer des outils de pentesting, des détecteurs de malwares et des frameworks d'exploitation haute performance.
+                C++ est un langage de programmation puissant et efficace utilisé pour les systèmes critiques, les jeux et les applications haute performance. C++ offre un contrôle bas niveau avec la gestion manuelle de la mémoire et des abstractions hauts niveaux. Maîtriser C++ signifie comprendre les pointeurs, la gestion de la mémoire, les templates et la programmation orientée objet avancée.
             </p>
         </div>
         
         <div class="content-section">
             <h2>🏆 Compétences Associées</h2>
             <div class="skills-list">
-                <div class="skill-item">Programmation POO</div>
-                <div class="skill-item">Gestion Mémoire</div>
-                <div class="skill-item">Systèmes d'Exploitation</div>
-                <div class="skill-item">Performances</div>
-                <div class="skill-item">Manipulation Bas Niveau</div>
-                <div class="skill-item">STL & Templates</div>
-            </div>
-        </div>
-        
-        <div class="content-section">
-            <h2>📚 Projets & Ressources</h2>
-            <p>Projets mettant en avant cette compétence :</p>
-            <div class="projets-container">
-                <div class="project-card">
-                    <div class="project-image">🎮</div>
-                    <div class="project-content">
-                        <div class="project-name">Systèmes Hautes Perfs</div>
-                        <div class="project-type">Applications Critiques</div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">🛡️</div>
-                    <div class="project-content">
-                        <div class="project-name">Tools Sécurité</div>
-                        <div class="project-type">Reverse Engineering</div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">⚡</div>
-                    <div class="project-content">
-                        <div class="project-name">Exploitation</div>
-                        <div class="project-type">Buffer Overflow</div>
-                    </div>
-                </div>
+                <div class="skill-item">Pointeurs</div>
+                <div class="skill-item">Memory Management</div>
+                <div class="skill-item">OOP</div>
+                <div class="skill-item">Templates</div>
+                <div class="skill-item">STL</div>
+                <div class="skill-item">Performance</div>
             </div>
         </div>
         
         <div class="content-section">
             <h3>Niveaux de Maîtrise</h3>
             <p>
-                <strong>Intermédiaire :</strong> POO, pointeurs, gestion mémoire, compilation multi-plateforme, 
-                utilisation de la STL, optimisation de code, intégration avec des bibliothèques externes.
+                <strong>Intermédiaire :</strong> OOP avancée, templates, STL, gestion mémoire, debugging, optimization, multi-threading.
             </p>
         </div>
     </div>
