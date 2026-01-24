@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio complet de Rayan Said Farah - 30 technologies maîtrisées en détail">
+    <meta name="keywords" content="Réseaux, Cybersécurité, Cloud, DevOps, Développement">
+    <title>Mes Compétences - Rayan Said Farah</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --success: #00d4ff;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            background: rgba(15, 52, 96, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(233, 69, 96, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        header a:hover {
+            color: var(--success);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        main {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        /* ===== CATEGORIES ===== */
+        .category {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            color: var(--success);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-title i {
+            font-size: 2.5rem;
+        }
+
+        /* ===== GRID DE TECHNOS ===== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .tech-card:hover::before {
+            left: 100%;
+        }
+
+        .tech-card:hover {
+            border-color: var(--success);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .tech-emoji {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tech-card:hover .tech-emoji {
+            animation: float 0.6s ease-in-out infinite;
+        }
+
+        .tech-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .tech-description {
+            font-size: 0.95rem;
+            color: rgba(234, 234, 234, 0.7);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .tech-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tech-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(233, 69, 96, 0.4);
+        }
+
+        /* ===== STATS ===== */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            padding: 2rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            background: rgba(0, 212, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--success);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(22, 33, 62, 0.8);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        footer a {
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 1rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                margin-top: 200px;
+                padding: 2rem 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <a href="index.html" style="font-size: 1.1rem;"><i class="fas fa-arrow-left"></i> Retour au Portfolio</a>
+        <h2 style="color: var(--success); font-size: 1.5rem;">Mes 30 Compétences</h2>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <h1>🎯 Mes 30 Compétences Professionnelles</h1>
+        <p class="intro">
+            Explorer en détail chacune des technologies que j'ai maîtrisées à travers mes projets, formations et expériences professionnelles.
+        </p>
+
+        <!-- ===== ADMINISTRATION RÉSEAUX ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-network-wired"></i> Administration Réseaux & Systèmes
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">🔍</div>
+                    <div class="tech-name">Wireshark</div>
+                    <div class="tech-description">Analyse avancée du trafic réseau, capture de paquets, inspection protocolaire</div>
+                    <a href="Compétences/WEB.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🐍</div>
+                    <div class="tech-name">Python</div>
+                    <div class="tech-description">Scripting, automation, développement de scripts réseau et outils sécurité</div>
+                    <a href="Compétences/WEB2.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">⚙️</div>
+                    <div class="tech-name">C++</div>
+                    <div class="tech-description">Programmation systèmes, développement de solutions bas niveau</div>
+                    <a href="Compétences/WEB3.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🔐</div>
+                    <div class="tech-name">FreeRADIUS</div>
+                    <div class="tech-description">Serveur d'authentification RADIUS, WPA-Enterprise, gestion utilisateurs</div>
+                    <a href="Compétences/WEB25.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DÉVELOPPEMENT WEB & BACKEND ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-code"></i> Développement Web & Backend
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">📄</div>
+                    <div class="tech-name">HTML5</div>
+                    <div class="tech-description">Markup sémantique, structure, accessibilité, SEO</div>
+                    <a href="Compétences/WEB4.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🎨</div>
+                    <div class="tech-name">CSS3</div>
+                    <div class="tech-description">Styling, animations, responsive design, FlexBox/Grid</div>
+                    <a href="Compétences/WEB5.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">⚡</div>
+                    <div class="tech-name">JavaScript</div>
+                    <div class="tech-description">ES6+, DOM, async/await, événements, bibliothèques</div>
+                    <a href="Compétences/WEB6.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">⚛️</div>
+                    <div class="tech-name">React</div>
+                    <div class="tech-description">Composants, hooks, état, routage, performance optimisation</div>
+                    <a href="Compétences/WEB18.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🚀</div>
+                    <div class="tech-name">Node.js & Express</div>
+                    <div class="tech-description">Serveurs backend, API REST, middleware, authentication</div>
+                    <a href="Compétences/WEB24.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🤖</div>
+                    <div class="tech-name">Arduino</div>
+                    <div class="tech-description">Microcontrôleurs, IoT, domotique, capteurs</div>
+                    <a href="Compétences/WEB7.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BASES DE DONNÉES ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-database"></i> Bases de Données
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">🗄️</div>
+                    <div class="tech-name">MongoDB</div>
+                    <div class="tech-description">NoSQL, documents JSON, scalabilité, agrégation</div>
+                    <a href="Compétences/WEB26.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🐘</div>
+                    <div class="tech-name">PostgreSQL</div>
+                    <div class="tech-description">SQL, ACID, triggers, extensions, performance tuning</div>
+                    <a href="Compétences/WEB27.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🐬</div>
+                    <div class="tech-name">MySQL</div>
+                    <div class="tech-description">SQL, optimisation, indexation, réplication</div>
+                    <a href="Compétences/WEB22.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DEVOPS & INFRASTRUCTURE ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-cloud"></i> DevOps & Infrastructure
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">🐳</div>
+                    <div class="tech-name">Docker</div>
+                    <div class="tech-description">Containerisation, images, compose, orchestration</div>
+                    <a href="Compétences/WEB28.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">📦</div>
+                    <div class="tech-name">Git</div>
+                    <div class="tech-description">Version control, branches, merges, workflows</div>
+                    <a href="Compétences/WEB29.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">☁️</div>
+                    <div class="tech-name">Azure</div>
+                    <div class="tech-description">Cloud computing, VMs, App Services, databases</div>
+                    <a href="Compétences/WEB11.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SYSTÈMES D'EXPLOITATION ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-laptop"></i> Systèmes d'Exploitation
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">🪟</div>
+                    <div class="tech-name">Windows</div>
+                    <div class="tech-description">Administration, Active Directory, groupe policy, sécurité</div>
+                    <a href="Compétences/WEB8.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🐧</div>
+                    <div class="tech-name">Linux</div>
+                    <div class="tech-description">Ubuntu, CentOS, bash, services, administration système</div>
+                    <a href="Compétences/WEB9.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🐉</div>
+                    <div class="tech-name">Kali Linux</div>
+                    <div class="tech-description">Penetration testing, outils de sécurité, reconnaissance</div>
+                    <a href="Compétences/WEB19.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🖥️</div>
+                    <div class="tech-name">VirtualBox</div>
+                    <div class="tech-description">Virtualisation, machines virtuelles, snapshots</div>
+                    <a href="Compétences/WEB21.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SIMULATION RÉSEAU ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-bezier-curve"></i> Simulation & Design Réseau
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">🔀</div>
+                    <div class="tech-name">Cisco Packet Tracer</div>
+                    <div class="tech-description">Simulation réseau, OSPF, VLAN, protocoles, topologie</div>
+                    <a href="Compétences/WEB10.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CYBERSÉCURITÉ & PENTESTING ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-shield-alt"></i> Cybersécurité & Pentesting
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">📦</div>
+                    <div class="tech-name">Scapy</div>
+                    <div class="tech-description">Crafting de paquets, analyse réseau, développement d'outils</div>
+                    <a href="Compétences/WEB12.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🎯</div>
+                    <div class="tech-name">Metasploit</div>
+                    <div class="tech-description">Framework exploitation, payloads, modules, post-exploitation</div>
+                    <a href="Compétences/WEB13.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🔎</div>
+                    <div class="tech-name">Burp Suite</div>
+                    <div class="tech-description">Web application testing, scanning, proxying</div>
+                    <a href="Compétences/WEB20.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🔎</div>
+                    <div class="tech-name">Nessus</div>
+                    <div class="tech-description">Vulnerability scanning, assessment, compliance checks</div>
+                    <a href="Compétences/WEB17.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MONITORING & DÉTECTION ===== -->
+        <section class="category">
+            <h2 class="category-title">
+                <i class="fas fa-eye"></i> Monitoring & Détection de Menaces
+            </h2>
+            <div class="skills-grid">
+                <div class="tech-card">
+                    <div class="tech-emoji">📊</div>
+                    <div class="tech-name">Zabbix</div>
+                    <div class="tech-description">Monitoring d'infrastructure, métriques, alertes, dashboards</div>
+                    <a href="Compétences/WEB14.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🚨</div>
+                    <div class="tech-name">Snort</div>
+                    <div class="tech-description">Détection d'intrusions réseau, IDS, règles de sécurité</div>
+                    <a href="Compétences/WEB15.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🛡️</div>
+                    <div class="tech-name">Fail2ban</div>
+                    <div class="tech-description">Protection contre brute force, banning d'IP, prévention</div>
+                    <a href="Compétences/WEB16.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-emoji">🛡️</div>
+                    <div class="tech-name">Wazuh</div>
+                    <div class="tech-description">XDR, détection de menaces, response, compliance</div>
+                    <a href="Compétences/WEB30.html" class="tech-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STATISTIQUES ===== -->
+        <section class="stats-section">
+            <h2 style="font-size: 2rem; color: var(--success); margin-bottom: 1rem;">
+                <i class="fas fa-chart-bar"></i> Mes Statistiques
+            </h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">30</div>
+                    <div class="stat-label">Technologies Maîtrisées</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Projets Réalisés</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Années d'Expérience</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Motivation & Engagement</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>
+            <a href="index.html">← Portfolio Principal</a>
+            <a href="#">Documentation</a>
+            <a href="#contact">Contact</a>
+        </p>
+        <p style="margin-top: 1rem; opacity: 0.8;">
+            © 2026 Rayan Said Farah | Ingénieur Réseau & Cybersécurité
+        </p>
+    </footer>
+</body>
+</html>
