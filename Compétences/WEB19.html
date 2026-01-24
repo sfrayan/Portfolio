@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>FreeRADIUS</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url("../images/Parcours.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #fff;
+        }
+        th {
+            font-weight: bold;
+        }
+        h3 {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 0;
+        }
+        .projets-container {
+            display: flex;
+            gap: 20px;
+        }
+        .projets {
+            position: relative;
+            flex: 1;
+        }
+        .projets img {
+            width: 100%;
+            height: auto;
+        }
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .projets:hover .layer {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="page_projets">
+        <div class="container">
+            <div class="row">
+                <h2 id="nom_proj">FreeRADIUS</h2>
+                <!-- Introduction -->
+                <div>
+                    <br>
+                </div>
+                <!-- Description -->
+                <div>
+                    <h3>Description</h3>
+                    <p>FreeRADIUS est un serveur RADIUS open-source haute performance utilisé pour l'authentification, l'autorisé et la comptabilisation (AAA) dans les réseaux informatiques. RADIUS (Remote Authentication Dial-In User Service) est un protocole réseau standard pour centraliser l'authentification des utilisateurs. FreeRADIUS supporte une variété de méthodes d'authentification : PAP, CHAP, MS-CHAP, EAP (y compris PEAP et TLS), et OAuth2. Il s'intégre avec de nombreuses sources d'authentification : LDAP, Active Directory, MySQL, PostgreSQL, et fichiers locaux. FreeRADIUS est particulièrement utilisé pour WPA-Enterprise, les VPN, les hotspots WiFi publics et l'accès à distance sécurisé. Sa scalabilité permet de gérer des milliers d'utilisateurs simultanément avec une latence minimale. Compatible avec la plupart des points d'accès WiFi et routeurs professionnels, FreeRADIUS est devenu le serveur RADIUS de référence pour les infrastructures d'authentification centralisée.
+                    </p>
+                    <br>
+                </div>
+                <!-- Ressources -->
+                <div>
+                    <h3>Ressources</h3>
+                    <p>Voici les projets où cette compétence a été utilisée :</p>
+                    <div>
+                        <br/>
+                    </div>
+                    <div class="projets-container">
+                        <div class="projets">
+                            <a href="../Projets/SAE501.html">
+                                <img src="../images/SAE501.jpg" alt="SAE501">
+                                <div class="layer"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
