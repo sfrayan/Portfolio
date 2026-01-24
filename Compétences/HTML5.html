@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>HTML5</title>
+    <meta name="description" content="Compétence en HTML5 - Markup & Structure">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e34c26 0%, #1f2937 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.6s ease;
+        }
+        
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounceIn 0.8s ease;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #e34c26, #ff8c42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .content-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(227, 76, 38, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(227, 76, 38, 0.2);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff8c42;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+            color: #ff8c42;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .projets-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .project-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 1/1;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(227, 76, 38, 0.3);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e34c26, #1f2937);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(227, 76, 38, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card:hover .project-image::before {
+            opacity: 1;
+        }
+        
+        .project-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.9));
+            padding: 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .project-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .project-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .project-type {
+            font-size: 0.9rem;
+            color: #ff8c42;
+        }
+        
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .skill-item {
+            background: rgba(227, 76, 38, 0.1);
+            border: 1px solid rgba(227, 76, 38, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            background: rgba(227, 76, 38, 0.2);
+            border-color: rgba(227, 76, 38, 0.6);
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounceIn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .content-section { padding: 25px; }
+            .projets-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📄</div>
+            <h1>HTML5</h1>
+            <p class="subtitle">Markup & Structure</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>📋 Description</h2>
+            <p>
+                HTML5 est la dernière version du langage de balisage standard pour créer des pages web. Il offre une meilleure sémantique, 
+                des éléments multimedia natifs, et une meilleure accessibilité. HTML5 forme la base fondamentale de tout développement web moderne, 
+                permettant la création de structures web sémantiques, accessibles et performantes. Maîtriser HTML5 signifie comprendre la structure d'une page, 
+                l'accessibilité, le référencement (SEO) et les meilleures pratiques de développement web. C'est une compétence essentielle pour tout développeur web.
+            </p>
+        </div>
+        
+        <div class="content-section">
+            <h2>🏆 Compétences Associées</h2>
+            <div class="skills-list">
+                <div class="skill-item">Sémantique Web</div>
+                <div class="skill-item">Accessibilité (A11y)</div>
+                <div class="skill-item">SEO</div>
+                <div class="skill-item">Multimedia</div>
+                <div class="skill-item">Formulaires Avancés</div>
+                <div class="skill-item">Web APIs</div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>📚 Projets & Ressources</h2>
+            <p>Projets mettant en avant cette compétence :</p>
+            <div class="projets-container">
+                <div class="project-card">
+                    <div class="project-image">🎎</div>
+                    <div class="project-content">
+                        <div class="project-name">Portfolio Personnel</div>
+                        <div class="project-type">Structure Sémantique</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🌐</div>
+                    <div class="project-content">
+                        <div class="project-name">Applications Web</div>
+                        <div class="project-type">Interfaces Accessibles</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">📱</div>
+                    <div class="project-content">
+                        <div class="project-name">Responsive Design</div>
+                        <div class="project-type">Mobile First</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h3>Niveaux de Maîtrise</h3>
+            <p>
+                <strong>Avancé :</strong> Sémantique HTML5, accessibilité WCAG, SEO, formulaires complexes, 
+                integration API Web, Progressive Web Apps (PWA), Web Components.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
