@@ -1,124 +1,506 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Réponse à l'appel d'offres</title>		
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SAE 303 - Réponse à Appel d'Offres : Virtualisation du SI Ville de Valence">
+    <meta name="keywords" content="Virtualisation, Appel d'Offres, Infrastructure, Active Directory, VMware, Haute Disponibilité">
+    <title>SAE 303 - Appel d'Offres | Portfolio Rayan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-image: url("../images/Parcours.jpg");
-            background-size: cover;
-            background-position: center;
-            color: #fff;
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 960px;
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
+            --warning: #ffd700;
+            --danger: #ff4757;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: rgba(15, 52, 96, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(233, 69, 96, 0.1);
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav a:hover {
+            color: var(--success);
+        }
+
+        /* Header */
+        header {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 3rem 2rem;
         }
-        .row {
-            margin-bottom: 20px;
+
+        section {
+            margin-bottom: 3rem;
         }
+
         h2 {
-            margin-top: 0;
+            font-size: 2rem;
+            color: var(--success);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: rgba(234, 234, 234, 0.85);
+            margin-bottom: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-left-color: var(--success);
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-item {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(233, 69, 96, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--success);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .highlight {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            margin: 1.5rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: rgba(234, 234, 234, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        /* Table Styling */
         table {
             width: 100%;
             border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            overflow: hidden;
         }
-        th, td {
-            padding: 10px;
+
+        table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #fff;
+            color: var(--success);
+            font-weight: 600;
         }
-        th {
-            font-weight: bold;
+
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            color: rgba(234, 234, 234, 0.85);
         }
-        h3 {
-            margin-top: 0;
+
+        table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
         }
-        p {
-            margin-bottom: 0;
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: var(--text-light);
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            margin-top: 3rem;
         }
-        .projets {
-            position: relative;
-        }
-        .projets img {
-            width: 100%;
-            height: auto;
-        }
-        .layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .projets:hover .layer {
-            opacity: 1;
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
-        <div class="container">
-            <div class="row">
-                <h2 id="nom_proj">Réponse à l'appel d'offres : Virtualisation du SI</h2>
-                <!-- Introduction -->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Cadre</th>
-                            <td>Cours : « SAE : Concevoir un réseau informatique sécurisé multi-sites »</td>
-                        </tr>
-                        <tr>
-                            <th>Groupe</th>
-                            <td>Équipe de 2</td>
-                        </tr>
-                        <tr>
-                            <th>Durée</th>
-                            <td>1,5 semaines</td>
-                        </tr>
-                        <tr>
-                            <th>Statut</th>
-                            <td>Terminé</td>
-                        </tr>
-                    </table>
-                    <br>
+    <!-- Navigation -->
+    <nav>
+        <a href="../index.html#projets"><i class="fas fa-arrow-left"></i> Retour au Portfolio</a>
+        <a href="https://github.com/sfrayan" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i> Voir le Repository
+        </a>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>🏘️ SAE 303 - Appel d'Offres Virtualisation</h1>
+        <p>Réponse d'Appel d'Offres : Virtualisation du SI Ville de Valence</p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- À Propos -->
+        <section>
+            <h2><i class="fas fa-info-circle"></i> À Propos du Projet</h2>
+            <p>
+                <strong>SAE 303</strong> est un projet académique dans le cadre du parcours Réseaux & Télécommunications. 
+                Ce projet démontre la capacité à <strong>analyser un cahier des charges</strong> complexe et à 
+                <strong>répondre à un appel d'offres</strong> professionnel avec des solutions techniques optimisées.
+            </p>
+            <p>
+                L'objectif est de concevoir une <strong>infrastructure informatique virtualisée en haute disponibilité</strong> 
+                pour moderniser le système d'information municipal.
+            </p>
+        </section>
+
+        <!-- Informations Cadre -->
+        <section>
+            <h2><i class="fas fa-briefcase"></i> Cadre du Projet</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Élément</th>
+                        <th>Détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cours</strong></td>
+                        <td>SAE : Concevoir un réseau informatique sécurisé multi-sites</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type</strong></td>
+                        <td>Situation d'Apprentissage et d'Évaluation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Équipe</strong></td>
+                        <td>2 personnes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Durée</strong></td>
+                        <td>1,5 semaines</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Statut</strong></td>
+                        <td>✅ Terminé</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Objectifs -->
+        <section>
+            <h2><i class="fas fa-bullseye"></i> Objectifs Principaux</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-cloud"></i> Virtualisation</h4>
+                    <p>Modernisation de l'infrastructure avec technologie de virtualisation avancée.</p>
                 </div>
-                <!-- Description -->
-                <div>
-                    <h3>Description</h3>
-                    <p>L'objectif de ce devoir est de concevoir et de mettre en œuvre une infrastructure informatique 
-                        virtualisée en haute disponibilité pour la Ville de Valence. Ce projet vise à moderniser le système 
-                        d'information municipal en réponse à l'augmentation des besoins en serveurs et en applications, ainsi 
-                        qu'au vieillissement de l'infrastructure actuelle. Les principaux objectifs incluent la simplification 
-                        de l'infrastructure Active Directory, l'amélioration des performances et de la disponibilité des applications métiers, 
-                        et la garantie de la sécurité des données critiques. Le projet doit également permettre une administration facilitée 
-                        et une évolutivité du système pour anticiper les futurs besoins en termes de capacité de stockage et d'ajout de nouveaux serveurs.
-                    </p>
-                    <br>
+                <div class="feature-card">
+                    <h4><i class="fas fa-cubes"></i> Haute Disponibilité</h4>
+                    <p>Garantir la continuité de service avec redémondance et basculement automatique.</p>
                 </div>
-                <!-- Ressources -->
-                <div>
-                    <h3>Ressources</h3>
+                <div class="feature-card">
+                    <h4><i class="fas fa-lock"></i> Sécurité</h4>
+                    <p>Protection des données sensibles de la collectivité territoriale.</p>
                 </div>
-                <div class="projets">
-                    <a href="../Projets/pdf/SAE_303.pdf">
-                        <img src="../images/SAE_303.jpg" alt="SAE_303">
-                        <div class="layer"></div>
-                    </a>
+                <div class="feature-card">
+                    <h4><i class="fas fa-expand"></i> Scalabilité</h4>
+                    <p>Évolutivité pour anticipier les futurs besoins en capacité de stockage.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Stack Technologique -->
+        <section>
+            <h2><i class="fas fa-tools"></i> Stack Technologique</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🌐</div>
+                    <strong>VMware</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">📄</div>
+                    <strong>Active Directory</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">💾</div>
+                    <strong>Storage</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🔐</div>
+                    <strong>Network</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🔍</div>
+                    <strong>Monitoring</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">📋</div>
+                    <strong>Documentation</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problématiques Résolues -->
+        <section>
+            <h2><i class="fas fa-wrench"></i> Problématiques Résolues</h2>
+            <div class="highlight">
+                <h4><i class="fas fa-list-check"></i> Cahier des Charges</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>✅ Vieillissement de l'infrastructure actuelle</li>
+                    <li>✅ Augmentation des besoins en serveurs et applications</li>
+                    <li>✅ Simplification de l'infrastructure Active Directory</li>
+                    <li>✅ Amélioration des performances et disponibilité</li>
+                    <li>✅ Sécurité des données critiques</li>
+                    <li>✅ Administration facilée</li>
+                    <li>✅ Évolutivité pour croissance future</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Architecture Proposée -->
+        <section>
+            <h2><i class="fas fa-building"></i> Architecture Proposée</h2>
+            <h3>Composants Clés</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li><strong>Hyperviseur VMware ESXi :</strong> Virtualisation fiable et avancée</li>
+                <li><strong>vSphere Management :</strong> Orchestration et gestion centralisée</li>
+                <li><strong>Storage SAN :</strong> Stockage haute performance avec redondance</li>
+                <li><strong>Active Directory Distributed :</strong> Authentification scalable</li>
+                <li><strong>Network Redundancy :</strong> Multiples connections pour haute dispo</li>
+                <li><strong>Backup & DR :</strong> Récupération de sinistre automatisée</li>
+            </ul>
+        </section>
+
+        <!-- Apprentissages -->
+        <section>
+            <h2><i class="fas fa-lightbulb"></i> Apprentissages Clés</h2>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>🔷 Analyse critique de cahiers des charges complexes</li>
+                <li>🔷 Conception d'architectures informatiques scalables</li>
+                <li>🔷 Virtualisation et orchestration d'infrastructure</li>
+                <li>🔷 Planification de haute disponibilité et disaster recovery</li>
+                <li>🔷 Proposition de solutions techniques optimisées</li>
+                <li>🔷 Rédaction d'appels d'offres professionnels</li>
+            </ul>
+        </section>
+
+        <!-- Statistiques -->
+        <section>
+            <h2><i class="fas fa-chart-bar"></i> Statistiques</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">1,5</div>
+                    <div class="stat-label">Semaines</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Développeurs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Complet</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">✅</div>
+                    <div class="stat-label">Validé</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section style="background: linear-gradient(135deg, rgba(233, 69, 96, 0.2), rgba(0, 212, 255, 0.1)); padding: 2rem; border-radius: 8px; text-align: center;">
+            <h2 style="text-align: center;"><i class="fas fa-download"></i> Ressources</h2>
+            <p>Accédez au rapport complet avec analyse détaillée, architecture proposée et estimation budgétaire.</p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="pdf/SAE_303.pdf" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-file-pdf"></i> Télécharger le Rapport
+                </a>
+                <a href="../index.html#projets" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour aux Projets
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Rayan Said Farah | SAE 303 - Appel d'Offres | Tous droits réservés</p>
+    </footer>
 </body>
 </html>
