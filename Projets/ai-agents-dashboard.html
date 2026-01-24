@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents Dashboard | Rayan Said Farah</title>
+    <meta name="description" content="AI Agents Dashboard - Plateforme de monitoring et gestion des agents IA avec interface moderne, gestion d'état centralisée et APIs RESTful.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
+            --warning: #ffd700;
+            --danger: #ff4757;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        header {
+            position: relative;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .project-header {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            gap: 1rem;
+            color: var(--accent-light);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(234, 234, 234, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .badge.production {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--success);
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(233, 69, 96, 0.1);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+            border-left-color: var(--success);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: rgba(234, 234, 234, 0.7);
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .tech-item strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            font-size: 0.85rem;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .roadmap-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .roadmap-item.complete {
+            border-left-color: var(--success);
+        }
+
+        .roadmap-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .roadmap-item .version {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--success);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap-item.complete .version {
+            background: rgba(0, 212, 255, 0.3);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .comparison-table th {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .check {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .cross {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            text-align: center;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            .features-grid,
+            .tech-stack,
+            .roadmap {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="project-header">
+            <a href="../index.html#projets" class="back-link">
+                <i class="fas fa-arrow-left"></i> Retour aux Projets
+            </a>
+            <h1>
+                <i class="fas fa-brain"></i> AI Agents Dashboard
+            </h1>
+            <p class="subtitle">Plateforme de Monitoring et Gestion des Agents IA</p>
+            <div class="project-badges">
+                <span class="badge">
+                    <i class="fas fa-code"></i> React + TypeScript
+                </span>
+                <span class="badge">
+                    <i class="fas fa-server"></i> Backend Python
+                </span>
+                <span class="badge">
+                    <i class="fas fa-chart-bar"></i> Real-time Monitoring
+                </span>
+                <span class="badge">
+                    <i class="fas fa-open-source-initiative"></i> Open Source
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+        <!-- APERÇU -->
+        <section>
+            <h2><i class="fas fa-bullseye"></i> Aperçu du Projet</h2>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                <strong>AI Agents Dashboard</strong> est une plateforme complète de monitoring et de gestion pour les agents d'intelligence artificielle. Conçue pour orchestrer et superviser plusieurs agents IA, elle offre une interface moderne avec gestion d'état centralisée, APIs RESTful, et un système de logging détaillé.
+            </p>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                Le projet combine un frontend React moderne avec un backend Python robuste, permettant une collaboration seamless entre les agents IA et les utilisateurs pour une automatisation intelligente.
+            </p>
+        </section>
+
+        <!-- FONCTIONNALITÉS -->
+        <section>
+            <h2><i class="fas fa-star"></i> Fonctionnalités Principales</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-robot"></i> Gestion des Agents</h3>
+                    <p>Créer, configurer et monitorer plusieurs agents IA en temps réel</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-line"></i> Monitoring en Temps Réel</h3>
+                    <p>Dashboards avec métriques en direct, logs et alertes</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-cogs"></i> Orchestration</h3>
+                    <p>Coordination entre agents avec workflows customisables</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-database"></i> Gestion d'État</h3>
+                    <p>State management centralisé pour synchronisation inter-agents</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-shield-alt"></i> Authentification & Sécurité</h3>
+                    <p>Système d'authentification robuste avec contrôle d'accès</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-terminal"></i> APIs RESTful</h3>
+                    <p>APIs complètes et documentées pour intégration externe</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-history"></i> Historique & Audit</h3>
+                    <p>Traçabilité complète des opérations et actions des agents</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-plug"></i> Intégrations</h3>
+                    <p>Connecteurs pour services externes et LLMs populaires</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURE -->
+        <section>
+            <h2><i class="fas fa-sitemap"></i> Architecture Système</h2>
+            <p style="margin-bottom: 1.5rem;">
+                Le système est organisé en trois couches principales:
+            </p>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <strong>Frontend (React)</strong>
+                    <p>Interface utilisateur moderne avec TypeScript et gestion d'état Redux</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Backend (Python/FastAPI)</strong>
+                    <p>APIs haute performance avec async/await et validation stricte</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Services d'Agents</strong>
+                    <p>Microservices pour l'exécution et le monitoring des agents</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Base de Données</strong>
+                    <p>PostgreSQL pour persistance avec migrations versionnées</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Cache & Queue</strong>
+                    <p>Redis pour cache distribué et traitement async avec Celery</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Logging & Monitoring</strong>
+                    <p>ELK Stack intégré pour observabilité complète</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STACK TECHNIQUE -->
+        <section>
+            <h2><i class="fas fa-code"></i> Stack Technique Détaillé</h2>
+            <p style="margin-bottom: 1.5rem;"><strong>Frontend:</strong></p>
+            <ul>
+                <li>React 18+ avec Hooks</li>
+                <li>TypeScript pour type safety</li>
+                <li>Redux/Redux Toolkit pour state management</li>
+                <li>React Query pour gestion des données</li>
+                <li>Material-UI + Custom Components</li>
+                <li>WebSockets pour real-time updates</li>
+            </ul>
+
+            <p style="margin-bottom: 1.5rem; margin-top: 1.5rem;"><strong>Backend:</strong></p>
+            <ul>
+                <li>Python 3.11+</li>
+                <li>FastAPI pour APIs haute performance</li>
+                <li>SQLAlchemy ORM</li>
+                <li>Pydantic pour validation</li>
+                <li>Celery pour tâches async</li>
+                <li>Docker & Docker Compose</li>
+            </ul>
+
+            <p style="margin-bottom: 1.5rem; margin-top: 1.5rem;"><strong>Agents IA:</strong></p>
+            <ul>
+                <li>Support LangChain/LlamaIndex</li>
+                <li>Intégration OpenAI, Claude, Local LLMs</li>
+                <li>Memory management avec context windows optimisés</li>
+                <li>Tool/Function calling framework</li>
+            </ul>
+        </section>
+
+        <!-- FONCTIONNALITÉS AVANCÉES -->
+        <section>
+            <h2><i class="fas fa-rocket"></i> Fonctionnalités Avancées</h2>
+            <p style="margin-bottom: 1.5rem;"><strong>Workflows Intelligents:</strong></p>
+            <ul>
+                <li>DAG-based workflow engine pour orchestration complexe</li>
+                <li>Conditional routing basé sur résultats d'agents</li>
+                <li>Error handling et retry policies automatiques</li>
+                <li>Load balancing entre agents parallèles</li>
+            </ul>
+
+            <p style="margin-bottom: 1.5rem; margin-top: 1.5rem;"><strong>Analytics & Insights:</strong></p>
+            <ul>
+                <li>Dashboards avec KPIs en temps réel</li>
+                <li>Analyse de performance des agents</li>
+                <li>Cost tracking pour appels d'APIs</li>
+                <li>Rapports détaillés avec export</li>
+            </ul>
+
+            <p style="margin-bottom: 1.5rem; margin-top: 1.5rem;"><strong>DevOps & Deployment:</strong></p>
+            <ul>
+                <li>Infrastructure as Code (Terraform)</li>
+                <li>CI/CD pipelines automatisés</li>
+                <li>Kubernetes-ready avec Helm charts</li>
+                <li>Monitoring avec Prometheus/Grafana</li>
+            </ul>
+        </section>
+
+        <!-- ROADMAP -->
+        <section>
+            <h2><i class="fas fa-map"></i> Roadmap & Évolution</h2>
+            <div class="roadmap">
+                <div class="roadmap-item complete">
+                    <span class="version">v1.0 ✅</span>
+                    <h3>Core Features (2024-2025)</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>✅ Dashboard agents</li>
+                        <li>✅ APIs RESTful</li>
+                        <li>✅ Logging & monitoring</li>
+                    </ul>
+                </div>
+                <div class="roadmap-item">
+                    <span class="version">v1.1</span>
+                    <h3>2025</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>Workflows GUI</li>
+                        <li>Multi-LLM support</li>
+                        <li>Advanced analytics</li>
+                    </ul>
+                </div>
+                <div class="roadmap-item">
+                    <span class="version">v2.0</span>
+                    <h3>2025+</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>Marketplace d'agents</li>
+                        <li>Collaborative features</li>
+                        <li>Enterprise features</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- UTILISATION -->
+        <section>
+            <h2><i class="fas fa-book"></i> Guide de Démarrage</h2>
+            <p style="margin-bottom: 1.5rem;"><strong>Installation:</strong></p>
+            <ol>
+                <li>Cloner le repository</li>
+                <li>Setup backend: <code>pip install -r requirements.txt</code></li>
+                <li>Setup frontend: <code>npm install</code></li>
+                <li>Configuration environment variables</li>
+                <li>Lancer Docker Compose pour services (DB, Redis, etc.)</li>
+                <li>Démarrer backend et frontend</li>
+            </ol>
+            <p style="margin-top: 1.5rem; color: rgba(234, 234, 234, 0.7);">Documentation complète disponible dans le repository avec exemples et tutoriels.</p>
+        </section>
+
+        <!-- CTA -->
+        <section style="text-align: center;">
+            <h2><i class="fas fa-link"></i> Accéder au Projet</h2>
+            <p style="margin-bottom: 2rem; color: rgba(234, 234, 234, 0.7);">
+                Explorez la plateforme complète sur GitHub avec documentation détaillée!
+            </p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="https://github.com/sfrayan/ai-agents-dashboard" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub Repository
+                </a>
+                <a href="https://github.com/sfrayan/ai-agents-dashboard/issues" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-bug"></i> Issues & Features
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Rayan Said Farah | AI Agents Dashboard | Plateforme de Monitoring IA</p>
+    </footer>
+</body>
+</html>
