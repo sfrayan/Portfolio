@@ -1,123 +1,509 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Attaques MITM</title>		
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SAE 24 - Attaques MITM sur Réseau Local et Stratégies de Protection">
+    <meta name="keywords" content="MITM, Cybersécurité, Attaque Réseau, ARP Spoofing, DNS Spoofing, Protection">
+    <title>SAE 24 - Attaques MITM | Portfolio Rayan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-image: url("../images/Parcours.jpg");
-            background-size: cover;
-            background-position: center;
-            color: #fff;
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 960px;
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
+            --warning: #ffd700;
+            --danger: #ff4757;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: rgba(15, 52, 96, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(233, 69, 96, 0.1);
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav a:hover {
+            color: var(--success);
+        }
+
+        /* Header */
+        header {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 3rem 2rem;
         }
-        .row {
-            margin-bottom: 20px;
+
+        section {
+            margin-bottom: 3rem;
         }
+
         h2 {
-            margin-top: 0;
+            font-size: 2rem;
+            color: var(--success);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: rgba(234, 234, 234, 0.85);
+            margin-bottom: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-left-color: var(--success);
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-item {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(233, 69, 96, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--success);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .highlight {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            margin: 1.5rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: rgba(234, 234, 234, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        /* Table Styling */
         table {
             width: 100%;
             border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            overflow: hidden;
         }
-        th, td {
-            padding: 10px;
+
+        table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #fff;
+            color: var(--success);
+            font-weight: 600;
         }
-        th {
-            font-weight: bold;
+
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            color: rgba(234, 234, 234, 0.85);
         }
-        h3 {
-            margin-top: 0;
+
+        table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
         }
-        p {
-            margin-bottom: 0;
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: var(--text-light);
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            margin-top: 3rem;
         }
-        .projets {
-            position: relative;
-        }
-        .projets img {
-            width: 100%;
-            height: auto;
-        }
-        .layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .projets:hover .layer {
-            opacity: 1;
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
-        <div class="container">
-            <div class="row">
-                <h2 id="nom_proj">Compte Rendu Attaques MITM sur un réseau local</h2>
-                <!-- Introduction -->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Cadre</th>
-                            <td>Cours : « SAE : Projet intégratif »</td>
-                        </tr>
-                        <tr>
-                            <th>Groupe</th>
-                            <td>Équipe de 2</td>
-                        </tr>
-                        <tr>
-                            <th>Durée</th>
-                            <td>1,5 semaines</td>
-                        </tr>
-                        <tr>
-                            <th>Statut</th>
-                            <td>Terminé</td>
-                        </tr>
-                    </table>
-                    <br>
+    <!-- Navigation -->
+    <nav>
+        <a href="../index.html#projets"><i class="fas fa-arrow-left"></i> Retour au Portfolio</a>
+        <a href="https://github.com/sfrayan" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i> Voir le Repository
+        </a>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>🎯 SAE 24 - Attaques MITM</h1>
+        <p>Démonstration et Protection contre les Attaques Man-in-the-Middle</p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- À Propos -->
+        <section>
+            <h2><i class="fas fa-info-circle"></i> À Propos du Projet</h2>
+            <p>
+                <strong>SAE 24</strong> est un projet pédagogique d'exploration des vulnérabilités réseau. 
+                L'objectif vise à <strong>programmer et expérimenter</strong> des attaques de type 
+                <strong>MITM (Man In The Middle)</strong> sur un réseau local, tout en étudiant les 
+                mesures de protection.
+            </p>
+            <p>
+                Ce projet démontre comment <strong>intercepter et modifier les communications</strong> 
+                entre deux hôtes sur un réseau local, et surtout, comment <strong>s'en protéger</strong>.
+            </p>
+        </section>
+
+        <!-- Informations Cadre -->
+        <section>
+            <h2><i class="fas fa-briefcase"></i> Cadre du Projet</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Élément</th>
+                        <th>Détail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cours</strong></td>
+                        <td>SAE : Projet Intégratif en Cybersécurité</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type</strong></td>
+                        <td>Situation d'Apprentissage et d'Évaluation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Équipe</strong></td>
+                        <td>2 personnes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Durée</strong></td>
+                        <td>1,5 semaines</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Statut</strong></td>
+                        <td>✅ Terminé</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Types d'Attaques -->
+        <section>
+            <h2><i class="fas fa-network-wired"></i> Types d'Attaques Étudiées</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-exchange-alt"></i> ARP Spoofing</h4>
+                    <p>Usurpation d'identité par falsification des requêtes ARP pour intercepter le trafic.</p>
                 </div>
-                <!-- Description -->
-                <div>
-                    <h3>Description</h3>
-                    <p>L'objectif vise à programmer et expérimenter des
-                        attaques de type MITM (Man In The Middle) sur un réseau local,
-                        tout en étudiant les mesures de protection pouvant être mises en
-                        œuvre pour contrer ces attaques. L'objectif principal est de
-                        comprendre ces attaques réseau à des fins pédagogiques, afin
-                        de mieux savoir comment s'en protéger. 
-                    </p>
-                    <br>
+                <div class="feature-card">
+                    <h4><i class="fas fa-globe"></i> DNS Spoofing</h4>
+                    <p>Manipulation des réponses DNS pour rediriger les utilisateurs vers des sites malveillants.</p>
                 </div>
-                <!-- Ressources -->
-                <div>
-                    <h3>Ressources</h3>
+                <div class="feature-card">
+                    <h4><i class="fas fa-key"></i> Session Hijacking</h4>
+                    <p>Vol de sessions établies entre client et serveur pour accéder aux données sensibles.</p>
                 </div>
-                <div class="projets">
-                    <a href="../Projets/pdf/SAE_24.pdf">
-                        <img src="../images/SAE_24.jpg" alt="SAE_24">
-                        <div class="layer"></div>
-                    </a>
+                <div class="feature-card">
+                    <h4><i class="fas fa-wifi"></i> SSL Stripping</h4>
+                    <p>Downgrade des connexions HTTPS vers HTTP pour capturer les données en clair.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Tools & Technologies -->
+        <section>
+            <h2><i class="fas fa-tools"></i> Outils & Technologiques</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🐍</div>
+                    <strong>Python</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">📦</div>
+                    <strong>Scapy</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🔍</div>
+                    <strong>Wireshark</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🐧</div>
+                    <strong>Linux</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🔒</div>
+                    <strong>Iptables</strong>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">💻</div>
+                    <strong>Virtual Lab</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Protection -->
+        <section>
+            <h2><i class="fas fa-shield-alt"></i> Stratégies de Protection</h2>
+            <div class="highlight">
+                <h4><i class="fas fa-lock"></i> Contre-Mesures Principales</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>✅ Utilisation de HTTPS/SSL/TLS pour encryption end-to-end</li>
+                    <li>✅ Vérification des certificats SSL via PKI</li>
+                    <li>✅ Configuration d'ARP binding pour prévenir ARP spoofing</li>
+                    <li>✅ DNSSEC pour sécuriser les résolutions DNS</li>
+                    <li>✅ VPN et tunnels chiffrés pour communications</li>
+                    <li>✅ Détection d'anomalies réseau avec IDS/IPS</li>
+                    <li>✅ Segmentation réseau et isolation VLAN</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Apprentissages -->
+        <section>
+            <h2><i class="fas fa-lightbulb"></i> Apprentissages Clés</h2>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>🔷 Fonctionnement détaillé des protocoles réseau (ARP, DNS, TCP/IP)</li>
+                <li>🔷 Techniques de création d'outils de sécurité offensifs</li>
+                <li>🔷 Principes de la cryptographie et du chiffrement</li>
+                <li>🔷 Analyse de captures réseau avec Wireshark</li>
+                <li>🔷 Implémentation de contremesures en Python</li>
+                <li>🔷 Sécurité réseau en environnement contrôlé</li>
+            </ul>
+        </section>
+
+        <!-- Objectifs Pédagogiques -->
+        <section>
+            <h2><i class="fas fa-bullseye"></i> Objectifs Pédagogiques</h2>
+            <p>
+                L'objectif principal est de <strong>comprendre ces attaques réseau à des fins pédagogiques</strong>, 
+                afin de mieux savoir <strong>comment s'en protéger</strong>. Ce projet allow:
+            </p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>Détection des vulnérabilités réseau potentielles</li>
+                <li>Compréhension des risques de sécurité en environnement LAN</li>
+                <li>Mise en place d'architectures réseau sécurisées</li>
+                <li>Développement d'outils de protection et de détection</li>
+                <li>Respect des éthiques et lois en cybersécurité</li>
+            </ul>
+        </section>
+
+        <!-- Statistiques -->
+        <section>
+            <h2><i class="fas fa-chart-bar"></i> Statistiques</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">1,5</div>
+                    <div class="stat-label">Semaines</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">4+</div>
+                    <div class="stat-label">Types d'Attaques</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">7+</div>
+                    <div class="stat-label">Contre-mesures</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">✅</div>
+                    <div class="stat-label">Validé</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section style="background: linear-gradient(135deg, rgba(233, 69, 96, 0.2), rgba(0, 212, 255, 0.1)); padding: 2rem; border-radius: 8px; text-align: center;">
+            <h2 style="text-align: center;"><i class="fas fa-download"></i> Ressources</h2>
+            <p>Accédez aux rapports complets incluant démonstrations, code source et recommandations de sécurité.</p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="pdf/SAE_24.pdf" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-file-pdf"></i> Télécharger le Rapport
+                </a>
+                <a href="../index.html#projets" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour aux Projets
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Rayan Said Farah | SAE 24 - Attaques MITM | Tous droits réservés</p>
+    </footer>
 </body>
 </html>
