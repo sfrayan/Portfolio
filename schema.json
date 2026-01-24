@@ -1,0 +1,60 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Sébastien Frayan",
+  "jobTitle": "Full Stack Developer | Web Developer",
+  "description": "Passionate full-stack developer with expertise in modern web technologies, specializing in React, Vue, Node.js, and cloud solutions. Building impactful digital experiences.",
+  "url": "https://sfrayan.com",
+  "email": "your-email@domain.com",
+  "image": "https://sfrayan.com/images/profile.jpg",
+  "birthPlace": {
+    "@type": "Place",
+    "name": "Saint-Maur-des-Fossés, Île-de-France, FR"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/sfrayan",
+    "https://github.com/sfrayan",
+    "https://twitter.com/sfrayan"
+  ],
+  "worksFor": [
+    {
+      "@type": "Organization",
+      "name": "Freelance",
+      "description": "Independent web development and consulting"
+    }
+  ],
+  "knowsAbout": [
+    "JavaScript",
+    "React",
+    "Vue.js",
+    "Node.js",
+    "TypeScript",
+    "HTML5",
+    "CSS3",
+    "Web Performance",
+    "SEO",
+    "Cloud Architecture",
+    "DevOps",
+    "Web Security"
+  ],
+  "hasOccupation": {
+    "@type": "Occupation",
+    "name": "Software Developer",
+    "occupationLocation": {
+      "@type": "City",
+      "name": "Remote"
+    }
+  },
+  "award": [
+    {
+      "@type": "Award",
+      "name": "Best Web Performance",
+      "description": "Excellence in web optimization and performance"
+    },
+    {
+      "@type": "Award",
+      "name": "Innovation in Web Development",
+      "description": "Pioneering work in modern JavaScript frameworks"
+    }
+  ]
+}
