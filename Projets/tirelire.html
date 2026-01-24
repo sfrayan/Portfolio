@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tirelire - App Partage de Dépenses | Rayan Said Farah</title>
+    <meta name="description" content="Tirelire - Application collaborative de partage de dépenses avec multi-devises, receipt splitting et support iOS/Android. Production-ready PWA.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
+            --warning: #ffd700;
+            --danger: #ff4757;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        header {
+            position: relative;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .project-header {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            gap: 1rem;
+            color: var(--accent-light);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(234, 234, 234, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .badge.production {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--success);
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(233, 69, 96, 0.1);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+            border-left-color: var(--success);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: rgba(234, 234, 234, 0.7);
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .tech-item strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            font-size: 0.85rem;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .comparison-table th {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .check {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .cross {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .roadmap-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .roadmap-item.complete {
+            border-left-color: var(--success);
+        }
+
+        .roadmap-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .roadmap-item .version {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--success);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap-item.complete .version {
+            background: rgba(0, 212, 255, 0.3);
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            text-align: center;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            .features-grid,
+            .tech-stack,
+            .roadmap {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="project-header">
+            <a href="../index.html#projets" class="back-link">
+                <i class="fas fa-arrow-left"></i> Retour aux Projets
+            </a>
+            <h1>
+                <i class="fas fa-piggy-bank"></i> Tirelire
+            </h1>
+            <p class="subtitle">App de Partage de Dépenses en Production</p>
+            <div class="project-badges">
+                <span class="badge production">
+                    <i class="fas fa-rocket"></i> PRODUCTION READY
+                </span>
+                <span class="badge">
+                    <i class="fas fa-code"></i> React 18+
+                </span>
+                <span class="badge">
+                    <i class="fas fa-mobile-alt"></i> PWA + Mobile
+                </span>
+                <span class="badge">
+                    <i class="fas fa-open-source-initiative"></i> MIT License
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+        <!-- APERÇU -->
+        <section>
+            <h2><i class="fas fa-bullseye"></i> Aperçu du Projet</h2>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                <strong>Tirelire</strong> est une application web progressive (PWA) et mobile de partage de dépenses de groupe. Compatible avec iOS et Android via Capacitor, elle permet de gérer les dépenses partagées sans créer de compte, en temps réel, avec support du multi-devises et d'une fonctionnalité innovante de receipt splitting par drag-drop.
+            </p>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                Production-ready depuis janvier 2026, avec 5000+ lignes de code, zéro TODOs, et design system complet.
+            </p>
+        </section>
+
+        <!-- FONCTIONNALITÉS -->
+        <section>
+            <h2><i class="fas fa-star"></i> Fonctionnalités Clés</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-exchange-alt"></i> Partage Égal & Inégal</h3>
+                    <p>Custom %, fixed amounts, distribution proportionnelle</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-calculator"></i> Calcul Automatique</h3>
+                    <p>Balances mises à jour en temps réel</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-wifi-off"></i> Hors Ligne</h3>
+                    <p>PWA avec localStorage - Fonctionne sans connexion</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-link"></i> Aucun Compte</h3>
+                    <p>URL partagée instantanée - Pas d'enregistrement</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-file-csv"></i> Export CSV</h3>
+                    <p>Télécharger l'historique complet des dépenses</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-globe"></i> Multi-Devises</h3>
+                    <p>EUR, USD, GBP, CHF, JPY, CAD, AUD, SEK, NOK, DKK</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-images"></i> Receipt Splitting</h3>
+                    <p>Upload photo → Drag-drop articles → Auto-calcul</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-mobile-alt"></i> iOS + Android</h3>
+                    <p>Apps natives avec Capacitor - TestFlight & Play Store ready</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STACK TECHNIQUE -->
+        <section>
+            <h2><i class="fas fa-code"></i> Stack Technique</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <strong>Frontend</strong>
+                    <p>React 18+ avec Hooks</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Styling</strong>
+                    <p>CSS3 + Design System complet</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Storage</strong>
+                    <p>localStorage (PWA offline)</p>
+                </div>
+                <div class="tech-item">
+                    <strong>PWA</strong>
+                    <p>Service Worker installable</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Mobile</strong>
+                    <p>Capacitor (iOS/Android)</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Camera</strong>
+                    <p>Capacitor Camera API</p>
+                </div>
+                <div class="tech-item">
+                    <strong>API</strong>
+                    <p>exchangerate-api.com (free tier)</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Build</strong>
+                    <p>Vite + Create React App</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MULTI-DEVISES -->
+        <section>
+            <h2><i class="fas fa-coins"></i> Multi-Devises Feature</h2>
+            <p style="margin-bottom: 1rem;">
+                Tirelire supporte 10 devises majeures avec:
+            </p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>✅ Taux de change en temps réel (API gratuite)</li>
+                <li>✅ Conversion automatique des balances</li>
+                <li>✅ Format localisé (€1.000,00 vs $1,000.00)</li>
+                <li>✅ Cache API pour performance</li>
+            </ul>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                <strong>Devises supportées:</strong> EUR, USD, GBP, CHF, JPY, CAD, AUD, SEK, NOK, DKK
+            </p>
+        </section>
+
+        <!-- RECEIPT SPLITTING -->
+        <section>
+            <h2><i class="fas fa-image"></i> Receipt Splitting (Killer Feature)</h2>
+            <p style="margin-bottom: 1rem;">
+                Fonctionnalité innovante pour diviser les articles d'un reçu:
+            </p>
+            <ol style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>Upload/camera → Capture de reçu</li>
+                <li>Image preview avant utilisation</li>
+                <li>Saisie manuelle des articles</li>
+                <li><strong>Drag-drop interface</strong> - Distribuez articles aux participants</li>
+                <li>Distribution intelligente proportionnelle</li>
+                <li>Stockage image reçu</li>
+            </ol>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                Cette approche élimine les disputes sur qui a commandé quoi - chacun peut voir et valider sa part.
+            </p>
+        </section>
+
+        <!-- COMPARAISON -->
+        <section>
+            <h2><i class="fas fa-chart-bar"></i> Comparaison vs Concurrents</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Tirelire</th>
+                        <th>Splitwise</th>
+                        <th>IHateMoney</th>
+                        <th>Tricount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pas de compte</strong></td>
+                        <td class="check">✅</td>
+                        <td class="cross">❌</td>
+                        <td class="cross">❌</td>
+                        <td class="cross">❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multi-devises</strong></td>
+                        <td class="check">✅</td>
+                        <td class="check">✅</td>
+                        <td class="cross">❌</td>
+                        <td class="cross">❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Receipt splitting</strong></td>
+                        <td class="check">✅ Drag-drop</td>
+                        <td class="check">✅</td>
+                        <td class="cross">❌</td>
+                        <td class="cross">❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hors ligne</strong></td>
+                        <td class="check">✅</td>
+                        <td class="cross">❌</td>
+                        <td>Partiel</td>
+                        <td class="cross">❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Open Source</strong></td>
+                        <td class="check">✅</td>
+                        <td class="cross">❌</td>
+                        <td class="check">✅</td>
+                        <td class="cross">❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>iOS/Android</strong></td>
+                        <td class="check">✅</td>
+                        <td class="check">✅</td>
+                        <td class="cross">❌</td>
+                        <td class="check">✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gratuit</strong></td>
+                        <td class="check">✅</td>
+                        <td>Freemium</td>
+                        <td class="check">✅</td>
+                        <td>Freemium</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ROADMAP -->
+        <section>
+            <h2><i class="fas fa-map"></i> Roadmap</h2>
+            <div class="roadmap">
+                <div class="roadmap-item complete">
+                    <span class="version">v1.0 ✅</span>
+                    <h3>Production Ready (Janvier 2026)</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>✅ Multi-devises (10 currencies)</li>
+                        <li>✅ Receipt splitting avec drag-drop</li>
+                        <li>✅ Capacitor iOS/Android ready</li>
+                        <li>✅ PWA installable</li>
+                    </ul>
+                </div>
+                <div class="roadmap-item">
+                    <span class="version">v1.1</span>
+                    <h3>Février 2026</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>OCR receipt extraction</li>
+                        <li>Push notifications</li>
+                        <li>Dark mode</li>
+                        <li>App Store launch</li>
+                    </ul>
+                </div>
+                <div class="roadmap-item">
+                    <span class="version">v2.0</span>
+                    <h3>2026+</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>Cloud sync (Supabase)</li>
+                        <li>Collaboration features</li>
+                        <li>Advanced analytics</li>
+                        <li>Freemium model</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- DÉPLOIEMENT -->
+        <section>
+            <h2><i class="fas fa-rocket"></i> Déploiement</h2>
+            <p style="margin-bottom: 1.5rem;">
+                <strong>Web:</strong> npm run build → Deploy ./build to Vercel / Netlify / GitHub Pages
+            </p>
+            <p style="margin-bottom: 1.5rem;">
+                <strong>iOS App Store:</strong> Xcode → Archive → TestFlight / App Store Connect
+            </p>
+            <p style="margin-bottom: 1.5rem;">
+                <strong>Google Play:</strong> Android Studio → Generate Signed Bundle → Google Play Console
+            </p>
+        </section>
+
+        <!-- CONTRIBUTION -->
+        <section>
+            <h2><i class="fas fa-users"></i> Contribution Opportunités</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-paint-brush"></i> Frontend</h3>
+                    <p>UI improvements, new features, mobile optimization</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-database"></i> Backend</h3>
+                    <p>Cloud sync (Supabase), settlement optimization</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-wrench"></i> DevOps</h3>
+                    <p>CI/CD, deployment automation</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-pencil"></i> Docs</h3>
+                    <p>Guides, tutorials, translations</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section style="text-align: center;">
+            <h2><i class="fas fa-link"></i> Accéder au Projet</h2>
+            <p style="margin-bottom: 2rem; color: rgba(234, 234, 234, 0.7);">
+                Explorez le code source, testez la démo, ou contribuez au projet!
+            </p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="https://github.com/sfrayan/Tirelire" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub Repository
+                </a>
+                <a href="https://github.com/sfrayan/Tirelire/issues" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-bug"></i> Issues & Features
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Rayan Said Farah | Tirelire - App Partage de Dépenses | MIT License</p>
+    </footer>
+</body>
+</html>
