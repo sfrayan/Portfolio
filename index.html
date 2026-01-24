@@ -640,95 +640,90 @@
             background: linear-gradient(135deg, rgba(22, 33, 62, 0.5) 0%, rgba(15, 52, 96, 0.5) 100%);
         }
 
-        .timeline {
-            position: relative;
-            padding: 2rem 0;
+        .parcours-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
         }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--accent), var(--success));
+        .parcours-section h3 {
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            padding-bottom: 1rem;
         }
 
-        .timeline-item {
-            margin-bottom: 3rem;
-            animation: fadeInUp 0.6s ease forwards;
+        .parcours-section h3 i {
+            font-size: 1.8rem;
         }
 
-        .timeline-item:nth-child(odd) {
-            margin-left: 0;
-            margin-right: 50%;
-            padding-right: 3rem;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) {
-            margin-left: 50%;
-            margin-right: 0;
-            padding-left: 3rem;
-            text-align: left;
-        }
-
-        .timeline-marker {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 16px;
-            background: var(--accent);
-            border: 4px solid var(--bg-dark);
-            border-radius: 50%;
-            top: 1rem;
-        }
-
-        .timeline-marker:hover {
-            background: var(--success);
-            transform: translateX(-50%) scale(1.3);
-        }
-
-        .timeline-content {
+        .parcours-item {
             background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
-            border: 2px solid rgba(233, 69, 96, 0.2);
+            border-left: 4px solid var(--accent);
+            margin-bottom: 1.5rem;
             transition: all 0.3s ease;
         }
 
-        .timeline-content:hover {
-            border-color: var(--success);
+        .parcours-item:hover {
+            border-left-color: var(--success);
             background: rgba(0, 212, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.2);
+            transform: translateX(5px);
         }
 
-        .timeline-date {
-            font-size: 0.9rem;
-            color: var(--success);
-            font-weight: 700;
+        .parcours-item p {
             margin-bottom: 0.5rem;
+            color: rgba(234, 234, 234, 0.9);
+            line-height: 1.6;
         }
 
-        .timeline-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+        .parcours-item p strong {
             color: var(--accent-light);
         }
 
-        .timeline-location {
-            font-size: 0.95rem;
-            color: rgba(234, 234, 234, 0.6);
-            margin-bottom: 1rem;
+        /* ===== CERTIFICATIONS SECTION ===== */
+        #certifications {
+            background: var(--bg-light) !important;
+            color: var(--text-dark) !important;
         }
 
-        .timeline-description {
-            font-size: 0.95rem;
+        .cert-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.2);
+            border-left-color: var(--success);
+        }
+
+        .cert-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .cert-card p {
+            color: rgba(22, 33, 62, 0.7);
             line-height: 1.6;
-            color: rgba(234, 234, 234, 0.8);
+        }
+
+        .cert-card p:last-child {
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 1rem;
         }
 
         /* ===== COMPÉTENCES SECTION ===== */
@@ -790,89 +785,9 @@
             font-weight: 700;
         }
 
-        /* ===== PROJETS SECTION ===== */
-        #projets {
-            background: linear-gradient(135deg, rgba(22, 33, 62, 0.5) 0%, rgba(15, 52, 96, 0.5) 100%);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(233, 69, 96, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            border-color: var(--success);
-            background: rgba(0, 212, 255, 0.1);
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
-        }
-
-        .project-header {
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(233, 69, 96, 0.15), rgba(0, 212, 255, 0.1));
-            border-bottom: 2px solid rgba(233, 69, 96, 0.2);
-        }
-
-        .project-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--accent-light);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .project-title i {
-            font-size: 1.5rem;
-            color: var(--success);
-        }
-
-        .project-date {
-            font-size: 0.85rem;
-            color: rgba(234, 234, 234, 0.6);
-        }
-
-        .project-body {
-            padding: 1.5rem;
-        }
-
-        .project-description {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: rgba(234, 234, 234, 0.8);
-            margin-bottom: 1.5rem;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-        }
-
-        .tag {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
         /* ===== LOISIRS SECTION ===== */
         #hobbies {
-            background: linear-gradient(135deg, rgba(15, 52, 96, 0.5) 0%, rgba(22, 33, 62, 0.5) 100%);
+            background: linear-gradient(135deg, rgba(22, 33, 62, 0.5) 0%, rgba(15, 52, 96, 0.5) 100%);
         }
 
         .hobbies-grid {
@@ -941,48 +856,31 @@
             align-items: flex-start;
         }
 
-        .contact-icon {
+        .contact-item i {
             font-size: 1.8rem;
             color: var(--success);
             min-width: 30px;
             margin-top: 0.3rem;
         }
 
-        .contact-details {
+        .contact-item > div {
             flex: 1;
         }
 
-        .contact-details h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
+        .contact-item strong {
+            display: block;
             color: var(--accent-light);
             margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
 
-        .contact-details p {
-            font-size: 0.95rem;
-            color: rgba(234, 234, 234, 0.8);
-            margin: 0;
-        }
-
-        .contact-details a {
-            color: var(--success);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .contact-details a:hover {
-            text-decoration: underline;
-            color: var(--accent-light);
-        }
-
-        .social-links {
+        .social-icons {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
         }
 
-        .social-link {
+        .social-icons a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -996,7 +894,7 @@
             font-size: 1.3rem;
         }
 
-        .social-link:hover {
+        .social-icons a:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
         }
@@ -1044,24 +942,6 @@
             min-height: 150px;
         }
 
-        .submit-btn {
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            align-self: flex-start;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
-        }
-
         /* ===== FOOTER ===== */
         footer {
             background: rgba(22, 33, 62, 0.8);
@@ -1070,20 +950,15 @@
             border-top: 2px solid rgba(233, 69, 96, 0.3);
         }
 
+        footer h3 {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
         footer p {
             color: rgba(234, 234, 234, 0.8);
             margin: 0.5rem 0;
-        }
-
-        footer a {
-            color: var(--success);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        footer a:hover {
-            color: var(--accent-light);
-            text-decoration: underline;
         }
 
         /* ===== RESPONSIF ===== */
@@ -1118,10 +993,6 @@
                 border-bottom: 1px solid rgba(0, 212, 255, 0.1);
             }
 
-            .main-navlinks {
-                gap: 0;
-            }
-
             nav {
                 padding: 1rem 1.5rem;
             }
@@ -1131,30 +1002,8 @@
                 gap: 2rem;
             }
 
-            .header-text {
-                text-align: center;
-            }
-
             .header-text h1 {
                 font-size: 2.5rem;
-            }
-
-            .header-subtitle {
-                justify-content: center;
-            }
-
-            .header-subtitle::before {
-                display: none;
-            }
-
-            .header-subtitle::after {
-                content: '';
-                display: inline-block;
-                width: 40px;
-                height: 3px;
-                background: linear-gradient(90deg, var(--accent), var(--success));
-                margin-left: 1rem;
-                border-radius: 2px;
             }
 
             .presentation-row {
@@ -1165,49 +1014,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .sub-title {
-                font-size: 1.8rem;
-            }
-
-            section {
-                padding: 2rem 1rem;
-            }
-
-            .visual-circle {
-                width: 250px;
-                height: 250px;
-            }
-
-            .logo-wrapper {
-                width: 160px;
-                height: 160px;
-            }
-
-            .cta-buttons {
-                justify-content: center;
-                gap: 1rem;
-            }
-
-            .btn {
-                padding: 0.8rem 2rem;
-                font-size: 0.95rem;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item:nth-child(odd),
-            .timeline-item:nth-child(even) {
-                margin-left: 0;
-                margin-right: 0;
-                padding-left: 70px;
-                padding-right: 0;
-                text-align: left;
-            }
-
-            .timeline-marker {
-                left: 20px;
+            .parcours-grid {
+                grid-template-columns: 1fr;
             }
 
             .contact-container {
@@ -1215,10 +1023,6 @@
             }
 
             .skills-container {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1232,48 +1036,6 @@
                 font-size: 2rem;
             }
 
-            .header-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .header-description {
-                font-size: 1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .profile-card {
-                width: 100%;
-                max-width: 280px;
-            }
-
-            .visual-circle {
-                width: 200px;
-                height: 200px;
-            }
-
-            .logo-wrapper {
-                width: 120px;
-                height: 120px;
-            }
-
-            .header-meta {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            nav {
-                padding: 0.8rem 1rem;
-            }
-
             .hobbies-grid {
                 grid-template-columns: 1fr;
             }
@@ -1281,15 +1043,15 @@
     </style>
 </head>
 <body>
-    <!-- ===== HEADER & NAVIGATION AMÉLIORÉE ===== -->
+    <!-- ===== HEADER & NAVIGATION ===== -->
     <header id="home">
         <nav>
-            <a href="#home" class="nav-icon" aria-label="Retour à l'accueil" aria-current="page">
+            <a href="#home" class="nav-icon">
                 <img src="gifs/LOGO RSF.gif" alt="logo">
                 <span class="nav-icon-text">RSF</span>
             </a>
             <div class="main-navlinks">
-                <button class="hamburger" type="button" aria-label="Basculer la navigation" aria-expanded="false">
+                <button class="hamburger" type="button" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -1299,7 +1061,6 @@
                     <a href="#presentation" class="nav-link" data-section="presentation">Présentation</a>
                     <a href="#parcours" class="nav-link" data-section="parcours">Parcours</a>
                     <a href="#competences" class="nav-link" data-section="competences">Compétences</a>
-                    <a href="#projets" class="nav-link" data-section="projets">Projets</a>
                     <a href="#hobbies" class="nav-link" data-section="hobbies">Loisirs</a>
                     <a href="#contact" class="nav-link" data-section="contact">Contact</a>
                 </div>
@@ -1322,12 +1083,12 @@
                     </div>
                     <div class="meta-item">
                         <i class="fas fa-location-dot"></i>
-                        <span>Saint-Maur-des-Fossés, FR</span>
+                        <span>Île-de-France, France</span>
                     </div>
                 </div>
                 <div class="cta-buttons">
-                    <a href="#projets" class="btn btn-primary">
-                        <i class="fas fa-briefcase"></i> Découvrir mes projets
+                    <a href="#competences" class="btn btn-primary">
+                        <i class="fas fa-code"></i> Voir mes compétences
                     </a>
                     <a href="#contact" class="btn btn-secondary">
                         <i class="fas fa-envelope"></i> Me contacter
@@ -1411,53 +1172,95 @@
     <section id="parcours">
         <div class="container">
             <h2 class="sub-title">Mon Parcours</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2023 - Présent</div>
-                        <div class="timeline-title">Bachelor Réseaux et Télécommunications</div>
-                        <div class="timeline-location"><i class="fas fa-graduation-cap"></i> IUT Sénart-Fontainebleau</div>
-                        <div class="timeline-description">
-                            Spécialisation en cybersécurité. Acquisition de compétences avancées en administration réseau, sécurité informatique et télécommunications.
-                        </div>
+            <div class="parcours-grid">
+                <div class="parcours-section">
+                    <h3><i class="fa-solid fa-school"></i> Formation Académique</h3>
+                    
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🎓</div>
+                        <p><strong>EFREI Paris PGE - ING Apprentissage</strong></p>
+                        <p>Majeure Réseaux et Sécurité</p>
+                        <p style="color: var(--accent); font-weight: 600;">2026 - 2029</p>
+                    </div>
+
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">📚</div>
+                        <p><strong>Bachelor Universitaire de Technologie</strong></p>
+                        <p>R&T Parcours Cybersécurité - IUTV</p>
+                        <p style="color: var(--accent); font-weight: 600;">2023 - 2026</p>
+                    </div>
+
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">💻</div>
+                        <p><strong>Diplôme Universitaire</strong></p>
+                        <p>Technicien d'Administration Réseaux</p>
+                        <p style="color: var(--accent); font-weight: 600;">2023</p>
+                    </div>
+
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🔬</div>
+                        <p><strong>Baccalauréat Scientifique</strong></p>
+                        <p>Spécialité Physique-Chimie</p>
+                        <p style="color: var(--accent); font-weight: 600;">2019</p>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2022 - 2023</div>
-                        <div class="timeline-title">Stage Administrateur Réseau</div>
-                        <div class="timeline-location"><i class="fas fa-building"></i> Entreprise Tech</div>
-                        <div class="timeline-description">
-                            Expérience pratique en administration de réseaux, configuration de routeurs et commutateurs, gestion de la sécurité réseau.
-                        </div>
+                <div class="parcours-section">
+                    <h3><i class="fa-solid fa-briefcase"></i> Expérience Professionnelle</h3>
+                    
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🌊</div>
+                        <p><strong>SFI SmartOcean Research Project</strong></p>
+                        <p>Western Norway University of Applied Science</p>
+                        <p>Développement de composants logiciels pour la plateforme de services SmartOcean, centre pour l'innovation basée sur la recherche.</p>
+                        <p>Travail sur les systèmes de capteurs sous-marins basés sur la communication acoustique intégrés aux services cloud computing.</p>
+                        <p>Développement sur la solution cloud en temps réel pour les séries temporelles de données historiques.</p>
+                        <p style="color: var(--accent); font-weight: 600;">Mars - Juin 2026</p>
+                    </div>
+
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">💻</div>
+                        <p><strong>Développeur Plateforme Client</strong></p>
+                        <p>Stage - Kolchy, Paris</p>
+                        <p>Participation à toutes les étapes du projet : analyse, conception, développement, tests</p>
+                        <p>Réalisation d'un espace client sécurisé (Next.js, API, hébergement cloud)</p>
+                        <p>Travail en équipe agile avec communication étroite avec les équipes produit</p>
+                        <p style="color: var(--accent); font-weight: 600;">Avril - Juin 2025</p>
+                    </div>
+
+                    <div class="parcours-item">
+                        <div style="font-size: 1.5rem; color: #e94560; margin-bottom: 0.5rem;">🏢</div>
+                        <p><strong>Stage - Salvia Développement</strong></p>
+                        <p>Formatage et inventaire du parc informatique</p>
+                        <p>Gestion des systèmes d'exploitation et configuration hardware</p>
+                        <p style="color: var(--accent); font-weight: 600;">Juin 2023</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2021 - 2023</div>
-                        <div class="timeline-title">DUT Réseaux et Télécommunications</div>
-                        <div class="timeline-location"><i class="fas fa-graduation-cap"></i> IUT Sénart-Fontainebleau</div>
-                        <div class="timeline-description">
-                            Formation fondamentale en réseaux informatiques, protocoles de communication et systèmes d'information.
-                        </div>
-                    </div>
+    <!-- ===== CERTIFICATIONS ===== -->
+    <section id="certifications">
+        <div class="container">
+            <h2 class="sub-title">Certifications</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div class="cert-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #e94560;">🔐</div>
+                    <h3>Google Cybersecurity Certificate</h3>
+                    <p>
+                        Formation complète en cybersécurité couvrant Python, Linux, SQL, SIEM et IDS
+                    </p>
+                    <p style="color: var(--accent); font-weight: 600;">2025</p>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2018 - 2021</div>
-                        <div class="timeline-title">Baccalauréat Scientifique</div>
-                        <div class="timeline-location"><i class="fas fa-school"></i> Lycée</div>
-                        <div class="timeline-description">
-                            Base solide en sciences et mathématiques, intérêt marqué pour l'informatique et les technologies.
-                        </div>
-                    </div>
+                <div class="cert-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #e94560;">💼</div>
+                    <h3>Google IT Support Certificate</h3>
+                    <p>
+                        Certification couvrant les systèmes d'exploitation, réseau et sécurité informatique
+                    </p>
+                    <p style="color: var(--accent); font-weight: 600;">2025</p>
                 </div>
             </div>
         </div>
@@ -1537,90 +1340,6 @@
         </div>
     </section>
 
-    <!-- ===== PROJETS ===== -->
-    <section id="projets">
-        <div class="container">
-            <h2 class="sub-title">Mes Projets</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-title">
-                            <i class="fas fa-network-wired"></i> Infrastructure Réseau Sécurisée
-                        </div>
-                        <div class="project-date">2024</div>
-                    </div>
-                    <div class="project-body">
-                        <div class="project-description">
-                            Conception et déploiement d'une infrastructure réseau complète avec segmentation VLAN, routage avancé et sécurité périmétrique.
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Cisco</span>
-                            <span class="tag">OSPF</span>
-                            <span class="tag">Firewall</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-title">
-                            <i class="fas fa-lock"></i> Audit de Sécurité
-                        </div>
-                        <div class="project-date">2024</div>
-                    </div>
-                    <div class="project-body">
-                        <div class="project-description">
-                            Pentest complet d'une application web incluant reconnaissance, exploitation et rapport détaillé avec recommandations.
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Burp Suite</span>
-                            <span class="tag">Metasploit</span>
-                            <span class="tag">OWASP</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-title">
-                            <i class="fas fa-server"></i> Système de Monitoring
-                        </div>
-                        <div class="project-date">2023</div>
-                    </div>
-                    <div class="project-body">
-                        <div class="project-description">
-                            Implémentation d'une solution de monitoring avec Zabbix et alertes automatiques pour la surveillance d'infrastructure.
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Zabbix</span>
-                            <span class="tag">Linux</span>
-                            <span class="tag">Grafana</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-title">
-                            <i class="fas fa-globe"></i> Application Web Full Stack
-                        </div>
-                        <div class="project-date">2023</div>
-                    </div>
-                    <div class="project-body">
-                        <div class="project-description">
-                            Développement d'une application web sécurisée avec frontend React et backend Node.js/Express avec authentification JWT.
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">React</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ===== LOISIRS ===== -->
     <section id="hobbies">
         <div class="container">
@@ -1630,7 +1349,7 @@
                     <div class="hobby-icon">🎮</div>
                     <div class="hobby-title">Jeux Vidéo</div>
                     <div class="hobby-description">
-                        Passionné par les jeux stratégiques et compétitifs. Développement de modding en Python.
+                        Passionné par les jeux stratégiques et compétitifs.
                     </div>
                 </div>
 
@@ -1638,7 +1357,7 @@
                     <div class="hobby-icon">📚</div>
                     <div class="hobby-title">Lecture Tech</div>
                     <div class="hobby-description">
-                        Suivi des actualités en cybersécurité et lecture de publications sur les nouvelles technologies.
+                        Suivi des actualités en cybersécurité et technologie.
                     </div>
                 </div>
 
@@ -1646,7 +1365,7 @@
                     <div class="hobby-icon">🏃</div>
                     <div class="hobby-title">Sport</div>
                     <div class="hobby-description">
-                        Course à pied et fitness réguliers pour maintenir une bonne santé et équilibre de vie.
+                        Course à pied et fitness pour une bonne santé.
                     </div>
                 </div>
 
@@ -1654,15 +1373,15 @@
                     <div class="hobby-icon">🎬</div>
                     <div class="hobby-title">Films & Séries</div>
                     <div class="hobby-description">
-                        Amateur de films de science-fiction et séries technologies inspirant des projets innovants.
+                        Amateur de films de science-fiction et techno-thrillers.
                     </div>
                 </div>
 
                 <div class="hobby-card">
-                    <div class="hobby-icon">🔬</div>
+                    <div class="hobby-icon">🔍</div>
                     <div class="hobby-title">CTF & Hacking</div>
                     <div class="hobby-description">
-                        Participation à des compétitions de capture de drapeau (CTF) pour l'apprentissage sécurité.
+                        Participation à des compétitions de cybersecurité.
                     </div>
                 </div>
 
@@ -1670,7 +1389,7 @@
                     <div class="hobby-icon">🎵</div>
                     <div class="hobby-title">Musique</div>
                     <div class="hobby-description">
-                        Écoute variée de musique électronique et hip-hop, détente créative et inspiration.
+                        Écoute variée de musique électronique et hip-hop.
                     </div>
                 </div>
             </div>
@@ -1684,66 +1403,67 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <i class="fas fa-envelope contact-icon"></i>
-                        <div class="contact-details">
-                            <h3>Email</h3>
-                            <p><a href="mailto:rayan.saidfarah@email.com">rayan.saidfarah@email.com</a></p>
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong><br>
+                            <span style="color: rgba(234, 234, 234, 0.8);">rayan.saidfarah@email.com</span>
                         </div>
                     </div>
 
                     <div class="contact-item">
-                        <i class="fas fa-phone contact-icon"></i>
-                        <div class="contact-details">
-                            <h3>Téléphone</h3>
-                            <p><a href="tel:+33123456789">+33 1 23 45 67 89</a></p>
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Téléphone</strong><br>
+                            <span style="color: rgba(234, 234, 234, 0.8);">+33 1 23 45 67 89</span>
                         </div>
                     </div>
 
                     <div class="contact-item">
-                        <i class="fas fa-location-dot contact-icon"></i>
-                        <div class="contact-details">
-                            <h3>Localisation</h3>
-                            <p>Saint-Maur-des-Fossés, Île-de-France, France</p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Localisation</strong><br>
+                            <span style="color: rgba(234, 234, 234, 0.8);">Île-de-France, France</span>
                         </div>
                     </div>
 
-                    <div class="contact-item">
-                        <i class="fas fa-globe contact-icon"></i>
-                        <div class="contact-details">
-                            <h3>Réseaux Sociaux</h3>
-                            <div class="social-links">
-                                <a href="https://github.com/sfrayan" class="social-link" title="GitHub">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="https://linkedin.com/in/rayan-said-farah" class="social-link" title="LinkedIn">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                <a href="https://twitter.com" class="social-link" title="Twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                            </div>
+                    <div>
+                        <strong style="display: block; margin-bottom: 1rem;">Réseaux Sociaux</strong>
+                        <div class="social-icons">
+                            <a href="https://www.linkedin.com/in/rayan-said-farah-1832602ba/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/sfrayan" target="_blank" rel="noopener noreferrer" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
                         </div>
                     </div>
+
+                    <a href="#" download class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i class="fas fa-download"></i> Télécharger mon CV
+                    </a>
                 </div>
 
                 <div class="contact-form">
-                    <h3 style="color: var(--success); margin-bottom: 1.5rem; font-size: 1.2rem;">
-                        <i class="fas fa-paper-plane"></i> Envoyez-moi un message
-                    </h3>
-                    <form>
+                    <form id="contactForm" action="https://formspree.io/f/xaqenqdd" method="POST">
                         <div class="form-group">
-                            <label for="name">Nom</label>
-                            <input type="text" id="name" name="name" required>
+                            <label for="nom">Votre Nom</label>
+                            <input type="text" id="nom" name="name" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Votre Email</label>
                             <input type="email" id="email" name="email" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="subject">Sujet</label>
-                            <input type="text" id="subject" name="subject" required>
+                            <label for="sujet">Sujet</label>
+                            <input type="text" id="sujet" name="subject" required>
                         </div>
 
                         <div class="form-group">
@@ -1751,9 +1471,10 @@
                             <textarea id="message" name="message" required></textarea>
                         </div>
 
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-send"></i> Envoyer
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Envoyer le Message
                         </button>
+                        <div id="form-status" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
                     </form>
                 </div>
             </div>
@@ -1762,25 +1483,15 @@
 
     <!-- ===== FOOTER ===== -->
     <footer>
-        <p>
-            © 2026 Rayan Said Farah - Ingénieur Réseau & Cybersécurité
-        </p>
-        <p>
-            <a href="#home">Retour au Début</a> |
-            <a href="#presentation">Présentation</a> |
-            <a href="#contact">Contact</a>
-        </p>
-        <p style="margin-top: 1.5rem; font-size: 0.9rem;">
-            <i class="fas fa-heart" style="color: var(--accent);"></i> Conçu avec passion pour vous inspirer
-        </p>
+        <h3>Merci pour votre visite ! 🚀</h3>
+        <p>© 2026 Rayan Said Farah | Ingénieur Réseau & Cybersécurité | Tous droits réservés</p>
     </footer>
 
-    <!-- SCRIPTS POUR LA NAVIGATION AMÉLIORÉE -->
+    <!-- SCRIPTS -->
     <script>
         // Menu hamburger
         const hamburger = document.querySelector('.hamburger');
         const navlinksContainer = document.querySelector('.navlinks-container');
-        const navLinks = document.querySelectorAll('.nav-link');
 
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('open');
@@ -1788,37 +1499,10 @@
         });
 
         // Fermer le menu au clic sur un lien
-        navLinks.forEach(link => {
+        document.querySelectorAll('.navlinks-container a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('open');
                 navlinksContainer.classList.remove('open');
-            });
-        });
-
-        // Mettre à jour le lien actif en scrollant
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-
-            // Mettre en évidence le lien de section actif
-            let currentSection = 'home';
-            document.querySelectorAll('section, header').forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (window.scrollY >= sectionTop - 200) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-section') === currentSection) {
-                    link.classList.add('active');
-                }
             });
         });
 
@@ -1835,16 +1519,6 @@
                 }
             });
         });
-
-        // Gestion du formulaire de contact
-        const contactForm = document.querySelector('.contact-form form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Merci pour votre message ! Je vous répondrai rapidement.');
-                contactForm.reset();
-            });
-        }
     </script>
 </body>
 </html>
