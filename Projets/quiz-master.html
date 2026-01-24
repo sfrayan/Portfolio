@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - Jeu de Quiz Interactif | Rayan Said Farah</title>
+    <meta name="description" content="Quiz Master - Application de quiz multijoueur avec modes Solo/Duel, catégories de questions, niveaux de difficulté, et classement en temps réel.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
+            --warning: #ffd700;
+            --danger: #ff4757;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        header {
+            position: relative;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .project-header {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            gap: 1rem;
+            color: var(--accent-light);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(234, 234, 234, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .badge.interactive {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: var(--accent);
+            color: var(--accent-light);
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(233, 69, 96, 0.1);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+            border-left-color: var(--success);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: rgba(234, 234, 234, 0.7);
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .tech-item strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            font-size: 0.85rem;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .mode-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .mode-card:hover {
+            border-color: var(--success);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .mode-card h3 {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-card p {
+            color: rgba(234, 234, 234, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .roadmap-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--warning);
+        }
+
+        .roadmap-item.complete {
+            border-left-color: var(--success);
+        }
+
+        .roadmap-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .roadmap-item .version {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--success);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap-item.complete .version {
+            background: rgba(0, 212, 255, 0.3);
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            text-align: center;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            .features-grid,
+            .tech-stack,
+            .roadmap {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="project-header">
+            <a href="../index.html#projets" class="back-link">
+                <i class="fas fa-arrow-left"></i> Retour aux Projets
+            </a>
+            <h1>
+                <i class="fas fa-brain"></i> Quiz Master
+            </h1>
+            <p class="subtitle">Jeu de Quiz Multijoueur Interactif</p>
+            <div class="project-badges">
+                <span class="badge interactive">
+                    <i class="fas fa-gamepad"></i> INTERACTIF
+                </span>
+                <span class="badge">
+                    <i class="fas fa-code"></i> HTML5/CSS3/JS
+                </span>
+                <span class="badge">
+                    <i class="fas fa-users"></i> Multijoueur
+                </span>
+                <span class="badge">
+                    <i class="fas fa-open-source-initiative"></i> MIT License
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+        <!-- APERÇU -->
+        <section>
+            <h2><i class="fas fa-bullseye"></i> Aperçu du Projet</h2>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                <strong>Quiz Master</strong> est une application web de quiz interactive offrant une expérience ludique et compétitive. Conçue en vanilla JavaScript, HTML5 et CSS3, elle propose deux modes de jeu distincts : un mode Solo pour tester ses connaissances et un mode Duel pour affronter un adversaire.
+            </p>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                L'application permet aux joueurs de sélectionner parmi plusieurs catégories de questions, de choisir un niveau de difficulté adapté, et de suivre leurs performances via un système de classement en temps réel.
+            </p>
+        </section>
+
+        <!-- MODES DE JEU -->
+        <section>
+            <h2><i class="fas fa-gamepad"></i> Modes de Jeu</h2>
+            <div class="features-grid">
+                <div class="mode-card">
+                    <h3><i class="fas fa-user"></i> Mode Solo</h3>
+                    <p>Testez vos connaissances et améliorez votre score personnel. Parfait pour l'apprentissage individuel.</p>
+                    <ul class="features-list">
+                        <li>Questionnaire à rythme libre</li>
+                        <li>Score personnel suivi</li>
+                        <li>Feedback immédiat</li>
+                        <li>Progression sauvegardée</li>
+                    </ul>
+                </div>
+                <div class="mode-card">
+                    <h3><i class="fas fa-crossed-swords"></i> Mode Duel</h3>
+                    <p>Défiez un ami et mesurez vos connaissances en temps réel. Le meilleur score remporte la victoire!</p>
+                    <ul class="features-list">
+                        <li>Compétition en direct</li>
+                        <li>Scores côte à côte</li>
+                        <li>Minuteur intégré</li>
+                        <li>Historique des matchs</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- FONCTIONNALITÉS -->
+        <section>
+            <h2><i class="fas fa-star"></i> Fonctionnalités Clés</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-list"></i> Catégories Variées</h3>
+                    <p>Multiples catégories de questions pour tous les intérêts et niveaux d'expertise</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-line"></i> Niveaux de Difficulté</h3>
+                    <p>Facile, Moyen, Difficile - Adaptez le challenge à votre niveau</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-clock"></i> Minuteur</h3>
+                    <p>Temps limité par question pour plus de défi</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-database"></i> Stockage Local</h3>
+                    <p>Les résultats et préférences sont sauvegardés automatiquement</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-trophy"></i> Classement</h3>
+                    <p>Suivi des scores et des statistiques personnelles</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-redo"></i> Rejeu</h3>
+                    <p>Questions randomisées pour une expérience toujours nouvelle</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STACK TECHNIQUE -->
+        <section>
+            <h2><i class="fas fa-code"></i> Stack Technique</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <strong>Frontend</strong>
+                    <p>Vanilla JavaScript (ES6+)</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Markup</strong>
+                    <p>HTML5 sémantique</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Styling</strong>
+                    <p>CSS3 responsive</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Storage</strong>
+                    <p>localStorage API</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Data</strong>
+                    <p>JSON (questions.json)</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Architecture</strong>
+                    <p>Classes ES6 (Quiz, Storage)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STRUCTURE DU PROJET -->
+        <section>
+            <h2><i class="fas fa-folder-tree"></i> Structure du Projet</h2>
+            <div style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.9rem; overflow-x: auto;">
+                <pre style="margin: 0;">Quiz-Master/
+├── index.html              # Page HTML principale
+├── data/
+│   └── questions.json      # Base de données questions
+├── src/
+│   ├── js/
+│   │   ├── app.js          # Contrôleur principal
+│   │   ├── Quiz.js         # Classe Quiz (logique jeu)
+│   │   ├── Storage.js      # Classe Storage (données)
+│   │   └── Utils.js        # Fonctions utilitaires
+│   └── css/
+│       ├── main.css        # Styles principaux
+│       └── responsive.css  # Responsive design
+├── README.md               # Documentation
+└── LICENSE                 # MIT License</pre>
+            </div>
+        </section>
+
+        <!-- FLUX DE JEU -->
+        <section>
+            <h2><i class="fas fa-arrows-alt"></i> Flux de Jeu</h2>
+            <ol style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li><strong>Page d'accueil:</strong> Choix du mode (Solo/Duel)</li>
+                <li><strong>Configuration:</strong> Entrée du/des noms, sélection catégorie</li>
+                <li><strong>Niveau:</strong> Choix du niveau de difficulté</li>
+                <li><strong>Jeu:</strong> Présentation des questions et réponses</li>
+                <li><strong>Résultats:</strong> Affichage des scores et statistiques</li>
+                <li><strong>Classement:</strong> Historique et positions des joueurs</li>
+            </ol>
+        </section>
+
+        <!-- DONNÉES -->
+        <section>
+            <h2><i class="fas fa-database"></i> Gestion des Données</h2>
+            <p style="margin-bottom: 1rem;">
+                Le projet utilise une architecture modulaire avec:
+            </p>
+            <ul class="features-list">
+                <li>Classe <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 4px;">Quiz</code> - Logique du jeu et gestion des questions</li>
+                <li>Classe <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 4px;">Storage</code> - Persistance des données (localStorage)</li>
+                <li>Fichier <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 4px;">questions.json</code> - Base de données structurée</li>
+                <li>Utilitaires - Fonctions réutilisables</li>
+            </ul>
+        </section>
+
+        <!-- CATÉGORIES & QUESTIONS -->
+        <section>
+            <h2><i class="fas fa-book"></i> Catégories de Questions</h2>
+            <p style="margin-bottom: 1rem;">
+                Quiz Master propose plusieurs catégories:
+            </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📚 Générale</h3>
+                    <p>Culture générale, histoire, géographie</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔬 Science</h3>
+                    <p>Biologie, chimie, physique, astronomie</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎬 Divertissement</h3>
+                    <p>Films, musique, télévision, célébrités</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🏅 Sports</h3>
+                    <p>Football, basket, olympiques, athlétisme</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSTALLATION -->
+        <section>
+            <h2><i class="fas fa-download"></i> Installation Rapide</h2>
+            <ol style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>Clonez le repository
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 0.5rem; margin: 0.5rem 0; border-radius: 4px; font-family: monospace;">git clone https://github.com/sfrayan/Quiz-Master.git</div>
+                </li>
+                <li>Accédez au répertoire
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 0.5rem; margin: 0.5rem 0; border-radius: 4px; font-family: monospace;">cd Quiz-Master</div>
+                </li>
+                <li>Lancez un serveur local (Python)
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 0.5rem; margin: 0.5rem 0; border-radius: 4px; font-family: monospace;">python -m http.server 8000</div>
+                </li>
+                <li>Ouvrez dans le navigateur: <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 4px;">http://localhost:8000</code></li>
+            </ol>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                <strong>Note:</strong> L'application n'a aucune dépendance externe - tout est inclus.
+            </p>
+        </section>
+
+        <!-- POINTS FORTS -->
+        <section>
+            <h2><i class="fas fa-lightbulb"></i> Points Forts</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-leaf"></i> Vanilla JS</h3>
+                    <p>Pas de dépendances externes, code pur et performant</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-mobile-alt"></i> Responsive</h3>
+                    <p>Fonctionne parfaitement sur desktop et mobile</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-bolt"></i> Performant</h3>
+                    <p>Temps de chargement rapide et interactions fluides</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-lock"></i> Sécurisé</h3>
+                    <p>Pas de connexion serveur - données locales uniquement</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROADMAP -->
+        <section>
+            <h2><i class="fas fa-map"></i> Roadmap Futur</h2>
+            <div class="roadmap">
+                <div class="roadmap-item complete">
+                    <span class="version">v1.0 ✅</span>
+                    <h3>Version Actuelle</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>✅ Mode Solo/Duel</li>
+                        <li>✅ Catégories multiples</li>
+                        <li>✅ Niveaux de difficulté</li>
+                        <li>✅ Classement</li>
+                    </ul>
+                </div>
+                <div class="roadmap-item">
+                    <span class="version">v1.1</span>
+                    <h3>Améliorations</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>Thème sombre/clair</li>
+                        <li>Explications réponses</li>
+                        <li>Statistiques détaillées</li>
+                        <li>Badges/Achievements</li>
+                    </ul>
+                </div>
+                <div class="roadmap-item">
+                    <span class="version">v2.0</span>
+                    <h3>Évolutions Majeures</h3>
+                    <ul style="margin: 1rem 0 0 1.5rem; font-size: 0.9rem;">
+                        <li>Backend Node.js</li>
+                        <li>Multijoueurs en ligne</li>
+                        <li>Système de points</li>
+                        <li>Contenu dynamique API</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section style="text-align: center;">
+            <h2><i class="fas fa-link"></i> Explorez le Projet</h2>
+            <p style="margin-bottom: 2rem; color: rgba(234, 234, 234, 0.7);">
+                Jouez immédiatement, consultez le code source ou contribuez au projet!
+            </p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="https://github.com/sfrayan/Quiz-Master" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub Repository
+                </a>
+                <a href="https://github.com/sfrayan/Quiz-Master/issues" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-bug"></i> Issues & Suggestions
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Rayan Said Farah | Quiz Master - Jeu de Quiz Interactif | MIT License</p>
+    </footer>
+</body>
+</html>
