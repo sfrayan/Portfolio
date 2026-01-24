@@ -1,126 +1,547 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Infrastructures de sécurité</title>		
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R401 - Infrastructures de Sécurité | Rayan Said Farah</title>
+    <meta name="description" content="R401 - Compte rendu du cours sur les Infrastructures de Sécurité. Snort, Fail2ban, Nmap, iptables, détection d'intrusions.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-image: url("../images/Parcours.jpg");
-            background-size: cover;
-            background-position: center;
-            color: #fff;
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 960px;
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
+            --warning: #ffd700;
+            --danger: #ff4757;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        header {
+            position: relative;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .project-header {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
-        .row {
-            margin-bottom: 20px;
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
         }
-        h2 {
-            margin-top: 0;
+
+        .back-link:hover {
+            gap: 1rem;
+            color: var(--accent-light);
         }
-        table {
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(234, 234, 234, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .badge.learning {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: var(--accent);
+            color: var(--accent-light);
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid rgba(233, 69, 96, 0.1);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+            border-left-color: var(--success);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: rgba(234, 234, 234, 0.7);
+        }
+
+        .info-table {
             width: 100%;
             border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
         }
-        th, td {
-            padding: 10px;
+
+        .info-table th,
+        .info-table td {
+            padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #fff;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.2);
         }
-        th {
+
+        .info-table th {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--success);
+            font-weight: 600;
+            width: 20%;
+        }
+
+        .info-table tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .tech-item strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            font-size: 0.85rem;
+            color: rgba(234, 234, 234, 0.6);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
             font-weight: bold;
         }
-        h3 {
-            margin-top: 0;
+
+        footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            text-align: center;
+            color: rgba(234, 234, 234, 0.6);
         }
-        p {
-            margin-bottom: 0;
-        }
-        .projets {
-            position: relative;
-        }
-        .projets img {
-            width: 100%;
-            height: auto;
-        }
-        .layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .projets:hover .layer {
-            opacity: 1;
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            .features-grid,
+            .tech-stack {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
-        <div class="container">
-            <div class="row">
-                <h2 id="nom_proj">Compte Rendu Infrastructures de sécurité</h2>
-                <!-- Introduction -->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Cadre</th>
-                            <td>Cours : « R401 : Infrastructures de sécurité »</td>
-                        </tr>
-                        <tr>
-                            <th>Groupe</th>
-                            <td>Monogroupe</td>
-                        </tr>
-                        <tr>
-                            <th>Durée</th>
-                            <td>1 journée</td>
-                        </tr>
-                        <tr>
-                            <th>Statut</th>
-                            <td>Terminé</td>
-                        </tr>
-                    </table>
-                    <br>
-                </div>
-                <!-- Description -->
-                <div>
-                    <h3>Description</h3>
-                    <p> Ce TP pratique vise à vous initier aux outils et techniques de surveillance 
-                        et de sécurisation des systèmes d'information. À travers des exercices concrets, 
-                        vous manipulerez des outils tels que Snort (pour la détection et la prévention d'intrusions), 
-                        Fail2ban (pour bloquer les attaques par force brute), et Nmap (pour le balayage réseau). 
-                        Vous configurerez des interfaces réseau, des routes, et mettrez en place des règles de filtrage 
-                        dynamique avec iptables pour protéger un serveur web contre des requêtes malveillantes. 
-                        Ce TP vous permettra de comprendre comment ces outils interagissent pour détecter et contrer 
-                        des menaces en temps réel, tout en vous offrant une expérience pratique essentielle pour la 
-                        sécurisation des infrastructures réseau.
-                    </p>
-                    <br>
-                </div>
-                <!-- Ressources -->
-                <div>
-                    <h3>Ressources</h3>
-                </div>
-                <div class="projets">
-                    <a href="../Projets/pdf/R401.pdf">
-                        <img src="../images/R401.jpg" alt="R401">
-                        <div class="layer"></div>
-                    </a>
-                </div>
+    <header>
+        <div class="project-header">
+            <a href="../index.html#projets" class="back-link">
+                <i class="fas fa-arrow-left"></i> Retour aux Projets
+            </a>
+            <h1>
+                <i class="fas fa-shield-alt"></i> R401
+            </h1>
+            <p class="subtitle">Infrastructures de Sécurité</p>
+            <div class="project-badges">
+                <span class="badge learning">
+                    <i class="fas fa-graduation-cap"></i> COURS R401
+                </span>
+                <span class="badge">
+                    <i class="fas fa-lock"></i> Sécurité
+                </span>
+                <span class="badge">
+                    <i class="fas fa-network-wired"></i> Réseau
+                </span>
+                <span class="badge">
+                    <i class="fas fa-book"></i> Documentation
+                </span>
             </div>
         </div>
-    </section>
+    </header>
+
+    <div class="content">
+        <!-- INFORMATIONS PRINCIPALES -->
+        <section>
+            <h2><i class="fas fa-info-circle"></i> Informations Principales</h2>
+            <table class="info-table">
+                <tr>
+                    <th>Cadre</th>
+                    <td>Cours : R401 - Infrastructures de Sécurité</td>
+                </tr>
+                <tr>
+                    <th>Format</th>
+                    <td>Monogroupe</td>
+                </tr>
+                <tr>
+                    <th>Durée</th>
+                    <td>1 journée (7 heures)</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td><span style="color: var(--success); font-weight: 600;">✓ Terminé</span></td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- APERÇU -->
+        <section>
+            <h2><i class="fas fa-bullseye"></i> Aperçu du Cours</h2>
+            <p style="font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                <strong>R401 - Infrastructures de Sécurité</strong> est un cours pratique couvrant les outils et techniques essentiels pour surveiller et sécuriser les systèmes d'information. Ce TP plongée dans la configuration de solutions de détection et de prévention d'intrusions.
+            </p>
+            <p style="color: rgba(234, 234, 234, 0.7);">
+                Le cours couvre l'utilisation de Snort (détection/prévention d'intrusions), Fail2ban (blocage d'attaques par force brute), Nmap (balayage réseau) et iptables (filtrage dynamique) pour protéger une infrastructure contre les menaces en temps réel.
+            </p>
+        </section>
+
+        <!-- OUTILS PRINCIPAUX -->
+        <section>
+            <h2><i class="fas fa-tools"></i> Outils & Technologies</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-bug"></i> Snort</h3>
+                    <p>Système de détection et prévention d'intrusions (IDS/IPS)</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-shield-alt"></i> Fail2ban</h3>
+                    <p>Protection contre les attaques par force brute (SSH, FTP, HTTP)</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-network-wired"></i> Nmap</h3>
+                    <p>Balayage de réseau et audit de vulnérabilités</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-filter"></i> Iptables</h3>
+                    <p>Pare-feu Linux avec règles de filtrage dynamiques</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-server"></i> Linux</h3>
+                    <p>Administration système et configuration réseau</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-line"></i> Monitoring</h3>
+                    <p>Surveillance et analyse des logs de sécurité</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCEPTS CLÉS -->
+        <section>
+            <h2><i class="fas fa-lightbulb"></i> Concepts Clés Couverts</h2>
+            <ul class="features-list">
+                <li><strong>Détection d'Intrusions (IDS):</strong> Monitorer les activités suspectes sur le réseau</li>
+                <li><strong>Prévention d'Intrusions (IPS):</strong> Bloquer automatiquement les menaces détectées</li>
+                <li><strong>Firewall Statefull:</strong> Gestion avancée des connexions avec iptables</li>
+                <li><strong>Défense contre Brute-Force:</strong> Ban automatique d'adresses IP suspectes</li>
+                <li><strong>Balayage de Sécurité:</strong> Identification de ports ouverts et services</li>
+                <li><strong>Règles de Sécurité:</strong> Création et test de signatures Snort personnalisées</li>
+                <li><strong>Analyse de Logs:</strong> Investigation des tentatives d'attaques</li>
+                <li><strong>Architecture de Défense:</strong> Défense en profondeur (defense-in-depth)</li>
+            </ul>
+        </section>
+
+        <!-- STACK TECHNIQUE -->
+        <section>
+            <h2><i class="fas fa-code"></i> Stack Technique</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <strong>IDS/IPS</strong>
+                    <p>Snort 3.x</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Fail2ban</strong>
+                    <p>Défense contre brute-force</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Scanning</strong>
+                    <p>Nmap et Nessus</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Firewall</strong>
+                    <p>iptables / nftables</p>
+                </div>
+                <div class="tech-item">
+                    <strong>OS</strong>
+                    <p>Linux Ubuntu/Debian</p>
+                </div>
+                <div class="tech-item">
+                    <strong>Monitoring</strong>
+                    <p>Syslog, Snorby, Barnyard2</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUJETS PRATIQUES -->
+        <section>
+            <h2><i class="fas fa-laptop-code"></i> Exercices Pratiques</h2>
+            <p style="margin-bottom: 1rem;">
+                Le cours couvre les exercices suivants:
+            </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-cog"></i> Installation Snort</h3>
+                    <p>Compilation et configuration de Snort 3 en mode IDS/IPS</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-file-code"></i> Règles Personnalisées</h3>
+                    <p>Création de signatures pour détecter des anomalies</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-ban"></i> Fail2ban Setup</h3>
+                    <p>Protection d'un serveur SSH contre brute-force</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-network-wired"></i> Nmap Scanning</h3>
+                    <p>Audit de topologie réseau et détection de vulnérabilités</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-iptables"></i> Filtrage iptables</h3>
+                    <p>Configuration pare-feu et gestion d'accès par règles</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-virus"></i> Pen Testing</h3>
+                    <p>Test d'attaques et vérification de la détection</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- POINTS FORTS -->
+        <section>
+            <h2><i class="fas fa-award"></i> Points de Compétences Développés</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-search"></i> Détection</h3>
+                    <p>Détection et analyse d'attaques en temps réel</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-shield"></i> Protection</h3>
+                    <p>Mise en place de défenses avancées</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-terminal"></i> Linux</h3>
+                    <p>Maîtrise de l'administration système</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-line"></i> Analyse</h3>
+                    <p>Interprétation et investigation de logs</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESSOURCES -->
+        <section>
+            <h2><i class="fas fa-file-pdf"></i> Ressources & Documentation</h2>
+            <p style="margin-bottom: 1.5rem;">
+                Le rapport complet contient tous les détails techniques:
+            </p>
+            <div class="features-grid">
+                <a href="../Projets/pdf/R401.pdf" style="text-decoration: none;" target="_blank">
+                    <div class="feature-card" style="cursor: pointer;">
+                        <h3><i class="fas fa-file-pdf"></i> Rapport Complet</h3>
+                        <p>Document détaillé avec captures d'écran et explications techniques</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section style="text-align: center;">
+            <h2><i class="fas fa-download"></i> Consulter la Documentation</h2>
+            <p style="margin-bottom: 2rem; color: rgba(234, 234, 234, 0.7);">
+                Téléchargez le rapport complet avec tous les détails techniques et captures d'écran.
+            </p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="../Projets/pdf/R401.pdf" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-download"></i> Télécharger le PDF
+                </a>
+                <a href="../index.html#projets" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour aux Projets
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Rayan Said Farah | R401 - Infrastructures de Sécurité | Cours</p>
+    </footer>
 </body>
 </html>
