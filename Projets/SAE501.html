@@ -1,203 +1,540 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SAE501 - Architecture Wi-Fi Sécurisée</title>		
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SAE501 - Architecture Wi-Fi Sécurisée Multi-Sites. Infrastructure RADIUS centralisée avec authentification WPA-Enterprise.">
+    <meta name="keywords" content="RADIUS, Wi-Fi, WPA-Enterprise, Sécurité, Réseau, Monitoring">
+    <title>SAE501 - Architecture Wi-Fi Sécurisée | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-image: url("../images/Parcours.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: #fff;
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
+
+        :root {
+            --primary: #0f3460;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --text-light: #eaeaea;
+            --text-dark: #16213e;
+            --bg-dark: #0d1117;
+            --bg-light: #f8f9fa;
+            --success: #00d4ff;
         }
-        .row {
-            margin-bottom: 20px;
+
+        html {
+            scroll-behavior: smooth;
         }
-        h2 {
-            margin-top: 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #fff;
-        }
-        th {
-            font-weight: bold;
-        }
-        h3 {
-            margin-top: 0;
-        }
-        p {
-            margin-bottom: 0;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             line-height: 1.6;
         }
-        ul {
-            margin-top: 10px;
-            margin-bottom: 0;
-            margin-left: 20px;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .tech-badges {
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 3rem;
+            background: rgba(15, 52, 96, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(233, 69, 96, 0.1);
         }
-        .badge {
-            background: rgba(233, 69, 96, 0.3);
-            border: 1px solid #e94560;
-            color: #e94560;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-        .github-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: rgba(233, 69, 96, 0.8);
-            color: white;
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--success);
             text-decoration: none;
-            border-radius: 5px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin: 0 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--success);
+        }
+
+        /* Header */
+        .header {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-light), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(234, 234, 234, 0.8);
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
             transition: all 0.3s ease;
         }
-        .github-link:hover {
-            background: #e94560;
-            transform: translateY(-2px);
+
+        .feature-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-left-color: var(--success);
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .tag {
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .architecture {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            margin: 2rem 0;
+        }
+
+        .stat {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--success);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: gap 0.3s ease;
+        }
+
+        .back-link:hover {
+            gap: 1rem;
+        }
+
+        footer {
+            background: var(--secondary);
+            color: var(--text-light);
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid rgba(233, 69, 96, 0.3);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <section id="page_projets">
-        <div class="container">
-            <div class="row">
-                <h2 id="nom_proj">SAE501 - Architecture Wi-Fi Sécurisée Multi-Sites</h2>
-                <!-- Introduction -->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Type</th>
-                            <td>Projet SAE - Infrastructure Réseau</td>
-                        </tr>
-                        <tr>
-                            <th>Cadre</th>
-                            <td>Sorbonne Paris Nord</td>
-                        </tr>
-                        <tr>
-                            <th>Groupe</th>
-                            <td>Équipe projet</td>
-                        </tr>
-                        <tr>
-                            <th>Statut</th>
-                            <td>Production-Ready</td>
-                        </tr>
-                    </table>
-                    <br>
-                </div>
-                <!-- Description -->
-                <div>
-                    <h3>Description</h3>
-                    <p>SAE501 est une infrastructure d'authentification RADIUS centralisée complète pour une chaîne de salles de sport permettant une gestion sécurisée et à grande échelle du Wi-Fi d'entreprise. 
-                        Le projet implémente une solution production-ready avec authentification WPA-Enterprise PEAP-MSCHAPv2, gestion centralisée des utilisateurs, monitoring en temps réel et logs d'audit complets.
-                        <br><br>
-                        <strong>Objectifs principaux :</strong>
-                    </p>
-                    <ul>
-                        <li>✓ Authentification WPA-Enterprise sécurisée (PEAP-MSCHAPv2)</li>
-                        <li>✓ Gestion centralisée des utilisateurs multi-sites</li>
-                        <li>✓ Monitoring en temps réel et détection d'anomalies</li>
-                        <li>✓ Logs d'audit complets et traçabilité</li>
-                        <li>✓ Installation et déploiement rapides (automatisés)</li>
-                        <li>✓ Interface d'administration web conviviale</li>
-                        <li>✓ Scalabilité pour chaînes multi-sites</li>
-                    </ul>
-                    <br>
-                </div>
-                <!-- Architecture -->
-                <div>
-                    <h3>Architecture Système</h3>
-                    <p>Le système est composé de 4 services principaux working en synergie :
-                    </p>
-                    <ul>
-                        <li><strong>FreeRADIUS</strong> (Port 1812/1813) : Serveur d'authentification RADIUS, protocole PEAP-MSCHAPv2 sans certificat client</li>
-                        <li><strong>PHP-Admin</strong> (Port 80/443) : Interface web de gestion des utilisateurs, logs d'audit et paramétrages système</li>
-                        <li><strong>MySQL/MariaDB</strong> (Port 3306) : Base de données RADIUS, stockage utilisateurs avec mots de passe hashés</li>
-                        <li><strong>Wazuh</strong> (Port 5601) : Monitoring en temps réel, détection d'anomalies et dashboard de visualisation</li>
-                    </ul>
-                    <br>
-                </div>
-                <!-- Technologies -->
-                <div>
-                    <h3>Technologies Utilisées</h3>
-                    <div class="tech-badges">
-                        <span class="badge">FreeRADIUS</span>
-                        <span class="badge">MySQL/MariaDB</span>
-                        <span class="badge">PHP</span>
-                        <span class="badge">Apache2</span>
-                        <span class="badge">PEAP-MSCHAPv2</span>
-                        <span class="badge">WPA-Enterprise</span>
-                        <span class="badge">Wazuh</span>
-                        <span class="badge">Bash Scripting</span>
-                        <span class="badge">Linux (Debian/Ubuntu)</span>
-                        <span class="badge">GitHub Actions</span>
-                        <span class="badge">GitHub Pages</span>
-                    </div>
-                    <br>
-                </div>
-                <!-- Contribution -->	
-                <div>
-                    <h3>Ma Contribution</h3>
-                    <p>J'ai conçu et développé l'intégralité de cette infrastructure d'authentification RADIUS production-ready pour entreprises.
-                        <br><br>
-                        <strong>Infrastructure RADIUS :</strong> Configuration complète de FreeRADIUS avec protocole PEAP-MSCHAPv2, intégration MySQL pour le stockage des utilisateurs, gestion sécurisée des mots de passe (hachage), configuration multi-sites avec load-balancing et failover.
-                        <br><br>
-                        <strong>Interface d'administration :</strong> Développement d'une interface PHP web conviviale permettant l'ajout/modification/suppression d'utilisateurs, consultation des logs d'audit, configuration des paramétrages RADIUS, visualisation de l'état du système et contrôle des services.
-                        <br><br>
-                        <strong>Base de données :</strong> Architecture MySQL optimisée avec schémas pour utilisateurs RADIUS, logs d'authentification, configuration des services et audit trail complet.
-                        <br><br>
-                        <strong>Monitoring et Sécurité :</strong> Intégration Wazuh pour monitoring en temps réel, détection d'anomalies, alertes de sécurité, dashboards de visualisation et centralisation des logs. Implémentation du hardening Linux, gestion des certificats SSL/TLS et sécurisation des accès.
-                        <br><br>
-                        <strong>Automatisation :</strong> Développement de scripts Bash complets pour automatiser l'installation complète (install_all.sh), tests automatisés (test_installation.sh), diagnostics (diagnostics.sh) et affichage des identifiants (show_credentials.sh). Chaque script peut s'exécuter indépendamment pour modulabilité.
-                        <br><br>
-                        <strong>CI/CD et Documentation :</strong> Configuration GitHub Actions pour tests automatisés (linting, scan de secrets, validation), déploiement automatique de GitHub Pages, documentation complète step-by-step, diagrammes d'architecture et journal de bord du projet.
-                        <br><br>
-                        Ce projet démontre ma capacité à déployer une infrastructure réseau d'entreprise sécurisée et scalable, automatiser les déploiements, implémenter des bonnes pratiques de sécurité et fournir une solution production-ready avec documentation complète.
-                    </p>
-                    <br>
-                </div>
-                <!-- Ressources -->
-                <div>
-                    <h3>Ressources & Dépôt</h3>
-                    <p>Accédez au code source complet, scripts d'installation et documentation du projet :
-                    </p>
-                    <a href="https://github.com/sfrayan/SAE501" class="github-link" target="_blank" rel="noopener noreferrer">
-                        📦 Voir le dépôt GitHub
-                    </a>
-                    <br>
-                    <p style="margin-top: 15px; font-size: 0.95rem;">
-                        <strong>Documentation en ligne :</strong> <a href="https://sfrayan.github.io/SAE501" style="color: #00d4ff;">https://sfrayan.github.io/SAE501</a>
-                    </p>
-                </div>
+    <!-- Navigation -->
+    <nav>
+        <a href="../index.html" class="nav-brand">
+            <i class="fas fa-arrow-left"></i> Portfolio
+        </a>
+        <div class="nav-links">
+            <a href="../index.html#projets">Projets</a>
+            <a href="../index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>📋 SAE501 - Architecture Wi-Fi Sécurisée Multi-Sites</h1>
+        <p>Infrastructure RADIUS centralisée avec authentification WPA-Enterprise</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <a href="../index.html#projets" class="back-link">
+            <i class="fas fa-arrow-left"></i> Retour aux projets
+        </a>
+
+        <h2><i class="fas fa-wifi"></i> À Propos du Projet</h2>
+        <p>
+            SAE501 est un projet complet de création d'une infrastructure d'authentification Wi-Fi sécurisée pour une chaîne de salles de sport multi-sites.
+            Le système utilise FreeRADIUS avec authentification PEAP-MSCHAPv2, permettant une gestion centralisée des utilisateurs avec monitoring en temps réel.
+        </p>
+
+        <h2><i class="fas fa-star"></i> Caractéristiques Principales</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4><i class="fas fa-lock"></i> Sécurité</h4>
+                <p>WPA-Enterprise avec PEAP-MSCHAPv2, sans certificats clients</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="fas fa-users"></i> Gestion Centralisée</h4>
+                <p>Interface web pour ajouter/modifier/supprimer utilisateurs</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="fas fa-chart-line"></i> Monitoring</h4>
+                <p>Wazuh pour détection d'anomalies en temps réel</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="fas fa-file-alt"></i> Logs d'Audit</h4>
+                <p>Enregistrement complet des authentifications et actions</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="fas fa-broadcast-tower"></i> Multi-Sites</h4>
+                <p>Architecture scalable pour plusieurs locations</p>
+            </div>
+            <div class="feature-card">
+                <h4><i class="fas fa-rocket"></i> Déploiement Rapide</h4>
+                <p>Scripts automatisés pour installation complète</p>
             </div>
         </div>
-    </section>
+
+        <h2><i class="fas fa-cogs"></i> Composants Techniques</h2>
+
+        <h3><i class="fas fa-server"></i> FreeRADIUS</h3>
+        <p>
+            Serveur d'authentification RADIUS (Port 1812/1813)
+        </p>
+        <ul>
+            <li>Protocole: PEAP-MSCHAPv2</li>
+            <li>Base de données utilisateurs: MySQL</li>
+            <li>Gestion transparente sans certificats clients</li>
+        </ul>
+
+        <h3><i class="fas fa-desktop"></i> Interface Web (PHP-Admin)</h3>
+        <p>
+            Application de gestion complète (Port 80/443)
+        </p>
+        <ul>
+            <li>Authentification sécurisée</li>
+            <li>Gestion CRUD des utilisateurs</li>
+            <li>Logs d'audit complets</li>
+            <li>Paramétrages système</li>
+            <li>Infos d'infrastructure</li>
+        </ul>
+
+        <h3><i class="fas fa-database"></i> MySQL/MariaDB</h3>
+        <p>
+            Base de données RADIUS (Port 3306)
+        </p>
+        <ul>
+            <li>Stockage utilisateurs avec hash de mots de passe</li>
+            <li>Logs d'authentification</li>
+            <li>Configuration système</li>
+        </ul>
+
+        <h3><i class="fas fa-chart-bar"></i> Wazuh</h3>
+        <p>
+            Plateforme de monitoring et sécurité (Port 5601/55000)
+        </p>
+        <ul>
+            <li>Monitoring en temps réel</li>
+            <li>Détection d'anomalies</li>
+            <li>Alertes de sécurité</li>
+            <li>Dashboards avancés</li>
+        </ul>
+
+        <h2><i class="fas fa-tachometer-alt"></i> Statistiques</h2>
+        <div class="stat">
+            <div class="stat-number">🚀 15-20 minutes</div>
+            <p>Installation complète avec script automatisé</p>
+        </div>
+        <div class="stat">
+            <div class="stat-number">📊 10+</div>
+            <p>Tests diagnostics automatiques inclus</p>
+        </div>
+        <div class="stat">
+            <div class="stat-number">100%</div>
+            <p>Automation avec scripts Bash production-ready</p>
+        </div>
+
+        <h2><i class="fas fa-laptop-code"></i> Technologies Utilisées</h2>
+        <div class="tech-tags">
+            <span class="tag">FreeRADIUS</span>
+            <span class="tag">WPA-Enterprise</span>
+            <span class="tag">PEAP-MSCHAPv2</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">PHP</span>
+            <span class="tag">Apache2</span>
+            <span class="tag">Wazuh</span>
+            <span class="tag">Elasticsearch</span>
+            <span class="tag">Bash</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Debian/Ubuntu</span>
+            <span class="tag">Docker</span>
+        </div>
+
+        <h2><i class="fas fa-book"></i> Documentation Complète</h2>
+        <p>
+            Le projet inclut une documentation exhaustive :
+        </p>
+        <ul>
+            <li>Guide d'installation étape par étape</li>
+            <li>Configuration de routeurs Wi-Fi</li>
+            <li>Gestion des utilisateurs</li>
+            <li>Monitoring et scénarios de dépannage</li>
+            <li>Bonnes pratiques de sécurité</li>
+            <li>Scripts de diagnostic</li>
+        </ul>
+
+        <h2><i class="fas fa-github"></i> Points Forts</h2>
+        <ul>
+            <li><strong>Production-Ready:</strong> Déploiement immédiat en environnement réel</li>
+            <li><strong>Automatisé:</strong> Installation complète en une commande</li>
+            <li><strong>Scalable:</strong> Architecture multi-sites avec gestion centralisée</li>
+            <li><strong>Sécurisé:</strong> WPA-Enterprise sans certificats clients</li>
+            <li><strong>Monitoré:</strong> Wazuh intégré pour détection d'anomalies</li>
+            <li><strong>Audit:</strong> Logs complets de toutes les authentifications</li>
+            <li><strong>Facile:</strong> Interface web intuitive pour gestion</li>
+            <li><strong>Bien Documenté:</strong> Documentation de 200+ lignes</li>
+        </ul>
+
+        <h2><i class="fas fa-question-circle"></i> Cas d'Usage</h2>
+        <ul>
+            <li>Chaîne de salles de sport (multi-sites)</li>
+            <li>Réseaux d'entreprise d'envergure</li>
+            <li>Établissements scolaires/universités</li>
+            <li>Hôtels et infrastructures touristiques</li>
+            <li>Laboratoires de recherche</li>
+            <li>Centres de formation</li>
+        </ul>
+
+        <h2><i class="fas fa-shield-alt"></i> Sécurité</h2>
+        <p>
+            SAE501 intégre de nombreuses mesures de sécurité :
+        </p>
+        <ul>
+            <li>Authentification WPA-Enterprise (sans certificats clients)</li>
+            <li>Hachage sécurisé des mots de passe en base de données</li>
+            <li>Firewall UFW préconfiguré</li>
+            <li>Hardening Linux avancé</li>
+            <li>Logs d'audit complets</li>
+            <li>Détection d'anomalies Wazuh</li>
+            <li>Isolation des données sensibles</li>
+        </ul>
+
+        <h2><i class="fas fa-github"></i> GitHub Pages et Actions</h2>
+        <p>
+            Le projet inclut :
+        </p>
+        <ul>
+            <li><strong>GitHub Pages:</strong> Documentation en ligne accessible</li>
+            <li><strong>CI/CD:</strong> Tests automatiques à chaque push (ShellCheck, lint, scan secrets)</li>
+            <li><strong>Workflows:</strong> Déploiement automatique de la documentation</li>
+            <li><strong>Badges:</strong> Statut de build visible sur le README</li>
+        </ul>
+
+        <h2><i class="fas fa-lightbulb"></i> Apprentissages Clés</h2>
+        <ul>
+            <li>Déploiement d'infrastructure réseau complexe</li>
+            <li>Configuration de protocoles d'authentification avancés</li>
+            <li>Monitoring et détection d'anomalies en production</li>
+            <li>Gestion de systèmes distribués multi-sites</li>
+            <li>Automatisation Bash de haut niveau</li>
+            <li>Sécurité informatique appliquée</li>
+            <li>Hardening Linux et meilleures pratiques</li>
+        </ul>
+
+        <h2><i class="fas fa-flag-checkered"></i> Pré -requis Minimum</h2>
+        <ul>
+            <li>VM ou serveur Linux (Debian 12+ ou Ubuntu 22.04+)</li>
+            <li>4GB RAM (8GB recommandé)</li>
+            <li>2 CPU cores minimum</li>
+            <li>50GB espace disque</li>
+            <li>Accès root pour installation</li>
+            <li>Connexion internet pendant installation</li>
+        </ul>
+
+        <div class="cta-buttons">
+            <a href="https://github.com/sfrayan/SAE501" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fab fa-github"></i> Voir sur GitHub
+            </a>
+            <a href="https://sfrayan.github.io/SAE501" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fas fa-book"></i> Documentation Complète
+            </a>
+            <a href="../index.html#projets" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Autres Projets
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>SAE501</strong> - Architecture Wi-Fi Sécurisée Multi-Sites</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">© 2026 Rayan Said Farah | Ingénieur Réseau & Cybersécurité</p>
+    </footer>
 </body>
 </html>
