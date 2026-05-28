@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RayanOS — Portfolio de Rayan SAID FARAH</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--os-bg-deep); }
+  #root { height: 100vh; }
+  ::selection { background: var(--coral); color: #fff; }
+  /* slim scrollbars */
+  ::-webkit-scrollbar { width: 9px; height: 9px; }
+  ::-webkit-scrollbar-thumb { background: var(--os-surface-3); border-radius: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  [data-lucide] svg { width: 100%; height: 100%; }
+  @keyframes rosFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes rosWinOpen { from { opacity: 0; transform: scale(0.97) translateY(8px); } to { opacity: 1; transform: none; } }
+  .ros-window { box-shadow: var(--shadow-md); }
+  .ros-dock-item:hover { transform: translateY(-8px) scale(1.08); }
+  .ros-contact:hover { border-color: var(--coral) !important; background: var(--os-surface-3) !important; transform: translateY(-2px); }
+  .ros-tl:hover { filter: brightness(1.15); }
+  .ros-desk-icon:hover { background: rgba(255,255,255,0.06); }
+  @keyframes rosKonami { 0%,100% { box-shadow: inset 0 0 0 0 transparent; } 30% { box-shadow: inset 0 0 120px 20px rgba(255,107,74,0.45); } }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel" src="apps.jsx"></script>
+<script type="text/babel" src="apps2.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+
+function App() {
+  const [lang, setLang] = useState('fr');
+  const [booted, setBooted] = useState(false);
+  const [wins, setWins] = useState([]);
+  const [flash, setFlash] = useState(false);
+  const konamiBuf = useRef([]);
+
+  // app registry
+  const APPS = [
+    { id: 'about', icon: 'user-round', bg: 'linear-gradient(135deg,#FF6B4A,#C9402A)', fg: '#fff',
+      label: { fr: 'À propos', en: 'About' }, title: { fr: 'about.app — whoami', en: 'about.app — whoami' },
+      accent: 'var(--coral)', w: 400, h: 600, render: (l) => <AboutApp lang={l} /> },
+    { id: 'projects', icon: 'folder', bg: 'var(--os-surface-2)', fg: 'var(--gold)',
+      label: { fr: 'Projets', en: 'Projects' }, title: { fr: 'projets — explorateur', en: 'projects — explorer' },
+      accent: 'var(--gold)', w: 580, h: 500, render: (l) => <ProjectsApp lang={l} /> },
+    { id: 'supervision', icon: 'radar', bg: '#08100C', fg: 'var(--noc-phosphor)',
+      label: { fr: 'Supervision', en: 'Monitoring' }, title: { fr: 'supervision.app', en: 'supervision.app' },
+      accent: 'var(--noc-phosphor)', w: 640, h: 540, render: (l) => <SupervisionApp lang={l} /> },
+    { id: 'jumeau', icon: 'box', bg: '#0A1322', fg: 'var(--twin-signal)',
+      label: { fr: 'Jumeau Numérique', en: 'Digital Twin' }, title: { fr: 'jumeau.app — blueprint', en: 'jumeau.app — blueprint' },
+      accent: 'var(--twin-signal)', w: 640, h: 540, render: (l) => <JumeauApp lang={l} /> },
+    { id: 'terminal', icon: 'square-terminal', bg: '#0C0A12', fg: 'var(--mint)',
+      label: { fr: 'Terminal', en: 'Terminal' }, title: { fr: 'terminal — bash', en: 'terminal — bash' },
+      accent: 'var(--mint)', w: 540, h: 440, render: (l) => <TerminalApp lang={l} onKonami={triggerKonami} /> },
+    { id: 'contact', icon: 'send', bg: 'var(--os-surface-2)', fg: 'var(--coral)',
+      label: { fr: 'Contact', en: 'Contact' }, title: { fr: 'contact.app', en: 'contact.app' },
+      accent: 'var(--coral)', w: 480, h: 360, render: (l) => <ContactApp lang={l} /> },
+  ];
+  const appById = (id) => APPS.find(a => a.id === id);
+
+  // lucide: re-render icons after every paint
+  useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
+
+  const triggerKonami = useCallback(() => {
+    setFlash(true); setTimeout(() => setFlash(false), 700);
+  }, []);
+
+  // konami code listener
+  useEffect(() => {
+    const code = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    const onKey = (e) => {
+      konamiBuf.current.push(e.key);
+      konamiBuf.current = konamiBuf.current.slice(-code.length);
+      if (code.every((k, i) => (konamiBuf.current[i] || '').toLowerCase() === k.toLowerCase())) {
+        triggerKonami(); openApp('terminal');
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const focus = (id) => {
+    setWins(ws => {
+      const maxZ = Math.max(10, ...ws.map(w => w.z));
+      return ws.map(w => w.id === id ? { ...w, z: maxZ + 1 } : w);
+    });
+  };
+
+  const openApp = (id) => {
+    const a = appById(id); if (!a) return;
+    setWins(ws => {
+      const maxZ = Math.max(10, ...ws.map(w => w.z));
+      if (ws.find(w => w.id === id)) return ws.map(w => w.id === id ? { ...w, z: maxZ + 1 } : w);
+      const n = ws.length;
+      const x = 70 + n * 38 + (window.innerWidth > 1100 ? 90 : 0);
+      const y = 64 + n * 32;
+      return [...ws, { id, x: Math.min(x, Math.max(20, window.innerWidth - a.w - 30)), y, z: maxZ + 1, w: a.w, h: a.h,
+        title: a.title, icon: a.icon, accent: a.accent }];
+    });
+  };
+  const closeApp = (id) => setWins(ws => ws.filter(w => w.id !== id));
+
+  const enter = () => { setBooted(true); setTimeout(() => { openApp('about'); }, 250); };
+
+  const activeApp = wins.length ? appById([...wins].sort((a, b) => b.z - a.z)[0].id)?.label[lang] : null;
+  const deskIcons = ['about', 'projects', 'supervision', 'jumeau'];
+
+  return (
+    <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden',
+      animation: flash ? 'rosKonami 0.7s var(--ease-out)' : 'none' }}>
+      <Wallpaper />
+      {!booted && <Boot lang={lang} onEnter={enter} />}
+      {booted && <>
+        <MenuBar lang={lang} setLang={setLang} activeApp={activeApp} onOpenAbout={() => openApp('about')} />
+
+        {/* desktop launcher icons (top-left) */}
+        <div style={{ position: 'absolute', top: 54, left: 18, zIndex: 5, display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {deskIcons.map(id => { const a = appById(id); return (
+            <button key={id} onDoubleClick={() => openApp(id)} onClick={() => openApp(id)} className="ros-desk-icon" style={{
+              width: 78, padding: '10px 6px', background: 'transparent', border: 'none', borderRadius: 10,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
+              <span style={{ width: 44, height: 44, borderRadius: 12, background: a.bg, border: '1px solid var(--os-line)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', color: a.fg, boxShadow: 'var(--shadow-sm)' }}>
+                <Icon name={a.icon} size={21} />
+              </span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--fg-2)', textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{a.label[lang]}</span>
+            </button>
+          ); })}
+        </div>
+
+        {/* windows */}
+        {wins.map(w => {
+          const a = appById(w.id);
+          const focused = [...wins].sort((x, y) => y.z - x.z)[0].id === w.id;
+          return (
+            <Window key={w.id} win={w} focused={focused} onFocus={focus} onClose={closeApp} lang={lang}>
+              {a.render(lang)}
+            </Window>
+          );
+        })}
+
+        <Dock lang={lang} apps={APPS} openIds={wins.map(w => w.id)} onOpen={openApp} />
+      </>}
+      {flash && <div style={{ position: 'absolute', bottom: 90, left: '50%', transform: 'translateX(-50%)', zIndex: 200,
+        fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--os-bg-deep)', background: 'var(--coral)',
+        padding: '10px 18px', borderRadius: 'var(--radius-pill)', boxShadow: 'var(--glow-coral)' }}>
+        ✦ KONAMI · easter egg unlocked</div>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
