@@ -151,34 +151,94 @@ export const PROJECTS_EXTRA = [
 // real text from the old portfolio; `en` is optional (falls back to fr).
 // Add a translation by appending an `en:` key to any entry.
 export const SKILL_INFO = {
-  "Wireshark": { fr: "Wireshark est un outil puissant de capture et d'analyse de paquets réseau, permettant de surveiller et diagnostiquer le trafic sur divers types de réseaux (Ethernet, Wi-Fi, etc.). Il supporte une vaste gamme de protocoles et offre des fonctionnalités avancées de filtrage. Grâce à son interface intuitive, il visualise les données captées sous forme de graphiques et statistiques, facilitant l'identification des anomalies." },
-  "FreeRADIUS": { fr: "FreeRADIUS est un serveur d'authentification open-source implémentant le protocole RADIUS. Il est utilisé pour l'authentification centralisée dans les réseaux d'entreprise, notamment pour le WiFi 802.1X et les VPN." },
-  "Azure": { fr: "Microsoft Azure est une plateforme cloud complète offrant compute, stockage, networking et services IA. Particulièrement utile pour les organisations Microsoft avec Active Directory intégré." },
-  "DHCP / DNS": { fr: "Configuration et administration des services DHCP (Dynamic Host Configuration Protocol) et DNS (Domain Name System), essentiels au fonctionnement des réseaux modernes." },
-  "React": { fr: "React est une bibliothèque JavaScript pour construire des interfaces avec des composants réutilisables. Il utilise le Virtual DOM pour optimiser les performances et JSX pour une syntaxe déclarative. Maîtriser React, c'est comprendre les hooks, le state management, le routing et l'intégration d'APIs." },
-  "Next.js": { fr: "Next.js est un framework React de production : rendu hybride (SSR/SSG), routing par fichiers, API routes et optimisations intégrées. Je l'utilise pour des espaces clients et des applications web performantes et bien référencées." },
-  "TypeScript": { fr: "TypeScript ajoute un typage statique à JavaScript, réduisant les bugs et améliorant la maintenabilité sur les gros projets. Je l'utilise avec React/Next.js et côté backend Node." },
-  "Node.js / Express": { fr: "Node.js est un runtime JavaScript côté serveur pour des backends haute performance ; Express est un framework web léger et flexible. Ensemble ils permettent de créer des API REST complètes et des applications full-stack JavaScript (async/await, middleware, authentification)." },
-  "Python": { fr: "Python est un langage versatile pour le scripting, l'automation et la data science. Sa syntaxe simple le rend idéal pour débuter tout en offrant des capacités avancées. Très utilisé en cybersécurité, DevOps et développement backend." },
-  "JavaScript": { fr: "JavaScript est le langage du web moderne : interfaces interactives, manipulation du DOM et expériences dynamiques. ES6+ apporte classes, promises, async/await et modules. Maîtriser JS, c'est comprendre la programmation asynchrone et les bonnes pratiques web." },
-  "C++": { fr: "C++ permet de créer des applications performantes et proches de la machine. Je l'utilise pour les tâches critiques en performance et la programmation système / embarquée." },
-  "PostgreSQL": { fr: "PostgreSQL est une base SQL open-source puissante et fiable : transactions ACID, triggers, procédures stockées et support JSON. Largement utilisée en production pour les applications critiques." },
-  "MongoDB": { fr: "MongoDB est une base NoSQL orientée documents qui stocke les données en JSON flexible. Idéale pour les structures de données variables et évolutives (collections, requêtes, agrégations, indexation)." },
-  "MySQL": { fr: "MySQL est une base SQL relationnelle open-source très utilisée pour le web. Bonne performance, fiabilité et simplicité, populaire dans les stacks LAMP/LEMP." },
-  "Docker": { fr: "Docker est une plateforme de containerisation qui package les applications avec leurs dépendances. Les conteneurs offrent isolation, portabilité et efficacité face aux VM (images, conteneurs, volumes, orchestration)." },
-  "Git": { fr: "Git est un système de contrôle de version distribué pour la gestion du code source. Il permet collaboration, traçabilité et gestion de branches (commits, merging, résolution de conflits)." },
-  "Arduino / ESP32": { fr: "Arduino/ESP32 sont des plateformes de prototypage électronique open-source. Elles permettent de créer des projets IoT, capteurs intelligents et domotique — microcontrôleurs, capteurs et systèmes embarqués interactifs." },
-  "Linux": { fr: "Linux est un système d'exploitation open-source puissant et flexible, central pour les serveurs, le DevOps et l'infrastructure cloud (shell, permissions, services, configuration système)." },
-  "Windows / AD": { fr: "Administration Windows en entreprise : gestion des serveurs, Active Directory, services réseau et sécurité (PowerShell, Group Policy, gestion des utilisateurs)." },
-  "Bash": { fr: "Bash est le shell Linux/Unix par défaut. Le scripting Bash permet d'automatiser des tâches système et de créer des outils en ligne de commande pour l'administration réseau et le DevOps." },
-  "PowerShell": { fr: "PowerShell est le framework d'automation Windows moderne : gestion avancée d'Active Directory, Windows Server et Azure, combinant le scripting shell avec la puissance de .NET." },
-  "Cisco Packet Tracer": { fr: "Cisco Packet Tracer est un simulateur réseau pour l'apprentissage et la certification CCNA. Il permet de concevoir, configurer et déboguer des architectures réseau sans matériel physique." },
-  "Scapy": { fr: "Scapy est une bibliothèque Python puissante pour créer, analyser et manipuler des paquets réseau. Elle permet la création de protocoles personnalisés et des tests de sécurité réseau avancés." },
-  "Metasploit": { fr: "Metasploit est le framework de pentesting le plus populaire pour identifier et exploiter les vulnérabilités : reconnaissance, exploitation et post-exploitation." },
-  "Nessus": { fr: "Nessus est un scanner de vulnérabilités professionnel qui identifie les faiblesses de sécurité des réseaux et systèmes, avec rapports détaillés et recommandations de remédiation." },
-  "OpenSSL": { fr: "OpenSSL est une bibliothèque open-source de cryptographie et de gestion de certificats SSL/TLS : création, gestion et validation de certificats numériques." },
-  "Zabbix": { fr: "Zabbix est une plateforme de monitoring et d'alerting open-source pour surveiller les infrastructures IT : collecte de métriques, visualisation et alertes automatiques." },
-  "Snort": { fr: "Snort est un système de détection d'intrusions (IDS) open-source qui analyse le trafic réseau en temps réel selon des règles pour détecter les activités malveillantes." },
-  "Fail2ban": { fr: "Fail2ban protège les serveurs contre les attaques par brute force : il analyse les logs et bannit automatiquement les adresses IP malveillantes." },
-  "Wazuh": { fr: "Wazuh est une plateforme XDR open-source pour la détection de menaces et la réponse aux incidents, combinant SIEM, IDS et EDR en une solution unifiée." },
+  "Wireshark": {
+    fr: "Wireshark est un outil puissant de capture et d'analyse de paquets réseau, permettant de surveiller et diagnostiquer le trafic sur divers types de réseaux (Ethernet, Wi-Fi, etc.). Il supporte une vaste gamme de protocoles et offre des fonctionnalités avancées de filtrage. Grâce à son interface intuitive, il visualise les données captées sous forme de graphiques et statistiques, facilitant l'identification des anomalies.",
+    en: "Wireshark is a powerful network packet capture and analysis tool for monitoring and troubleshooting traffic across network types (Ethernet, Wi-Fi, etc.). It supports a wide range of protocols with advanced filtering, and its intuitive interface visualises captured data as graphs and statistics to spot anomalies." },
+  "FreeRADIUS": {
+    fr: "FreeRADIUS est un serveur d'authentification open-source implémentant le protocole RADIUS. Il est utilisé pour l'authentification centralisée dans les réseaux d'entreprise, notamment pour le WiFi 802.1X et les VPN.",
+    en: "FreeRADIUS is an open-source authentication server implementing the RADIUS protocol. It provides centralised authentication for enterprise networks, notably for 802.1X Wi-Fi and VPNs." },
+  "Azure": {
+    fr: "Microsoft Azure est une plateforme cloud complète offrant compute, stockage, networking et services IA. Particulièrement utile pour les organisations Microsoft avec Active Directory intégré.",
+    en: "Microsoft Azure is a comprehensive cloud platform offering compute, storage, networking and AI services. Especially valuable for Microsoft-centric organisations with integrated Active Directory." },
+  "DHCP / DNS": {
+    fr: "Configuration et administration des services DHCP (Dynamic Host Configuration Protocol) et DNS (Domain Name System), essentiels au fonctionnement des réseaux modernes.",
+    en: "Configuration and administration of DHCP (Dynamic Host Configuration Protocol) and DNS (Domain Name System) services, core to how modern networks operate." },
+  "React": {
+    fr: "React est une bibliothèque JavaScript pour construire des interfaces avec des composants réutilisables. Il utilise le Virtual DOM pour optimiser les performances et JSX pour une syntaxe déclarative. Maîtriser React, c'est comprendre les hooks, le state management, le routing et l'intégration d'APIs.",
+    en: "React is a JavaScript library for building interfaces from reusable components. It uses the Virtual DOM for performance and JSX for declarative syntax. Mastering React means hooks, state management, routing and API integration." },
+  "Next.js": {
+    fr: "Next.js est un framework React de production : rendu hybride (SSR/SSG), routing par fichiers, API routes et optimisations intégrées. Je l'utilise pour des espaces clients et des applications web performantes et bien référencées.",
+    en: "Next.js is a production React framework: hybrid rendering (SSR/SSG), file-based routing, API routes and built-in optimisations. I use it for client portals and fast, SEO-friendly web apps." },
+  "TypeScript": {
+    fr: "TypeScript ajoute un typage statique à JavaScript, réduisant les bugs et améliorant la maintenabilité sur les gros projets. Je l'utilise avec React/Next.js et côté backend Node.",
+    en: "TypeScript adds static typing to JavaScript, reducing bugs and improving maintainability on large projects. I use it with React/Next.js and on the Node backend." },
+  "Node.js / Express": {
+    fr: "Node.js est un runtime JavaScript côté serveur pour des backends haute performance ; Express est un framework web léger et flexible. Ensemble ils permettent de créer des API REST complètes et des applications full-stack JavaScript (async/await, middleware, authentification).",
+    en: "Node.js is a server-side JavaScript runtime for high-performance backends; Express is a lightweight, flexible web framework. Together they power complete REST APIs and full-stack JavaScript apps (async/await, middleware, authentication)." },
+  "Python": {
+    fr: "Python est un langage versatile pour le scripting, l'automation et la data science. Sa syntaxe simple le rend idéal pour débuter tout en offrant des capacités avancées. Très utilisé en cybersécurité, DevOps et développement backend.",
+    en: "Python is a versatile language for scripting, automation and data science. Its simple syntax suits beginners while offering advanced power. Widely used in cybersecurity, DevOps and backend development." },
+  "JavaScript": {
+    fr: "JavaScript est le langage du web moderne : interfaces interactives, manipulation du DOM et expériences dynamiques. ES6+ apporte classes, promises, async/await et modules. Maîtriser JS, c'est comprendre la programmation asynchrone et les bonnes pratiques web.",
+    en: "JavaScript is the language of the modern web: interactive interfaces, DOM manipulation and dynamic experiences. ES6+ brings classes, promises, async/await and modules. Mastering JS means async programming and web best practices." },
+  "C++": {
+    fr: "C++ permet de créer des applications performantes et proches de la machine. Je l'utilise pour les tâches critiques en performance et la programmation système / embarquée.",
+    en: "C++ enables high-performance, close-to-the-metal applications. I use it for performance-critical tasks and systems / embedded programming." },
+  "PostgreSQL": {
+    fr: "PostgreSQL est une base SQL open-source puissante et fiable : transactions ACID, triggers, procédures stockées et support JSON. Largement utilisée en production pour les applications critiques.",
+    en: "PostgreSQL is a powerful, reliable open-source SQL database: ACID transactions, triggers, stored procedures and JSON support. Widely used in production for critical applications." },
+  "MongoDB": {
+    fr: "MongoDB est une base NoSQL orientée documents qui stocke les données en JSON flexible. Idéale pour les structures de données variables et évolutives (collections, requêtes, agrégations, indexation).",
+    en: "MongoDB is a document-oriented NoSQL database storing data as flexible JSON. Ideal for variable, evolving data structures (collections, queries, aggregations, indexing)." },
+  "MySQL": {
+    fr: "MySQL est une base SQL relationnelle open-source très utilisée pour le web. Bonne performance, fiabilité et simplicité, populaire dans les stacks LAMP/LEMP.",
+    en: "MySQL is a widely used open-source relational SQL database for the web. Solid performance, reliability and simplicity, popular in LAMP/LEMP stacks." },
+  "Docker": {
+    fr: "Docker est une plateforme de containerisation qui package les applications avec leurs dépendances. Les conteneurs offrent isolation, portabilité et efficacité face aux VM (images, conteneurs, volumes, orchestration).",
+    en: "Docker is a containerisation platform that packages applications with their dependencies. Containers offer isolation, portability and efficiency over VMs (images, containers, volumes, orchestration)." },
+  "Git": {
+    fr: "Git est un système de contrôle de version distribué pour la gestion du code source. Il permet collaboration, traçabilité et gestion de branches (commits, merging, résolution de conflits).",
+    en: "Git is a distributed version control system for source code. It enables collaboration, traceability and branch management (commits, merging, conflict resolution)." },
+  "Arduino / ESP32": {
+    fr: "Arduino/ESP32 sont des plateformes de prototypage électronique open-source. Elles permettent de créer des projets IoT, capteurs intelligents et domotique — microcontrôleurs, capteurs et systèmes embarqués interactifs.",
+    en: "Arduino/ESP32 are open-source electronics prototyping platforms. They power IoT projects, smart sensors and home automation — microcontrollers, sensors and interactive embedded systems." },
+  "Linux": {
+    fr: "Linux est un système d'exploitation open-source puissant et flexible, central pour les serveurs, le DevOps et l'infrastructure cloud (shell, permissions, services, configuration système).",
+    en: "Linux is a powerful, flexible open-source operating system, central to servers, DevOps and cloud infrastructure (shell, permissions, services, system configuration)." },
+  "Windows / AD": {
+    fr: "Administration Windows en entreprise : gestion des serveurs, Active Directory, services réseau et sécurité (PowerShell, Group Policy, gestion des utilisateurs).",
+    en: "Enterprise Windows administration: server management, Active Directory, network services and security (PowerShell, Group Policy, user management)." },
+  "Bash": {
+    fr: "Bash est le shell Linux/Unix par défaut. Le scripting Bash permet d'automatiser des tâches système et de créer des outils en ligne de commande pour l'administration réseau et le DevOps.",
+    en: "Bash is the default Linux/Unix shell. Bash scripting automates system tasks and builds command-line tools for network administration and DevOps." },
+  "PowerShell": {
+    fr: "PowerShell est le framework d'automation Windows moderne : gestion avancée d'Active Directory, Windows Server et Azure, combinant le scripting shell avec la puissance de .NET.",
+    en: "PowerShell is the modern Windows automation framework: advanced management of Active Directory, Windows Server and Azure, combining shell scripting with the power of .NET." },
+  "Cisco Packet Tracer": {
+    fr: "Cisco Packet Tracer est un simulateur réseau pour l'apprentissage et la certification CCNA. Il permet de concevoir, configurer et déboguer des architectures réseau sans matériel physique.",
+    en: "Cisco Packet Tracer is a network simulator for learning and CCNA certification. It lets you design, configure and debug network architectures without physical hardware." },
+  "Scapy": {
+    fr: "Scapy est une bibliothèque Python puissante pour créer, analyser et manipuler des paquets réseau. Elle permet la création de protocoles personnalisés et des tests de sécurité réseau avancés.",
+    en: "Scapy is a powerful Python library to craft, analyse and manipulate network packets. It enables custom protocols and advanced network security testing." },
+  "Metasploit": {
+    fr: "Metasploit est le framework de pentesting le plus populaire pour identifier et exploiter les vulnérabilités : reconnaissance, exploitation et post-exploitation.",
+    en: "Metasploit is the most popular pentesting framework for identifying and exploiting vulnerabilities: reconnaissance, exploitation and post-exploitation." },
+  "Nessus": {
+    fr: "Nessus est un scanner de vulnérabilités professionnel qui identifie les faiblesses de sécurité des réseaux et systèmes, avec rapports détaillés et recommandations de remédiation.",
+    en: "Nessus is a professional vulnerability scanner that identifies security weaknesses across networks and systems, with detailed reports and remediation guidance." },
+  "OpenSSL": {
+    fr: "OpenSSL est une bibliothèque open-source de cryptographie et de gestion de certificats SSL/TLS : création, gestion et validation de certificats numériques.",
+    en: "OpenSSL is an open-source cryptography and SSL/TLS certificate library: creating, managing and validating digital certificates." },
+  "Zabbix": {
+    fr: "Zabbix est une plateforme de monitoring et d'alerting open-source pour surveiller les infrastructures IT : collecte de métriques, visualisation et alertes automatiques.",
+    en: "Zabbix is an open-source monitoring and alerting platform for IT infrastructure: metric collection, visualisation and automatic alerts." },
+  "Snort": {
+    fr: "Snort est un système de détection d'intrusions (IDS) open-source qui analyse le trafic réseau en temps réel selon des règles pour détecter les activités malveillantes.",
+    en: "Snort is an open-source intrusion detection system (IDS) that analyses network traffic in real time against rules to detect malicious activity." },
+  "Fail2ban": {
+    fr: "Fail2ban protège les serveurs contre les attaques par brute force : il analyse les logs et bannit automatiquement les adresses IP malveillantes.",
+    en: "Fail2ban protects servers against brute-force attacks: it parses logs and automatically bans malicious IP addresses." },
+  "Wazuh": {
+    fr: "Wazuh est une plateforme XDR open-source pour la détection de menaces et la réponse aux incidents, combinant SIEM, IDS et EDR en une solution unifiée.",
+    en: "Wazuh is an open-source XDR platform for threat detection and incident response, combining SIEM, IDS and EDR in a unified solution." },
 };

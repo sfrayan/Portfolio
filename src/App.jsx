@@ -664,7 +664,7 @@ function SupervisionApp({ lang, intent, onIntentDone }) {
                 <p style={{ fontFamily: 'var(--font-display)', fontSize: 14, lineHeight: 1.6, color: '#C2D6C9', margin: 0 }}>{desc || '—'}</p>
                 {rel.length > 0 && (
                   <div style={{ marginTop: 20 }}>
-                    <div style={{ fontSize: 10.5, color: '#5C7565', letterSpacing: '0.16em', marginBottom: 10 }}>PROJETS ASSOCIÉS</div>
+                    <div style={{ fontSize: 10.5, color: '#5C7565', letterSpacing: '0.16em', marginBottom: 10 }}>{lang === 'fr' ? 'PROJETS ASSOCIÉS' : 'RELATED PROJECTS'}</div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                       {rel.map(p => (
                         <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', background: 'rgba(12,26,18,0.7)', border: '1px solid #16301F', borderRadius: 6 }}>
