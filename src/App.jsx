@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES, SKILL_INFO, PROJECTS_EXTRA } from './data/content.js';
+import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES, SKILL_INFO, PROJECTS_EXTRA, PROJECTS_FULL } from './data/content.js';
 
 // ---- Responsive hook ----------------------------------------
 // True when viewport is phone-sized. Drives full-screen windows,
@@ -1042,6 +1042,9 @@ function ArchivesApp({ lang, intent, onIntentDone }) {
       {/* project detail modal (text — no PDF) */}
       {info && (() => {
         const m = ARCHIVE_META[info.cat] || ARCHIVE_META.net;
+        const full = PROJECTS_FULL[info.id];                              // long legacy description if available
+        const desc = (full && full.description) || (lang === 'fr' ? info.dfr : info.den);
+        const techs = (full && full.tools && full.tools.length) ? full.tools : info.techs;
         return (
           <div onClick={() => setInfo(null)} style={{
             position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(9,8,13,0.72)',
@@ -1061,11 +1064,39 @@ function ArchivesApp({ lang, intent, onIntentDone }) {
                 </button>
               </div>
               <div style={{ padding: '18px 20px', overflow: 'auto', fontFamily: 'var(--font-display)' }}>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-2)', margin: '0 0 16px' }}>{lang === 'fr' ? info.dfr : info.den}</p>
+                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-2)', margin: '0 0 16px' }}>{desc}</p>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 8 }}>{t.stack}</div>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {info.techs.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
+                  {techs.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
                 </div>
+                {full && (full.demoUrl || full.repoUrl || full.pdfPath) && (
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
+                    {full.demoUrl && (
+                      <a href={full.demoUrl} target="_blank" rel="noopener noreferrer" style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12,
+                        color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                        padding: '8px 14px', borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}>
+                        <Icon name="external-link" size={14} color="var(--mint)" /> Live Demo
+                      </a>
+                    )}
+                    {full.repoUrl && (
+                      <a href={full.repoUrl} target="_blank" rel="noopener noreferrer" style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12,
+                        color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                        padding: '8px 14px', borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}>
+                        <Icon name="github" size={14} /> Code
+                      </a>
+                    )}
+                    {full.pdfPath && (
+                      <button onClick={() => { setInfo(null); setDoc({ file: full.pdfPath }); }} style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12,
+                        color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                        padding: '8px 14px', borderRadius: 'var(--radius-sm)', cursor: 'pointer' }}>
+                        <Icon name="file-text" size={14} color="var(--gold)" /> {t.preview}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
