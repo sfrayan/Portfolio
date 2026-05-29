@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES } from './data/content.js';
+import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES, SKILL_INFO } from './data/content.js';
 
 // ---- Responsive hook ----------------------------------------
 // True when viewport is phone-sized. Drives full-screen windows,
@@ -427,6 +427,7 @@ function ProjectsApp({ lang }) {
   const [sel, setSel] = useState(PROJECTS[0].id);
   const p = PROJECTS.find(x => x.id === sel);
   const meta = KIND_META[p.kind];
+  useEffect(() => { window.lucide && window.lucide.createIcons(); });  // hydrate icons on project switch
   return (
     <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', height: mobile ? 'auto' : 460, fontFamily: 'var(--font-display)' }}>
       {/* file list */}
@@ -477,14 +478,24 @@ function ProjectsApp({ lang }) {
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 22 }}>
           {p.stack.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
         </div>
-        {p.repo && (
-          <a href={p.repo} target="_blank" rel="noopener noreferrer" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
-            color: 'var(--os-bg-deep)', background: 'var(--coral)', padding: '9px 16px', borderRadius: 'var(--radius-sm)',
-            textDecoration: 'none', fontWeight: 600 }}>
-            <Icon name="github" size={15} /> {t.view_repo}
-          </a>
-        )}
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          {p.repo && (
+            <a href={p.repo} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
+              color: 'var(--os-bg-deep)', background: 'var(--coral)', padding: '9px 16px', borderRadius: 'var(--radius-sm)',
+              textDecoration: 'none', fontWeight: 600 }}>
+              <Icon name="github" size={15} /> {t.view_repo}
+            </a>
+          )}
+          {p.doc && (
+            <a href={`${import.meta.env.BASE_URL}projets/pdf/${p.doc}`} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
+              color: 'var(--fg-1)', background: 'var(--os-surface-2)', border: '1px solid var(--os-line)',
+              padding: '9px 16px', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600 }}>
+              <Icon name="file-text" size={15} color="var(--gold)" /> {t.preview}
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -541,6 +552,10 @@ const NOC_ACCENT = { phosphor: 'var(--noc-phosphor)', cyan: 'var(--noc-cyan)', a
 function SupervisionApp({ lang }) {
   const t = T[lang];
   const mobile = useIsMobile();
+  const [sel, setSel] = useState(null);   // clicked skill → detail modal
+  // App's lucide hydration only fires on App re-renders; local state
+  // changes here (opening the modal) need their own pass.
+  useEffect(() => { window.lucide && window.lucide.createIcons(); });
   const scan = {
     position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.6, borderRadius: 'inherit',
     backgroundImage: 'repeating-linear-gradient(to bottom, rgba(91,242,168,0.03) 0px, rgba(91,242,168,0.03) 1px, transparent 1px, transparent 3px)',
@@ -574,20 +589,78 @@ function SupervisionApp({ lang }) {
                 <span style={{ fontSize: 10, color: ac }}>{cat.skills.length} {t.techs}</span>
               </div>
               {cat.skills.map(([name, val]) => (
-                <div key={name} style={{ marginBottom: 7 }}>
+                <button key={name} onClick={() => setSel({ name, val, ac, cat: cat[lang] })} className="ros-noc-row" style={{
+                  display: 'block', width: '100%', textAlign: 'left', background: 'transparent', border: 'none',
+                  padding: '2px 4px', margin: '0 -4px 5px', borderRadius: 4, cursor: 'pointer', fontFamily: 'var(--font-mono)',
+                }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 3 }}>
-                    <span style={{ color: '#8FB09C' }}>{name}</span>
+                    <span style={{ color: '#8FB09C', display: 'flex', alignItems: 'center', gap: 4 }}>
+                      {name}{SKILL_INFO[name] && <Icon name="chevron-right" size={11} color="#3B5A47" />}
+                    </span>
                     <span style={{ color: ac }}>{val}%</span>
                   </div>
                   <div style={{ height: 3, background: '#0B1B12', borderRadius: 2, overflow: 'hidden' }}>
                     <div style={{ width: val + '%', height: '100%', background: ac, boxShadow: `0 0 6px ${ac}` }} />
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           );
         })}
       </div>
+
+      {/* skill detail — resurfaced legacy content, rendered on-brand */}
+      {sel && (() => {
+        const info = SKILL_INFO[sel.name];
+        const desc = info && (info[lang] || info.fr);
+        const key = sel.name.split(/[ /]/)[0].toLowerCase();
+        const rel = PROJECTS.filter(p => p.stack.some(s => { const sl = s.toLowerCase(); return sl.includes(key) || key.includes(sl); }));
+        return (
+          <div onClick={() => setSel(null)} style={{
+            position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(4,10,7,0.78)',
+            backdropFilter: 'var(--blur-glass)', WebkitBackdropFilter: 'var(--blur-glass)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: mobile ? 0 : '6vh 5vw',
+          }}>
+            <div onClick={e => e.stopPropagation()} style={{
+              width: mobile ? '100%' : 'min(560px, 92vw)', maxHeight: mobile ? '100dvh' : '88vh',
+              background: '#0A1610', border: '1px solid #1C3B28', borderRadius: mobile ? 0 : 'var(--radius-lg)',
+              overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-window)',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '0 14px', height: 44, background: '#0C1A12', borderBottom: '1px solid #1C3B28', flexShrink: 0 }}>
+                <StatusDot color={sel.ac} size={8} />
+                <span style={{ fontSize: 12.5, color: '#EAF2EC', flex: 1, fontWeight: 600 }}>{sel.name}</span>
+                <button onClick={() => setSel(null)} title={t.close} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11.5, color: '#A9C4B2', background: 'transparent', border: '1px solid #1C3B28', borderRadius: 'var(--radius-sm)', padding: '5px 9px', cursor: 'pointer', fontFamily: 'var(--font-mono)' }}>
+                  <Icon name="x" size={13} />
+                </button>
+              </div>
+              <div style={{ padding: '18px 20px', overflow: 'auto' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 10 }}>
+                  <span style={{ fontSize: 10.5, color: '#5C7565', letterSpacing: '0.14em', textTransform: 'uppercase' }}>{sel.cat}</span>
+                  <span style={{ fontSize: 22, color: sel.ac, fontWeight: 700, fontFamily: 'var(--font-display)' }}>{sel.val}%</span>
+                </div>
+                <div style={{ height: 4, background: '#0B1B12', borderRadius: 2, overflow: 'hidden', marginBottom: 18 }}>
+                  <div style={{ width: sel.val + '%', height: '100%', background: sel.ac, boxShadow: `0 0 8px ${sel.ac}` }} />
+                </div>
+                <p style={{ fontFamily: 'var(--font-display)', fontSize: 14, lineHeight: 1.6, color: '#C2D6C9', margin: 0 }}>{desc || '—'}</p>
+                {rel.length > 0 && (
+                  <div style={{ marginTop: 20 }}>
+                    <div style={{ fontSize: 10.5, color: '#5C7565', letterSpacing: '0.16em', marginBottom: 10 }}>PROJETS ASSOCIÉS</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      {rel.map(p => (
+                        <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', background: 'rgba(12,26,18,0.7)', border: '1px solid #16301F', borderRadius: 6 }}>
+                          <Icon name={KIND_META[p.kind].icon} size={15} color={sel.ac} />
+                          <span style={{ fontSize: 12.5, color: '#DCEAE0', flex: 1, fontFamily: 'var(--font-display)' }}>{p.name}</span>
+                          <span style={{ fontSize: 10, color: p.status === 'live' ? 'var(--noc-phosphor)' : 'var(--noc-amber)' }}>{p.status === 'live' ? '● live' : '◐ wip'}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -644,6 +717,12 @@ function JumeauApp({ lang }) {
             <div style={{ fontSize: 10.5, color: '#7E96B8', marginTop: 5, lineHeight: 1.45 }}>{m[lang].slice(0, 64)}…</div>
             <div style={{ marginTop: 9, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: `1px solid ${ink}`, paddingTop: 7 }}>
               <span style={{ fontSize: 9.5, color: sig }}>◄── {m.stack[0]} ──►</span>
+              {(m.doc || m.repo) && (
+                <a href={m.doc ? `${import.meta.env.BASE_URL}projets/pdf/${m.doc}` : m.repo} target="_blank" rel="noopener noreferrer"
+                  title={m.doc ? 'rapport' : 'repo'} style={{ display: 'inline-flex', color: teal }}>
+                  <Icon name={m.doc ? 'file-text' : 'github'} size={13} color={teal} />
+                </a>
+              )}
             </div>
           </div>
         ))}
@@ -747,6 +826,7 @@ function ArchivesApp({ lang }) {
   const [doc, setDoc] = useState(null);   // currently previewed PDF
   const base = import.meta.env.BASE_URL;  // '/Portfolio/' in prod, '/' in dev
   const pdfUrl = (f) => `${base}projets/pdf/${f}`;
+  useEffect(() => { window.lucide && window.lucide.createIcons(); });  // hydrate modal icons
 
   return (
     <div style={{ padding: '22px 24px', fontFamily: 'var(--font-display)', minHeight: 420 }}>
