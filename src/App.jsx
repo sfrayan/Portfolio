@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES, SKILL_INFO } from './data/content.js';
+import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES, SKILL_INFO, PROJECTS_EXTRA } from './data/content.js';
 
 // ---- Responsive hook ----------------------------------------
 // True when viewport is phone-sized. Drives full-screen windows,
@@ -81,6 +81,7 @@ const T = {
     view_repo: 'Voir le dépôt', stack: 'Stack', status: 'Statut',
     archives_title: 'Archives', archives_sub: 'Rapports & documents · ~/docs',
     preview: 'Aperçu', open_tab: 'Onglet', download: 'Télécharger', docs: 'documents',
+    archives_reports: 'Rapports PDF', archives_projects: 'Projets académiques', details: 'Détails',
   },
   en: {
     boot_press: 'Press to enter',
@@ -112,6 +113,7 @@ const T = {
     view_repo: 'View repo', stack: 'Stack', status: 'Status',
     archives_title: 'Archives', archives_sub: 'Reports & documents · ~/docs',
     preview: 'Preview', open_tab: 'Tab', download: 'Download', docs: 'documents',
+    archives_reports: 'PDF reports', archives_projects: 'Academic projects', details: 'Details',
   },
 };
 
@@ -818,12 +820,14 @@ const ARCHIVE_META = {
   iot:   { icon: 'cpu',           color: 'var(--noc-cyan)' },
   ai:    { icon: 'brain-circuit', color: 'var(--coral)' },
   cloud: { icon: 'cloud',         color: 'var(--noc-phosphor)' },
+  web:   { icon: 'globe',         color: 'var(--noc-phosphor)' },
 };
 
 function ArchivesApp({ lang }) {
   const t = T[lang];
   const mobile = useIsMobile();
   const [doc, setDoc] = useState(null);   // currently previewed PDF
+  const [info, setInfo] = useState(null); // currently opened project detail
   const base = import.meta.env.BASE_URL;  // '/Portfolio/' in prod, '/' in dev
   const pdfUrl = (f) => `${base}projets/pdf/${f}`;
   useEffect(() => { window.lucide && window.lucide.createIcons(); });  // hydrate modal icons
@@ -833,8 +837,9 @@ function ArchivesApp({ lang }) {
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--mint)', marginBottom: 4 }}>$ ls ~/docs</div>
       <div style={{ fontWeight: 700, fontSize: 21, color: 'var(--fg-1)' }}>{t.archives_title}</div>
       <div style={{ fontSize: 13, color: 'var(--fg-3)' }}>{t.archives_sub}</div>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', margin: '6px 0 18px' }}>{ARCHIVES.length} {t.docs}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', margin: '6px 0 18px' }}>{ARCHIVES.length + PROJECTS_EXTRA.length} {t.docs}</div>
 
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 10 }}>{t.archives_reports}</div>
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 12 }}>
         {ARCHIVES.map(a => {
           const m = ARCHIVE_META[a.cat] || ARCHIVE_META.net;
@@ -875,6 +880,61 @@ function ArchivesApp({ lang }) {
           );
         })}
       </div>
+
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.16em', margin: '22px 0 10px' }}>{t.archives_projects}</div>
+      <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 12 }}>
+        {PROJECTS_EXTRA.map(p => {
+          const m = ARCHIVE_META[p.cat] || ARCHIVE_META.net;
+          return (
+            <button key={p.id} onClick={() => setInfo(p)} className="ros-contact" style={{
+              textAlign: 'left', display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px',
+              background: 'var(--os-surface-2)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-md)',
+              cursor: 'pointer', transition: 'all var(--dur-base) var(--ease-out)', fontFamily: 'var(--font-display)',
+            }}>
+              <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--os-surface-3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Icon name={m.icon} size={20} color={m.color} />
+              </div>
+              <div style={{ minWidth: 0, flex: 1 }}>
+                <div style={{ fontSize: 14, color: 'var(--fg-1)', fontWeight: 600, lineHeight: 1.2 }}>{p[lang]}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--fg-3)', marginTop: 3 }}>{t.details} →</div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* project detail modal (text — no PDF) */}
+      {info && (() => {
+        const m = ARCHIVE_META[info.cat] || ARCHIVE_META.net;
+        return (
+          <div onClick={() => setInfo(null)} style={{
+            position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(9,8,13,0.72)',
+            backdropFilter: 'var(--blur-glass)', WebkitBackdropFilter: 'var(--blur-glass)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: mobile ? 0 : '8vh 5vw',
+          }}>
+            <div onClick={e => e.stopPropagation()} style={{
+              width: mobile ? '100%' : 'min(520px, 92vw)', maxHeight: mobile ? '100dvh' : '82vh',
+              background: 'var(--os-surface)', border: '1px solid var(--os-line)', borderRadius: mobile ? 0 : 'var(--radius-lg)',
+              overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-window)',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 14px', height: 44, background: 'var(--os-surface-2)', borderBottom: '1px solid var(--os-line)', flexShrink: 0 }}>
+                <Icon name={m.icon} size={15} color={m.color} />
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{info[lang]}</span>
+                <button onClick={() => setInfo(null)} title={t.close} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-sm)', padding: '5px 10px', cursor: 'pointer' }}>
+                  <Icon name="x" size={14} />
+                </button>
+              </div>
+              <div style={{ padding: '18px 20px', overflow: 'auto', fontFamily: 'var(--font-display)' }}>
+                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-2)', margin: '0 0 16px' }}>{lang === 'fr' ? info.dfr : info.den}</p>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 8 }}>{t.stack}</div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {info.techs.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* PDF viewer modal — true overlay over the whole OS */}
       {doc && (

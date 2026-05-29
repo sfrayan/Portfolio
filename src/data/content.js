@@ -121,6 +121,31 @@ export const ARCHIVES = [
     den: 'Procedure to build and test an RJ45 network cable (T568 standard).' },
 ];
 
+// ---- Extra projects : legacy projects without a PDF ---------
+// Surfaced in archives.app under "Projets". cat → ARCHIVE_META.
+export const PROJECTS_EXTRA = [
+  { id: 'tirelire', cat: 'web', fr: 'Tirelire — Partage de dépenses', en: 'Tirelire — Expense sharing',
+    dfr: 'Application web progressive (PWA) et mobile de partage de dépenses de groupe — sans création de compte, en temps réel, multi-devises et partage de reçus.',
+    den: 'Progressive web app (PWA) and mobile group expense-sharing app — no account needed, real-time, multi-currency with receipt split.',
+    techs: ['JavaScript', 'PWA', 'Capacitor', 'localStorage'] },
+  { id: 'fizzbuzz', cat: 'web', fr: 'FizzBuzz — Kata algorithmique', en: 'FizzBuzz — Algorithmic kata',
+    dfr: 'Kata de programmation classique implémenté en plusieurs langages : bonnes pratiques, patterns de conception et approches algorithmiques.',
+    den: 'Classic programming kata implemented in several languages: clean code, design patterns and algorithmic approaches.',
+    techs: ['Python', 'JavaScript', 'C++'] },
+  { id: 'phishing', cat: 'sec', fr: 'Phishing — Vidéo de sensibilisation', en: 'Phishing — Awareness video',
+    dfr: 'Vidéo de sensibilisation informative et divertissante sur les attaques de phishing : dangers associés et solutions de sécurité, avec une touche d\'humour.',
+    den: 'An informative, light-hearted awareness video on phishing attacks: the risks involved and how to protect against them.',
+    techs: ['Cybersécurité', 'Vidéo', 'Sensibilisation'] },
+  { id: 'sae-r502', cat: 'net', fr: 'SAE R502 — Architecture réseau complète', en: 'SAE R502 — Full network architecture',
+    dfr: 'Conception et simulation d\'une architecture réseau complète sous Cisco Packet Tracer (BUT3 Réseaux & Télécoms).',
+    den: 'Design and simulation of a complete network architecture with Cisco Packet Tracer (BUT3 Networks & Telecom).',
+    techs: ['Cisco Packet Tracer', 'Routage', 'VLAN'] },
+  { id: 'sae501', cat: 'sec', fr: 'SAE501 — Architecture Wi-Fi sécurisée', en: 'SAE501 — Secure Wi-Fi architecture',
+    dfr: 'Infrastructure d\'authentification Wi-Fi sécurisée pour une chaîne de salles de sport multi-sites : FreeRADIUS, PEAP-MSCHAPv2, gestion centralisée et monitoring temps réel.',
+    den: 'Secure Wi-Fi authentication infrastructure for a multi-site gym chain: FreeRADIUS, PEAP-MSCHAPv2, centralized user management and real-time monitoring.',
+    techs: ['FreeRADIUS', 'PEAP-MSCHAPv2', '802.1X', 'Wi-Fi'] },
+];
+
 // ---- Skill descriptions (resurfaced from legacy/Compétences) -
 // Keyed by the skill label used in SKILL_CATEGORIES. `fr` is the
 // real text from the old portfolio; `en` is optional (falls back to fr).
