@@ -10,7 +10,7 @@ export const SKILL_CATEGORIES = [
   { id: 'net', fr: 'Administration Réseaux', en: 'Network Administration', icon: 'network', accent: 'cyan',
     skills: [['Wireshark', 96], ['FreeRADIUS', 88], ['Azure', 84], ['DHCP / DNS', 90]] },
   { id: 'web', fr: 'Développement Web & Backend', en: 'Web & Backend Dev', icon: 'code-xml', accent: 'phosphor',
-    skills: [['React', 92], ['Next.js', 90], ['TypeScript', 86], ['Node.js / Express', 88], ['Python', 90], ['JavaScript', 94], ['C++', 78]] },
+    skills: [['React', 92], ['Next.js', 90], ['TypeScript', 86], ['Node.js / Express', 88], ['Python', 90], ['JavaScript', 94], ['HTML5', 90], ['CSS3', 88], ['C++', 78]] },
   { id: 'db', fr: 'Bases de Données', en: 'Databases', icon: 'database', accent: 'cyan',
     skills: [['PostgreSQL', 84], ['MongoDB', 82], ['MySQL', 86]] },
   { id: 'devops', fr: 'DevOps & Infrastructure', en: 'DevOps & Infra', icon: 'container', accent: 'phosphor',
@@ -20,7 +20,7 @@ export const SKILL_CATEGORIES = [
   { id: 'sim', fr: 'Simulation Réseau', en: 'Network Simulation', icon: 'route', accent: 'cyan',
     skills: [['Cisco Packet Tracer', 88]] },
   { id: 'sec', fr: 'Cybersécurité & Pentesting', en: 'Cybersecurity & Pentest', icon: 'shield-half', accent: 'amber',
-    skills: [['Scapy', 84], ['Metasploit', 80], ['Nessus', 82], ['OpenSSL', 78]] },
+    skills: [['Scapy', 84], ['Metasploit', 80], ['Nessus', 82], ['OpenSSL', 78], ['Burp Suite', 82]] },
   { id: 'mon', fr: 'Monitoring & Détection', en: 'Monitoring & Detection', icon: 'activity', accent: 'amber',
     skills: [['Zabbix', 86], ['Snort', 82], ['Fail2ban', 84], ['Wazuh', 80]] },
 ];
@@ -50,7 +50,9 @@ export const PROJECTS = [
   { id: 'smartocean', name: 'SmartOcean', ext: 'cloud', kind: 'iot', featured: true,
     fr: 'Composants logiciels pour capteurs sous-marins acoustiques intégrés au cloud — projet de recherche en Norvège.',
     en: 'Software components for acoustic subsea sensors integrated with the cloud — research project in Norway.',
-    stack: ['Cloud', 'Time-series', 'Acoustic comms'], status: 'live' },
+    stack: ['Cloud', 'Time-series', 'Acoustic comms'], status: 'live',
+    demoUrl: 'https://sfrayan.github.io/ruleless-digital-twins-demo/',
+    repoUrl: 'https://github.com/sfrayan/ruleless-digital-twins-demo' },
 ];
 
 // ---- Journey / timeline -------------------------------------
@@ -241,4 +243,149 @@ export const SKILL_INFO = {
   "Wazuh": {
     fr: "Wazuh est une plateforme XDR open-source pour la détection de menaces et la réponse aux incidents, combinant SIEM, IDS et EDR en une solution unifiée.",
     en: "Wazuh is an open-source XDR platform for threat detection and incident response, combining SIEM, IDS and EDR in a unified solution." },
+  "Burp Suite": {
+    fr: "Burp Suite est l'outil de référence pour le test de sécurité des applications web : proxy/intercepteur, scanner automatisé, Intruder, Repeater et extensions, pour identifier les vulnérabilités de l'OWASP Top 10.",
+    en: "Burp Suite is the reference tool for web application security testing: proxy/interceptor, automated scanner, Intruder, Repeater and extensions, to identify OWASP Top 10 vulnerabilities." },
+  "HTML5": {
+    fr: "HTML5 est le standard actuel du web : structure sémantique, accessibilité (normes WCAG), formulaires interactifs et APIs natives (Canvas, SVG, Geolocation, localStorage, Web Workers).",
+    en: "HTML5 is the current web standard: semantic structure, accessibility (WCAG), interactive forms and native APIs (Canvas, SVG, Geolocation, localStorage, Web Workers)." },
+  "CSS3": {
+    fr: "CSS3 permet de créer des interfaces modernes et animées : layouts Flexbox et Grid, animations et transitions, design responsive mobile-first et variables CSS pour la maintenabilité.",
+    en: "CSS3 enables modern, animated interfaces: Flexbox and Grid layouts, animations and transitions, mobile-first responsive design and CSS variables for maintainability." },
+};
+
+// ---- Full legacy skill pages (extracted from legacy/Compétences) ----
+// Only skills NOT already covered by SKILL_INFO above.
+// Keyed by slug. Schema: { slug, title, description, tools, pdfPath }.
+export const SKILLS_FULL = {
+  "burpsuite": {
+    slug: "burpsuite", title: "Burp Suite",
+    description: "Burp Suite est l'outil de référence pour le test de sécurité des applications web. Il identifie les vulnérabilités (OWASP Top 10) via un proxy/intercepteur, un scanner automatisé, l'Intruder, le Repeater et un écosystème d'extensions.",
+    tools: ["Proxy / Interceptor", "Scanner", "Intruder", "Repeater", "Extensions"],
+    pdfPath: null },
+  "css3": {
+    slug: "css3", title: "CSS3",
+    description: "CSS3 permet de créer des interfaces modernes et animées : layouts Flexbox et Grid, animations et transitions (keyframes), design responsive mobile-first avec media queries, et variables CSS pour la maintenabilité.",
+    tools: ["Flexbox", "CSS Grid", "Animations", "Responsive", "Variables CSS"],
+    pdfPath: null },
+  "html5": {
+    slug: "html5", title: "HTML5",
+    description: "HTML5 est le standard actuel du web : structure sémantique, accessibilité (normes WCAG), formulaires interactifs avec validation, et APIs natives (Canvas, SVG, Geolocation, localStorage, Web Workers).",
+    tools: ["Sémantique", "Formulaires", "Canvas / SVG", "WCAG", "Web APIs"],
+    pdfPath: null },
+};
+
+// ---- Full legacy project pages (extracted from legacy/Projets) ------
+// Long descriptions resurfaced for ProjectDetailView / Spotlight / terminal.
+// Keyed by slug. Schema: { slug, title, description, tools, pdfPath }.
+// pdfPath = bare filename under public/projets/pdf/ (same as ARCHIVES.file), or null.
+export const PROJECTS_FULL = {
+  "smartocean": {
+    slug: "smartocean", title: "SmartOcean — Ruleless Digital Twins",
+    description: "Composants logiciels pour jumeaux numériques « ruleless » : un contrôleur MAPE-K (.NET 8) raisonne sur une ontologie SOSA/SSN avec Apache Jena et une simulation FMU, intégré à Home Assistant et aux prix d'électricité Nord Pool. Stage de recherche M1 à HVL (SFI SmartOcean), Norvège.",
+    tools: [".NET 8", "OWL / SOSA", "Apache Jena", "MAPE-K", "FMU", "Nord Pool", "Home Assistant"],
+    pdfPath: null,
+    demoUrl: "https://sfrayan.github.io/ruleless-digital-twins-demo/",
+    repoUrl: "https://github.com/sfrayan/ruleless-digital-twins-demo" },
+  "ai-agents-dashboard": {
+    slug: "ai-agents-dashboard", title: "AI Agents Dashboard",
+    description: "Plateforme complète de monitoring et de gestion d'agents IA autonomes : orchestration multi-agents, gestion d'état centralisée, APIs RESTful et logging détaillé. Frontend React/TypeScript et backend Python.",
+    tools: ["React", "TypeScript", "Python", "REST", "Real-time monitoring"],
+    pdfPath: null },
+  "azure": {
+    slug: "azure", title: "Azure AD — Service d'annuaire",
+    description: "TP R304 : mise en place d'un service d'annuaire Azure AD (Azure Active Directory) — gestion centralisée des identités et des accès utilisateurs en environnement d'entreprise (IAM, cloud).",
+    tools: ["Azure AD", "IAM", "Cloud", "R304"],
+    pdfPath: "Azure.pdf" },
+  "conforama": {
+    slug: "conforama", title: "Conforama — Analyse de cyberattaque",
+    description: "Rapport détaillé d'analyse d'une cyberattaque majeure (cours Expression & Culture, équipe de 3, 3 semaines) : conséquences néfastes, vecteurs d'attaque et mesures de sécurité mises en place par les entreprises pour s'en prémunir.",
+    tools: ["Cybersécurité", "Analyse d'incident", "Rapport"],
+    pdfPath: "rapportcyberattaquev4.0.pdf" },
+  "esp32": {
+    slug: "esp32", title: "ESP32 — Programmation microprocesseur",
+    description: "SAE « Découvrir un dispositif de transmission » : programmation d'un ESP32 avec Arduino pour transmettre des instructions en binaire et reproduire le comportement d'un microprocesseur, afin d'en comprendre les fondamentaux.",
+    tools: ["ESP32", "Arduino", "C++", "Binaire"],
+    pdfPath: "SAE13_GR3_SAID_FARAH_RAYAN.pdf" },
+  "fastfoodbike": {
+    slug: "fastfoodbike", title: "FastFoodBike",
+    description: "Plateforme fullstack de livraison de nourriture en production : backend robuste (37 endpoints API), front React, paiements Stripe/Razorpay, architecturée pour supporter des milliers d'utilisateurs.",
+    tools: ["Node.js", "React", "MongoDB", "Stripe / Razorpay"],
+    pdfPath: null },
+  "fizzbuzz": {
+    slug: "fizzbuzz", title: "FizzBuzz — Kata algorithmique",
+    description: "Kata de programmation classique implémenté en plusieurs langages : bonnes pratiques de code, patterns de conception et approches algorithmiques (boucles, conditions, gestion des nombres).",
+    tools: ["Python", "JavaScript", "C++"],
+    pdfPath: null },
+  "infinite-think": {
+    slug: "infinite-think", title: "Infinite Think — Rapport IA",
+    description: "Rapport stratégique (cours Gestion de projet, équipe de 5, 3 mois) sur une technologie d'IA futuriste : analyse technique, viabilité commerciale et vision future pour en convaincre des investisseurs.",
+    tools: ["IA", "Rapport", "Gestion de projet"],
+    pdfPath: "InfinityThink.pdf" },
+  "pentesting-suite": {
+    slug: "pentesting-suite", title: "PENTESTING-SUITE",
+    description: "Framework professionnel de sécurité (Python 3.8+) pour des tests d'intrusion avancés et l'évaluation automatisée de vulnérabilités : modules de reconnaissance avancée, moteur d'exploitation et infrastructure de classe entreprise.",
+    tools: ["Python", "Reconnaissance", "Exploitation", "Vulnérabilités"],
+    pdfPath: null },
+  "phishing": {
+    slug: "phishing", title: "Phishing — Vidéo de sensibilisation",
+    description: "Vidéo de sensibilisation (cours Hygiène Informatique, équipe de 3, 3 mois) sur les attaques de phishing : dangers associés, méthodes courantes des cyberattaquants et solutions de protection, avec une touche d'humour.",
+    tools: ["Cybersécurité", "Vidéo", "Sensibilisation"],
+    pdfPath: null },
+  "quiz-master": {
+    slug: "quiz-master", title: "Quiz Master",
+    description: "Application web de quiz multijoueur en vanilla JavaScript : modes Solo et Duel, plusieurs catégories de questions, niveaux de difficulté et suivi des scores en temps réel.",
+    tools: ["Vanilla JS", "HTML5", "CSS3", "localStorage"],
+    pdfPath: null,
+    repoUrl: "https://github.com/sfrayan/Quiz-Master" },
+  "r401": {
+    slug: "r401", title: "R401 — Infrastructures de sécurité",
+    description: "TP R401 : configuration de solutions de détection et de prévention d'intrusions (Snort IDS/IPS) pour surveiller et sécuriser les systèmes d'information.",
+    tools: ["Snort", "IDS / IPS", "Sécurité réseau"],
+    pdfPath: "R401.pdf" },
+  "r410": {
+    slug: "r410", title: "R410 — Sécurité des réseaux",
+    description: "Cours R410 (équipe de 3) : cryptographie, protocoles sécurisés et mise en œuvre de solutions de sécurité réseau — chiffrement, authentification, VPN et SSL/TLS.",
+    tools: ["Cryptographie", "VPN", "SSL / TLS"],
+    pdfPath: "R410.pdf" },
+  "rj45": {
+    slug: "rj45", title: "RJ45 — Réalisation d'un câble",
+    description: "SAE « Découvrir un dispositif de transmission » : élaboration d'un protocole de fabrication et de test de câbles RJ45 droits et croisés — normes de câblage (T568), différences droit/croisé et techniques de sertissage.",
+    tools: ["Câblage RJ45", "Norme T568", "Réseau"],
+    pdfPath: "PROTOCOLE_RJ45.pdf" },
+  "sae-r502": {
+    slug: "sae-r502", title: "SAE R502 — Architecture réseau complète",
+    description: "SAE du BUT3 Réseaux & Télécoms (équipe de 4) : conception et simulation d'une architecture réseau complète sous Cisco Packet Tracer, intégrant routage dynamique (OSPF) et segmentation (VLAN).",
+    tools: ["Cisco Packet Tracer", "OSPF", "VLAN", "Routage"],
+    pdfPath: null },
+  "sae501": {
+    slug: "sae501", title: "SAE501 — Architecture Wi-Fi sécurisée",
+    description: "Infrastructure d'authentification Wi-Fi sécurisée pour une chaîne de salles de sport multi-sites : FreeRADIUS, WPA-Enterprise (PEAP-MSCHAPv2), gestion centralisée des utilisateurs et monitoring en temps réel.",
+    tools: ["FreeRADIUS", "PEAP-MSCHAPv2", "802.1X", "Wi-Fi"],
+    pdfPath: null },
+  "sae-23": {
+    slug: "sae-23", title: "SAE 23 — Infrastructure d'entreprise",
+    description: "SAE du parcours Réseaux & Télécoms : conception et mise en place d'une solution informatique d'entreprise complète — gestion des utilisateurs, permissions et données sensibles, avec PostgreSQL et PHP.",
+    tools: ["PostgreSQL", "PHP", "Infrastructure"],
+    pdfPath: "SAE_23.pdf" },
+  "sae-24": {
+    slug: "sae-24", title: "SAE 24 — Attaques MITM",
+    description: "Projet pédagogique d'exploration des vulnérabilités réseau : programmation et expérimentation d'attaques Man-in-the-Middle sur un réseau local (interception et modification des communications), et étude des mesures de protection.",
+    tools: ["MITM", "ARP spoofing", "Sécurité réseau"],
+    pdfPath: "SAE_24.pdf" },
+  "sae-303": {
+    slug: "sae-303", title: "SAE 303 — Appel d'offres / Virtualisation",
+    description: "Réponse à un appel d'offres pour la virtualisation du SI de la ville de Valence : analyse d'un cahier des charges complexe et conception d'une infrastructure informatique virtualisée en haute disponibilité.",
+    tools: ["Virtualisation", "Haute disponibilité", "Appel d'offres"],
+    pdfPath: "SAE_303.pdf" },
+  "sae-pentesting": {
+    slug: "sae-pentesting", title: "SAE Pentesting — Découverte du pentesting",
+    description: "SAE « Découvrir le pentesting » (équipe de 3) : identification, analyse et exploitation des vulnérabilités de machines Windows XP et Metasploitable avec Nessus et d'autres outils, révélant plusieurs failles critiques.",
+    tools: ["Nessus", "Metasploit", "Pentesting"],
+    pdfPath: "SAE_Pentesting.pdf" },
+  "tirelire": {
+    slug: "tirelire", title: "Tirelire — Partage de dépenses",
+    description: "Application web progressive (PWA) et mobile (iOS/Android via Capacitor) de partage de dépenses de groupe : sans création de compte, en temps réel, multi-devises, avec receipt splitting par drag-drop. Production-ready, 5000+ lignes de code.",
+    tools: ["React", "PWA", "Capacitor", "localStorage"],
+    pdfPath: null },
 };

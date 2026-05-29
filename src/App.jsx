@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES, SKILL_INFO, PROJECTS_EXTRA } from './data/content.js';
+import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES, SKILL_INFO, PROJECTS_EXTRA, PROJECTS_FULL } from './data/content.js';
 
 // ---- Responsive hook ----------------------------------------
 // True when viewport is phone-sized. Drives full-screen windows,
@@ -451,6 +451,9 @@ function ProjectsApp({ lang, intent, onIntentDone }) {
   const [sel, setSel] = useState(PROJECTS[0].id);
   const p = PROJECTS.find(x => x.id === sel);
   const meta = KIND_META[p.kind];
+  // long legacy description if a PROJECTS_FULL entry matches (some curated ids differ from slugs)
+  const _fullAlias = { 'pentest-suite': 'pentesting-suite', 'ai-agents': 'ai-agents-dashboard', 'esp32-twin': 'esp32' };
+  const _full = PROJECTS_FULL[_fullAlias[p.id] || p.id];
   useEffect(() => {  // deep-link from Spotlight / terminal
     if (intent && intent.kind === 'project' && PROJECTS.find(x => x.id === intent.id)) { setSel(intent.id); onIntentDone && onIntentDone(); }
   }, [intent]);
@@ -499,12 +502,28 @@ function ProjectsApp({ lang, intent, onIntentDone }) {
             {p.status === 'live' ? 'DÉPLOYÉ / LIVE' : 'EN COURS / WIP'}
           </span>
         </div>
-        <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--fg-2)', marginBottom: 18 }}>{p[lang]}</p>
+        <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--fg-2)', marginBottom: 18 }}>{(_full && _full.description) || p[lang]}</p>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.18em', marginBottom: 10 }}>{t.stack}</div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 22 }}>
           {p.stack.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
         </div>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          {p.demoUrl && (
+            <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
+              color: 'var(--fg-1)', background: 'var(--os-surface-2)', border: '1px solid var(--os-line)',
+              padding: '9px 16px', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600 }}>
+              <Icon name="external-link" size={15} color="var(--mint)" /> Live Demo
+            </a>
+          )}
+          {p.repoUrl && (
+            <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
+              color: 'var(--fg-1)', background: 'var(--os-surface-2)', border: '1px solid var(--os-line)',
+              padding: '9px 16px', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600 }}>
+              <Icon name="github" size={15} /> Code
+            </a>
+          )}
           {p.repo && (
             <a href={p.repo} target="_blank" rel="noopener noreferrer" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
@@ -1023,9 +1042,61 @@ function ArchivesApp({ lang, intent, onIntentDone }) {
         })}
       </div>
 
+      {/* academic projects: PROJECTS_FULL entries that carry a PDF report */}
+      {(() => {
+        const cats = { azure: 'cloud', conforama: 'sec', esp32: 'iot', r401: 'net', r410: 'sec', rj45: 'net',
+          'sae-23': 'net', 'sae-24': 'sec', 'sae-303': 'net', 'sae-pentesting': 'sec', 'infinite-think': 'ai' };
+        const pdfProjects = Object.values(PROJECTS_FULL).filter(p => p.pdfPath);
+        return (
+          <>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.16em', margin: '22px 0 10px' }}>{lang === 'fr' ? 'Projets académiques' : 'Academic projects'}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 12 }}>
+              {pdfProjects.map(p => {
+                const cat = cats[p.slug] || 'net';
+                const m = ARCHIVE_META[cat] || ARCHIVE_META.net;
+                return (
+                  <div key={p.slug} style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '14px 16px',
+                    background: 'var(--os-surface-2)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-display)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--os-surface-3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <Icon name={m.icon} size={20} color={m.color} />
+                      </div>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <div style={{ fontSize: 14, color: 'var(--fg-1)', fontWeight: 600, lineHeight: 1.2 }}>{p.title}</div>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--fg-3)', marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.tools.slice(0, 3).join(' · ')}</div>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: 12.5, lineHeight: 1.5, color: 'var(--fg-2)', margin: 0 }}>{p.description.slice(0, 100)}…</p>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                      <button onClick={() => setInfo({ ...p, id: p.slug, cat })} style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11.5,
+                        color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                        borderRadius: 'var(--radius-sm)', padding: '6px 12px', cursor: 'pointer' }}>
+                        <Icon name="panel-top" size={13} color={m.color} /> {t.details}
+                      </button>
+                      {p.pdfPath && (
+                        <button onClick={() => setDoc({ file: p.pdfPath })} style={{
+                          display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11.5,
+                          color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                          borderRadius: 'var(--radius-sm)', padding: '6px 12px', cursor: 'pointer' }}>
+                          <Icon name="file-text" size={13} color="var(--gold)" /> PDF
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        );
+      })()}
+
       {/* project detail modal (text — no PDF) */}
       {info && (() => {
         const m = ARCHIVE_META[info.cat] || ARCHIVE_META.net;
+        const full = PROJECTS_FULL[info.id];                              // long legacy description if available
+        const desc = (full && full.description) || (lang === 'fr' ? info.dfr : info.den);
+        const techs = (full && full.tools && full.tools.length) ? full.tools : info.techs;
         return (
           <div onClick={() => setInfo(null)} style={{
             position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(9,8,13,0.72)',
@@ -1039,17 +1110,45 @@ function ArchivesApp({ lang, intent, onIntentDone }) {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 14px', height: 44, background: 'var(--os-surface-2)', borderBottom: '1px solid var(--os-line)', flexShrink: 0 }}>
                 <Icon name={m.icon} size={15} color={m.color} />
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{info[lang]}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{info.title || info[lang]}</span>
                 <button onClick={() => setInfo(null)} title={t.close} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-sm)', padding: '5px 10px', cursor: 'pointer' }}>
                   <Icon name="x" size={14} />
                 </button>
               </div>
               <div style={{ padding: '18px 20px', overflow: 'auto', fontFamily: 'var(--font-display)' }}>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-2)', margin: '0 0 16px' }}>{lang === 'fr' ? info.dfr : info.den}</p>
+                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-2)', margin: '0 0 16px' }}>{desc}</p>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.16em', marginBottom: 8 }}>{t.stack}</div>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {info.techs.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
+                  {techs.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
                 </div>
+                {full && (full.demoUrl || full.repoUrl || full.pdfPath) && (
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
+                    {full.demoUrl && (
+                      <a href={full.demoUrl} target="_blank" rel="noopener noreferrer" style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12,
+                        color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                        padding: '8px 14px', borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}>
+                        <Icon name="external-link" size={14} color="var(--mint)" /> Live Demo
+                      </a>
+                    )}
+                    {full.repoUrl && (
+                      <a href={full.repoUrl} target="_blank" rel="noopener noreferrer" style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12,
+                        color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                        padding: '8px 14px', borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}>
+                        <Icon name="github" size={14} /> Code
+                      </a>
+                    )}
+                    {full.pdfPath && (
+                      <button onClick={() => { setInfo(null); setDoc({ file: full.pdfPath }); }} style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12,
+                        color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                        padding: '8px 14px', borderRadius: 'var(--radius-sm)', cursor: 'pointer' }}>
+                        <Icon name="file-text" size={14} color="var(--gold)" /> {t.preview}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
