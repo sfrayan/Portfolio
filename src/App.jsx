@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES } from './data/content.js';
 
 // ---- Responsive hook ----------------------------------------
 // True when viewport is phone-sized. Drives full-screen windows,
@@ -57,7 +58,7 @@ const T = {
     login: 'Se connecter',
     menu_about: 'À propos', menu_help: 'Aide', menu_lang: 'FR',
     dock_about: 'À propos', dock_projects: 'Projets', dock_supervision: 'Supervision',
-    dock_jumeau: 'Jumeau Numérique', dock_terminal: 'Terminal', dock_contact: 'Contact',
+    dock_jumeau: 'Jumeau Numérique', dock_terminal: 'Terminal', dock_contact: 'Contact', dock_archives: 'Archives',
     about_title: 'whoami',
     about_role: 'Développeur web fullstack · Cybersécurité · IA',
     about_lead: "Étudiant en 3ᵉ année de BUT Réseaux & Télécommunications, parcours cybersécurité, à l'Université Sorbonne Paris Nord. Je conçois des applications web modernes, des systèmes connectés et des outils intelligents — du frontend Next.js jusqu'à l'infrastructure réseau.",
@@ -78,6 +79,8 @@ const T = {
     open: 'Ouvrir', close: 'Fermer', back: 'Retour',
     parcours: 'Parcours', skills_cat: 'Catégories', techs: 'Technologies',
     view_repo: 'Voir le dépôt', stack: 'Stack', status: 'Statut',
+    archives_title: 'Archives', archives_sub: 'Rapports & documents · ~/docs',
+    preview: 'Aperçu', open_tab: 'Onglet', download: 'Télécharger', docs: 'documents',
   },
   en: {
     boot_press: 'Press to enter',
@@ -86,7 +89,7 @@ const T = {
     login: 'Log in',
     menu_about: 'About', menu_help: 'Help', menu_lang: 'EN',
     dock_about: 'About', dock_projects: 'Projects', dock_supervision: 'Monitoring',
-    dock_jumeau: 'Digital Twin', dock_terminal: 'Terminal', dock_contact: 'Contact',
+    dock_jumeau: 'Digital Twin', dock_terminal: 'Terminal', dock_contact: 'Contact', dock_archives: 'Archives',
     about_title: 'whoami',
     about_role: 'Fullstack web developer · Cybersecurity · AI',
     about_lead: "Third-year student in Networks & Telecommunications (cybersecurity track) at Université Sorbonne Paris Nord. I build modern web apps, connected systems and intelligent tools — from Next.js frontends all the way down to network infrastructure.",
@@ -107,73 +110,14 @@ const T = {
     open: 'Open', close: 'Close', back: 'Back',
     parcours: 'Journey', skills_cat: 'Categories', techs: 'Technologies',
     view_repo: 'View repo', stack: 'Stack', status: 'Status',
+    archives_title: 'Archives', archives_sub: 'Reports & documents · ~/docs',
+    preview: 'Preview', open_tab: 'Tab', download: 'Download', docs: 'documents',
   },
 };
 
 // ---- DATA ----------------------------------------------------
-// Skill categories (30 techs / 9 categories) — from the real repo.
-const SKILL_CATEGORIES = [
-  { id: 'net', fr: 'Administration Réseaux', en: 'Network Administration', icon: 'network', accent: 'cyan',
-    skills: [['Wireshark', 96], ['FreeRADIUS', 88], ['Azure', 84], ['DHCP / DNS', 90]] },
-  { id: 'web', fr: 'Développement Web & Backend', en: 'Web & Backend Dev', icon: 'code-xml', accent: 'phosphor',
-    skills: [['React', 92], ['Next.js', 90], ['TypeScript', 86], ['Node.js / Express', 88], ['Python', 90], ['JavaScript', 94], ['C++', 78]] },
-  { id: 'db', fr: 'Bases de Données', en: 'Databases', icon: 'database', accent: 'cyan',
-    skills: [['PostgreSQL', 84], ['MongoDB', 82], ['MySQL', 86]] },
-  { id: 'devops', fr: 'DevOps & Infrastructure', en: 'DevOps & Infra', icon: 'container', accent: 'phosphor',
-    skills: [['Docker', 84], ['Git', 92], ['Arduino / ESP32', 86]] },
-  { id: 'os', fr: "Systèmes d'Exploitation", en: 'Operating Systems', icon: 'terminal', accent: 'phosphor',
-    skills: [['Linux', 92], ['Windows / AD', 86], ['Bash', 88], ['PowerShell', 80]] },
-  { id: 'sim', fr: 'Simulation Réseau', en: 'Network Simulation', icon: 'route', accent: 'cyan',
-    skills: [['Cisco Packet Tracer', 88]] },
-  { id: 'sec', fr: 'Cybersécurité & Pentesting', en: 'Cybersecurity & Pentest', icon: 'shield-half', accent: 'amber',
-    skills: [['Scapy', 84], ['Metasploit', 80], ['Nessus', 82], ['OpenSSL', 78]] },
-  { id: 'mon', fr: 'Monitoring & Détection', en: 'Monitoring & Detection', icon: 'activity', accent: 'amber',
-    skills: [['Zabbix', 86], ['Snort', 82], ['Fail2ban', 84], ['Wazuh', 80]] },
-];
-
-const PROJECTS = [
-  { id: 'quiz-master', name: 'Quiz Master', ext: 'app', kind: 'web', repo: 'https://github.com/sfrayan/Quiz-Master',
-    fr: 'Application de quiz multijoueur (Solo / Duel), catégories, niveaux de difficulté et classement en temps réel.',
-    en: 'Multiplayer quiz app (Solo / Duel) with categories, difficulty levels and a real-time leaderboard.',
-    stack: ['Vanilla JS', 'HTML5', 'CSS3', 'localStorage'], status: 'live' },
-  { id: 'pentest-suite', name: 'Pentesting Suite', ext: 'sh', kind: 'sec',
-    fr: 'Boîte à outils de tests d\'intrusion : reconnaissance, scan de vulnérabilités et exploitation guidée.',
-    en: 'Penetration-testing toolkit: recon, vulnerability scanning and guided exploitation.',
-    stack: ['Python', 'Scapy', 'Metasploit', 'Nessus'], status: 'live' },
-  { id: 'ai-agents', name: 'AI Agents Dashboard', ext: 'tsx', kind: 'ai',
-    fr: 'Tableau de bord pour orchestrer et superviser des agents IA autonomes.',
-    en: 'Dashboard to orchestrate and supervise autonomous AI agents.',
-    stack: ['Next.js', 'TypeScript', 'React'], status: 'wip' },
-  { id: 'esp32-twin', name: 'ESP32 Digital Twin', ext: 'ino', kind: 'iot',
-    fr: 'Jumeau numérique d\'un objet connecté ESP32 : capteurs, télémétrie et boucle de contrôle MAPE-K.',
-    en: 'Digital twin of an ESP32 connected device: sensors, telemetry and a MAPE-K control loop.',
-    stack: ['C++', 'Arduino', 'MQTT', 'Home Assistant'], status: 'wip' },
-  { id: 'fastfoodbike', name: 'FastFoodBike', ext: 'app', kind: 'web',
-    fr: 'Plateforme de commande et livraison à vélo : panier, suivi et back-office.',
-    en: 'Order & bike-delivery platform: cart, tracking and back-office.',
-    stack: ['React', 'Node.js', 'PostgreSQL'], status: 'live' },
-  { id: 'smartocean', name: 'SmartOcean', ext: 'cloud', kind: 'iot', featured: true,
-    fr: 'Composants logiciels pour capteurs sous-marins acoustiques intégrés au cloud — projet de recherche en Norvège.',
-    en: 'Software components for acoustic subsea sensors integrated with the cloud — research project in Norway.',
-    stack: ['Cloud', 'Time-series', 'Acoustic comms'], status: 'live' },
-];
-
-const JOURNEY = [
-  { year: '2019', fr: 'Baccalauréat Scientifique', en: 'Scientific Baccalaureate', sub: 'Physique-Chimie', type: 'edu' },
-  { year: '2023', fr: 'DU Technicien Admin Réseaux', en: 'Network Admin Technician Degree', sub: 'IUTV', type: 'edu' },
-  { year: '2023', fr: 'Stage — Salvia Développement', en: 'Internship — Salvia Développement', sub: 'Parc informatique', type: 'work' },
-  { year: '2023–26', fr: 'BUT Réseaux & Télécoms', en: 'BUT Networks & Telecom', sub: 'Parcours Cybersécurité · USPN', type: 'edu' },
-  { year: '2025', fr: 'Stage — Kolchy, Paris', en: 'Internship — Kolchy, Paris', sub: 'Espace client Next.js', type: 'work' },
-  { year: '2026', fr: 'SmartOcean Research', en: 'SmartOcean Research', sub: 'Western Norway Univ.', type: 'work', current: true },
-];
-
-const SOCIALS = [
-  { id: 'github', label: 'GitHub', handle: 'sfrayan', icon: 'github', url: 'https://github.com/sfrayan' },
-  { id: 'mail', label: 'Email', handle: 'rsaidfarah@gmail.com', icon: 'mail', url: 'mailto:rsaidfarah@gmail.com' },
-  // TODO: remplacer '#' par l'URL LinkedIn réelle quand fournie
-  { id: 'linkedin', label: 'LinkedIn', handle: 'Rayan Said Farah', icon: 'linkedin', url: '#' },
-  { id: 'location', label: 'Localisation', handle: 'Paris, France', icon: 'map-pin', url: '#' },
-];
+// SKILL_CATEGORIES, PROJECTS, JOURNEY, SOCIALS, ARCHIVES now live in
+// src/data/content.js (imported at the top). Edit content there.
 
 // ---- UI atoms ------------------------------------------------
 function StatusDot({ color = 'var(--mint)', size = 8, glow = true }) {
@@ -722,11 +666,12 @@ function TerminalApp({ lang, onKonami }) {
   useEffect(() => { if (endRef.current) endRef.current.scrollTop = endRef.current.scrollHeight; }, [history]);
 
   const COMMANDS = {
-    help: () => ['Commandes : help · whoami · ls · skills · projects · contact · neofetch · matrix · konami · coffee · sudo · clear'],
+    help: () => ['Commandes : help · whoami · ls · skills · projects · docs · contact · neofetch · matrix · konami · coffee · sudo · clear'],
     whoami: () => ['rayan — curieux · ambitieux · créatif', 'Fullstack dev · cybersécurité · IA · Linux enjoyer'],
-    ls: () => ['about.app  projets/  supervision.app  jumeau.app  contact.app  secrets/.hidden'],
+    ls: () => ['about.app  projets/  supervision.app  jumeau.app  archives/  contact.app  secrets/.hidden'],
     skills: () => SKILL_CATEGORIES.map(c => `${c[lang].padEnd(30)} ${c.skills.length} techs`),
     projects: () => PROJECTS.map(p => `${(p.id + '.' + p.ext).padEnd(22)} ${p.status === 'live' ? '● live' : '◐ wip'}`),
+    docs: () => ARCHIVES.map(a => `${a.file.padEnd(34)} ${a[lang]}`),
     contact: () => SOCIALS.map(s => `${s.label.padEnd(13)} ${s.handle}`),
     date: () => [new Date().toString()],
     sudo: () => ['[sudo] password for rayan: ', 'nice try 😏 — accès refusé. Va voir le terminal, pas root.'],
@@ -787,7 +732,104 @@ function TerminalApp({ lang, onKonami }) {
   );
 }
 
-Object.assign(window, { SupervisionApp, JumeauApp, TerminalApp });
+// ---- archives.app : academic PDF reports --------------------
+const ARCHIVE_META = {
+  net:   { icon: 'network',       color: 'var(--noc-cyan)' },
+  sec:   { icon: 'shield-half',   color: 'var(--noc-amber)' },
+  iot:   { icon: 'cpu',           color: 'var(--noc-cyan)' },
+  ai:    { icon: 'brain-circuit', color: 'var(--coral)' },
+  cloud: { icon: 'cloud',         color: 'var(--noc-phosphor)' },
+};
+
+function ArchivesApp({ lang }) {
+  const t = T[lang];
+  const mobile = useIsMobile();
+  const [doc, setDoc] = useState(null);   // currently previewed PDF
+  const base = import.meta.env.BASE_URL;  // '/Portfolio/' in prod, '/' in dev
+  const pdfUrl = (f) => `${base}projets/pdf/${f}`;
+
+  return (
+    <div style={{ padding: '22px 24px', fontFamily: 'var(--font-display)', minHeight: 420 }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--mint)', marginBottom: 4 }}>$ ls ~/docs</div>
+      <div style={{ fontWeight: 700, fontSize: 21, color: 'var(--fg-1)' }}>{t.archives_title}</div>
+      <div style={{ fontSize: 13, color: 'var(--fg-3)' }}>{t.archives_sub}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', margin: '6px 0 18px' }}>{ARCHIVES.length} {t.docs}</div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 12 }}>
+        {ARCHIVES.map(a => {
+          const m = ARCHIVE_META[a.cat] || ARCHIVE_META.net;
+          return (
+            <div key={a.id} className="ros-contact" style={{
+              display: 'flex', flexDirection: 'column', gap: 10, padding: '14px 16px',
+              background: 'var(--os-surface-2)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-md)',
+              transition: 'all var(--dur-base) var(--ease-out)',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--os-surface-3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Icon name="file-text" size={20} color={m.color} />
+                </div>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ fontSize: 14.5, color: 'var(--fg-1)', fontWeight: 600, lineHeight: 1.2 }}>{a[lang]}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
+                    <Icon name={m.icon} size={12} color={m.color} />
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--fg-3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.file}</span>
+                  </div>
+                </div>
+              </div>
+              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: 'var(--fg-2)', margin: 0 }}>{lang === 'fr' ? a.dfr : a.den}</p>
+              <div style={{ display: 'flex', gap: 8, marginTop: 2 }}>
+                <button onClick={() => setDoc(a)} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 12,
+                  color: 'var(--os-bg-deep)', background: 'var(--coral)', border: 'none', padding: '7px 13px',
+                  borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 600 }}>
+                  <Icon name="eye" size={14} /> {t.preview}
+                </button>
+                <a href={pdfUrl(a.file)} target="_blank" rel="noopener noreferrer" style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 12,
+                  color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                  padding: '7px 13px', borderRadius: 'var(--radius-sm)', textDecoration: 'none' }}>
+                  <Icon name="external-link" size={14} /> {t.open_tab}
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* PDF viewer modal — true overlay over the whole OS */}
+      {doc && (
+        <div onClick={() => setDoc(null)} style={{
+          position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(9,8,13,0.72)',
+          backdropFilter: 'var(--blur-glass)', WebkitBackdropFilter: 'var(--blur-glass)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: mobile ? 0 : '4vh 4vw',
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            width: mobile ? '100%' : 'min(900px, 92vw)', height: mobile ? '100dvh' : '92vh',
+            background: 'var(--os-surface)', border: '1px solid var(--os-line)', borderRadius: mobile ? 0 : 'var(--radius-lg)',
+            overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: 'var(--shadow-window)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 12px', height: 44, background: 'var(--os-surface-2)', borderBottom: '1px solid var(--os-line)', flexShrink: 0 }}>
+              <Icon name="file-text" size={15} color="var(--gold)" />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{doc.file}</span>
+              <a href={pdfUrl(doc.file)} download style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--fg-2)', textDecoration: 'none' }}>
+                <Icon name="download" size={14} />{!mobile && ` ${t.download}`}
+              </a>
+              <button onClick={() => setDoc(null)} title={t.close} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: 'var(--font-mono)', fontSize: 11.5,
+                color: 'var(--fg-1)', background: 'var(--os-surface-3)', border: '1px solid var(--os-line)',
+                borderRadius: 'var(--radius-sm)', padding: '5px 10px', cursor: 'pointer' }}>
+                <Icon name="x" size={14} />{!mobile && ` ${t.close}`}
+              </button>
+            </div>
+            <iframe title={doc.file} src={pdfUrl(doc.file)} style={{ flex: 1, width: '100%', border: 'none', background: '#fff' }} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+Object.assign(window, { SupervisionApp, JumeauApp, TerminalApp, ArchivesApp, ARCHIVE_META });
 
 // ==== App (from ui_kits/portfolio/index.html inline script) ====
 
@@ -819,6 +861,9 @@ function App() {
     { id: 'contact', icon: 'send', bg: 'var(--os-surface-2)', fg: 'var(--coral)',
       label: { fr: 'Contact', en: 'Contact' }, title: { fr: 'contact.app', en: 'contact.app' },
       accent: 'var(--coral)', w: 480, h: 360, render: (l) => <ContactApp lang={l} /> },
+    { id: 'archives', icon: 'archive', bg: 'var(--os-surface-2)', fg: 'var(--gold)',
+      label: { fr: 'Archives', en: 'Archives' }, title: { fr: 'archives — documents', en: 'archives — documents' },
+      accent: 'var(--gold)', w: 620, h: 520, render: (l) => <ArchivesApp lang={l} /> },
   ];
   const appById = (id) => APPS.find(a => a.id === id);
 
@@ -867,7 +912,7 @@ function App() {
   const enter = () => { setBooted(true); setTimeout(() => { openApp('about'); }, 250); };
 
   const activeApp = wins.length ? appById([...wins].sort((a, b) => b.z - a.z)[0].id)?.label[lang] : null;
-  const deskIcons = ['about', 'projects', 'supervision', 'jumeau'];
+  const deskIcons = ['about', 'projects', 'supervision', 'jumeau', 'archives'];
 
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden',
