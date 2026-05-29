@@ -50,7 +50,9 @@ export const PROJECTS = [
   { id: 'smartocean', name: 'SmartOcean', ext: 'cloud', kind: 'iot', featured: true,
     fr: 'Composants logiciels pour capteurs sous-marins acoustiques intégrés au cloud — projet de recherche en Norvège.',
     en: 'Software components for acoustic subsea sensors integrated with the cloud — research project in Norway.',
-    stack: ['Cloud', 'Time-series', 'Acoustic comms'], status: 'live' },
+    stack: ['Cloud', 'Time-series', 'Acoustic comms'], status: 'live',
+    demoUrl: 'https://sfrayan.github.io/ruleless-digital-twins-demo/',
+    repoUrl: 'https://github.com/sfrayan/ruleless-digital-twins-demo' },
 ];
 
 // ---- Journey / timeline -------------------------------------
