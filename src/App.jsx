@@ -254,7 +254,7 @@ function Clock({ lang }) {
 }
 
 // ---- Top menubar ---------------------------------------------
-function MenuBar({ lang, setLang, activeApp, onOpenAbout, onSpotlight, mobile }) {
+function MenuBar({ lang, setLang, activeApp, onOpenAbout, onSpotlight, mobile, theme }) {
   const t = T[lang];
   return (
     <div style={{
@@ -265,7 +265,7 @@ function MenuBar({ lang, setLang, activeApp, onOpenAbout, onSpotlight, mobile })
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <span onClick={onOpenAbout} style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', color: 'var(--coral)', fontWeight: 700, fontFamily: 'var(--font-display)' }}>
-          <Icon name="hexagon" size={15} /> RayanOS
+          <Icon name={theme === 'win95' ? 'monitor' : 'hexagon'} size={15} /> {theme === 'win95' ? 'My Portfolio' : 'RayanOS'}
         </span>
         <span style={{ color: 'var(--fg-1)', fontWeight: 600 }}>{activeApp || t.menu_about}</span>
         {!mobile && <span onClick={onOpenAbout} style={{ color: 'var(--fg-3)', cursor: 'pointer' }}>{t.menu_help}</span>}
@@ -764,7 +764,7 @@ function JumeauApp({ lang }) {
 }
 
 // ---- Terminal with easter eggs -------------------------------
-function TerminalApp({ lang, onKonami, onOpen }) {
+function TerminalApp({ lang, onKonami, onOpen, onTheme }) {
   const t = T[lang];
   const [history, setHistory] = useState([
     { type: 'sys', text: 'RayanOS terminal — bash 5.2' },
@@ -788,6 +788,7 @@ function TerminalApp({ lang, onKonami, onOpen }) {
       '  open <slug>            ouvrir la fenêtre',
       '  pdf <slug>             ouvrir le rapport PDF',
       '  skills·projects·docs·contact   listes rapides',
+      '  theme win95|default   bascule de thème',
       '  matrix · konami · coffee · sudo · clear',
     ],
     whoami: () => ['rayan — curieux · ambitieux · créatif', 'Fullstack dev · cybersécurité · IA · Linux enjoyer'],
@@ -862,6 +863,13 @@ function TerminalApp({ lang, onKonami, onOpen }) {
       else if (r.pdfFile) { const a = ARCHIVES.find(x => x.file === r.pdfFile); if (a) { onOpen && onOpen('pdf', a.id); push([`Ouverture du rapport de ${r.title}…`]); } else push([`Aucun rapport PDF pour '${arg}'.`], 'err'); }
       else push([`Aucun rapport PDF pour '${arg}'.`], 'err');
       return done();
+    }
+
+    if (cmd === 'theme') {
+      const a = arg.toLowerCase();
+      if (a === 'win95') { onTheme && onTheme('win95'); push(['🖥️  Thème Win95 activé. Tapez "theme default" pour revenir.']); return done(); }
+      if (a === 'default' || a === 'rayanos') { onTheme && onTheme('default'); push(['✨ Thème RayanOS restauré.']); return done(); }
+      push(['usage: theme <win95|default>'], 'err'); return done();
     }
 
     const fn = COMMANDS[cmd];
@@ -1178,6 +1186,11 @@ function App() {
   const mobile = useIsMobile();
   const [intent, setIntent] = useState(null);     // deep-link → an app opens its modal
   const [spotlight, setSpotlight] = useState(false);
+  const [theme, setTheme] = useState('default');   // 'default' | 'win95' — toggled from terminal
+
+  useEffect(() => {
+    document.body.classList.toggle('theme-win95', theme === 'win95');
+  }, [theme]);
 
   // app registry
   const APPS = [
@@ -1195,7 +1208,7 @@ function App() {
       accent: 'var(--twin-signal)', w: 640, h: 540, render: (l) => <JumeauApp lang={l} /> },
     { id: 'terminal', icon: 'square-terminal', bg: '#0C0A12', fg: 'var(--mint)',
       label: { fr: 'Terminal', en: 'Terminal' }, title: { fr: 'terminal — bash', en: 'terminal — bash' },
-      accent: 'var(--mint)', w: 540, h: 440, render: (l) => <TerminalApp lang={l} onKonami={triggerKonami} onOpen={openTarget} /> },
+      accent: 'var(--mint)', w: 540, h: 440, render: (l) => <TerminalApp lang={l} onKonami={triggerKonami} onOpen={openTarget} onTheme={setTheme} /> },
     { id: 'contact', icon: 'send', bg: 'var(--os-surface-2)', fg: 'var(--coral)',
       label: { fr: 'Contact', en: 'Contact' }, title: { fr: 'contact.app', en: 'contact.app' },
       accent: 'var(--coral)', w: 480, h: 360, render: (l) => <ContactApp lang={l} /> },
@@ -1277,7 +1290,7 @@ function App() {
       <Wallpaper />
       {!booted && <Boot lang={lang} onEnter={enter} />}
       {booted && <>
-        <MenuBar lang={lang} setLang={setLang} activeApp={activeApp} onOpenAbout={() => openApp('about')} onSpotlight={() => setSpotlight(true)} mobile={mobile} />
+        <MenuBar lang={lang} setLang={setLang} activeApp={activeApp} onOpenAbout={() => openApp('about')} onSpotlight={() => setSpotlight(true)} mobile={mobile} theme={theme} />
 
         {/* desktop launcher icons (top-left) — hidden on phones (dock is enough) */}
         {!mobile && <div style={{ position: 'absolute', top: 54, left: 18, zIndex: 5, display: 'flex', flexDirection: 'column', gap: 6 }}>

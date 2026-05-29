@@ -50,6 +50,62 @@
   .ros-desk-icon:hover { background: rgba(255,255,255,0.06); }
   .ros-noc-row:hover { background: rgba(91,242,168,0.07) !important; }
   @keyframes rosKonami { 0%,100% { box-shadow: inset 0 0 0 0 transparent; } 30% { box-shadow: inset 0 0 120px 20px rgba(255,107,74,0.45); } }
+
+  /* ===== Win95 retro theme — toggled via terminal: theme win95 ===== */
+  body.theme-win95 {
+    --os-bg-deep: #008080;
+    --os-bg: #008080;
+    --os-surface: #c0c0c0;
+    --os-surface-2: #d4d0c8;
+    --os-surface-3: #e4e0d8;
+    --os-line: #808080;
+    --os-line-soft: #b0b0b0;
+    --glass-bg: #c0c0c0;
+    --blur-glass: blur(0px);
+    --fg-1: #000000;
+    --fg-2: #1a1a1a;
+    --fg-3: #555555;
+    --fg-4: #808080;
+    --coral: #000080;
+    --coral-hover: #1084d0;
+    --coral-press: #00006a;
+    --coral-dim: #b8c4e0;
+    --mint: #008000;
+    --gold: #808000;
+    --alert: #aa0000;
+    --font-display: 'Tahoma', 'Arial', sans-serif;
+    --font-mono: 'Courier New', monospace;
+    --radius-sm: 0px; --radius-md: 0px; --radius-lg: 0px; --radius-xl: 0px; --radius-pill: 0px;
+    --glow-coral: none; --glow-mint: none;
+    --shadow-sm: 1px 1px 0 #000; --shadow-md: 1px 1px 0 #000;
+    --shadow-lg: 2px 2px 0 #000; --shadow-window: 1px 1px 0 #000;
+  }
+  /* 3D outset window frame */
+  body.theme-win95 .ros-window {
+    border: 2px solid !important;
+    border-color: #ffffff #808080 #808080 #ffffff !important;
+    box-shadow: 1px 1px 0 #000 !important;
+    border-radius: 0 !important;
+  }
+  /* classic blue title bar (titlebar = first child div of the window) */
+  body.theme-win95 .ros-window > div:first-child {
+    background: linear-gradient(90deg, #000080, #1084d0) !important;
+    border-bottom: none !important;
+  }
+  body.theme-win95 .ros-window > div:first-child > span {
+    color: #ffffff !important;
+    font-weight: bold !important;
+  }
+  /* 3D beveled buttons (background kept so dock icons stay legible) */
+  body.theme-win95 button {
+    border: 2px solid !important;
+    border-color: #ffffff #808080 #808080 #ffffff !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  body.theme-win95 button:active {
+    border-color: #808080 #ffffff #ffffff #808080 !important;
+  }
 </style>
 </head>
 <body>
