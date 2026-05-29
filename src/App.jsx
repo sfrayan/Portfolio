@@ -505,6 +505,22 @@ function ProjectsApp({ lang, intent, onIntentDone }) {
           {p.stack.map(s => <Pill key={s} accent="var(--fg-1)">{s}</Pill>)}
         </div>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          {p.demoUrl && (
+            <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
+              color: 'var(--fg-1)', background: 'var(--os-surface-2)', border: '1px solid var(--os-line)',
+              padding: '9px 16px', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600 }}>
+              <Icon name="external-link" size={15} color="var(--mint)" /> Live Demo
+            </a>
+          )}
+          {p.repoUrl && (
+            <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
+              color: 'var(--fg-1)', background: 'var(--os-surface-2)', border: '1px solid var(--os-line)',
+              padding: '9px 16px', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontWeight: 600 }}>
+              <Icon name="github" size={15} /> Code
+            </a>
+          )}
           {p.repo && (
             <a href={p.repo} target="_blank" rel="noopener noreferrer" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5,
