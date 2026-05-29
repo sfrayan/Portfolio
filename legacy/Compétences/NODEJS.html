@@ -1,66 +1,171 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node.js & Express - Rayan Said Farah</title>
-    <link rel="stylesheet" href="../main.css">
-    <link rel="stylesheet" href="../components.css">
-    <link rel="stylesheet" href="../sections.css">
-    <link rel="stylesheet" href="../responsive.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Node.js</title>
+    <meta name="description" content="Compétence en Node.js - Backend & API REST">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #68a063 0%, #1f2937 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.6s ease;
+        }
+        
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounceIn 0.8s ease;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #68a063, #7ac47f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .content-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(104, 160, 99, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(104, 160, 99, 0.2);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #7ac47f;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+            color: #7ac47f;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .skill-item {
+            background: rgba(104, 160, 99, 0.1);
+            border: 1px solid rgba(104, 160, 99, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            background: rgba(104, 160, 99, 0.2);
+            border-color: rgba(104, 160, 99, 0.6);
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounceIn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
 </head>
 <body>
-    <header style="height: auto; padding: 100px 20px 60px; text-align: center; background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
-        <nav style="position: static; background: transparent; padding: 0; box-shadow: none;">
-            <a href="../index.html" class="nav-icon" style="display: inline-block; margin-bottom: 20px;">
-                <i class="fas fa-arrow-left" style="color: white; font-size: 1.5rem;"></i>
-            </a>
-        </nav>
-        <h1 style="color: #00d4ff; margin-bottom: 0;">🚀 Node.js & Express</h1>
-        <p style="color: rgba(234, 234, 234, 0.8); margin-top: 10px;">Backend & API REST</p>
-    </header>
-
-    <section style="background: var(--bg-light); color: var(--text-dark);">
-        <div class="container">
-            <h2 style="color: #e94560; margin-bottom: 20px;">À Propos de Node.js</h2>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🚀</div>
+            <h1>Node.js/Express</h1>
+            <p class="subtitle">Backend & API REST</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>📋 Description</h2>
             <p>
-                Node.js et Express me permettent de créer des APIs RESTful scalables et performantes. Je maîtrise la création de serveurs, la gestion des requêtes HTTP et l'intégration avec les bases de données.
+                Node.js est un runtime JavaScript côté serveur qui permet de créer des applications backend haute performance. Express est un framework web léger et flexible pour Node.js. Ensemble, ils permettent de créer des API REST complètes et des applications full-stack JavaScript. Maîtriser Node.js/Express signifie comprendre async/await, middleware, authentification et les meilleures pratiques backend.
             </p>
-
-            <h2 style="color: #e94560; margin-top: 30px; margin-bottom: 20px;">Compétences Maîtrisées</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Express Framework</h3>
-                        <p>Routage, middlewares, gestion d'erreurs et validation.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">APIs RESTful</h3>
-                        <p>Création d'APIs REST avec endpoints CRUD complets.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Authentification</h3>
-                        <p>JWT, OAuth et gestion sécurisée des sessions utilisateurs.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Déploiement</h3>
-                        <p>Déploiement sur heroku, AWS, Azure et gestion des variables d'environnement.</p>
-                    </div>
-                </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🏆 Compétences Associées</h2>
+            <div class="skills-list">
+                <div class="skill-item">Express Framework</div>
+                <div class="skill-item">REST API</div>
+                <div class="skill-item">Middleware</div>
+                <div class="skill-item">Authentication</div>
+                <div class="skill-item">Database ORM</div>
+                <div class="skill-item">Deployment</div>
             </div>
         </div>
-    </section>
-
-    <footer>
-        <h3>Retour au Portfolio</h3>
-        <a href="../index.html#competences" style="color: #00d4ff; text-decoration: none; font-weight: 600;">← Retour aux Compétences</a>
-    </footer>
+        
+        <div class="content-section">
+            <h3>Niveaux de Maîtrise</h3>
+            <p>
+                <strong>Avancé :</strong> Express avancé, middleware personnalisé, JWT, OAuth, Mongoose/Sequelize, streaming, clustering, load balancing.
+            </p>
+        </div>
+    </div>
 </body>
 </html>

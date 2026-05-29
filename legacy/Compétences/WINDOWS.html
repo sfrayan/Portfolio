@@ -1,66 +1,171 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows - Rayan Said Farah</title>
-    <link rel="stylesheet" href="../main.css">
-    <link rel="stylesheet" href="../components.css">
-    <link rel="stylesheet" href="../sections.css">
-    <link rel="stylesheet" href="../responsive.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Windows</title>
+    <meta name="description" content="Compétence en Windows - Administration & Active Directory">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0078d4 0%, #1f2937 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.6s ease;
+        }
+        
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounceIn 0.8s ease;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #0078d4, #00a4ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .content-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 120, 212, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 120, 212, 0.2);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #00bfff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+            color: #00bfff;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .skill-item {
+            background: rgba(0, 120, 212, 0.1);
+            border: 1px solid rgba(0, 120, 212, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            background: rgba(0, 120, 212, 0.2);
+            border-color: rgba(0, 120, 212, 0.6);
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounceIn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
 </head>
 <body>
-    <header style="height: auto; padding: 100px 20px 60px; text-align: center; background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
-        <nav style="position: static; background: transparent; padding: 0; box-shadow: none;">
-            <a href="../index.html" class="nav-icon" style="display: inline-block; margin-bottom: 20px;">
-                <i class="fas fa-arrow-left" style="color: white; font-size: 1.5rem;"></i>
-            </a>
-        </nav>
-        <h1 style="color: #00d4ff; margin-bottom: 0;">🪟 Windows Server</h1>
-        <p style="color: rgba(234, 234, 234, 0.8); margin-top: 10px;">Administration & Management</p>
-    </header>
-
-    <section style="background: var(--bg-light); color: var(--text-dark);">
-        <div class="container">
-            <h2 style="color: #e94560; margin-bottom: 20px;">À Propos de Windows</h2>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🪟</div>
+            <h1>Windows</h1>
+            <p class="subtitle">Administration & Active Directory</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>📋 Description</h2>
             <p>
-                Je maîtrise l'administration de Windows Server, Active Directory et la gestion des groupes de travail. Je comprends les systèmes de fichiers, la sécurité et l'optimisation.
+                Windows est le système d'exploitation le plus largement utilisé en entreprise. L'administration Windows inclut la gestion des serveurs, Active Directory (AD), les services réseau et la sécurité. Maîtriser Windows signifie comprendre PowerShell, Group Policy, user management et l'infrastructure d'entreprise.
             </p>
-
-            <h2 style="color: #e94560; margin-top: 30px; margin-bottom: 20px;">Compétences Maîtrisées</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Active Directory</h3>
-                        <p>Configuration AD, utilisateurs, groupes et GPO.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Serveurs</h3>
-                        <p>Installation, configuration et gestion de Windows Server.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Sécurité</h3>
-                        <p>Firewall Windows, UAC et gestion des permissions.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Performance</h3>
-                        <p>Monitoring, optimisation et dépannage de systèmes.</p>
-                    </div>
-                </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>🏆 Compétences Associées</h2>
+            <div class="skills-list">
+                <div class="skill-item">Active Directory</div>
+                <div class="skill-item">Group Policy</div>
+                <div class="skill-item">PowerShell</div>
+                <div class="skill-item">Server Manager</div>
+                <div class="skill-item">User Management</div>
+                <div class="skill-item">Security</div>
             </div>
         </div>
-    </section>
-
-    <footer>
-        <h3>Retour au Portfolio</h3>
-        <a href="../index.html#competences" style="color: #00d4ff; text-decoration: none; font-weight: 600;">← Retour aux Compétences</a>
-    </footer>
+        
+        <div class="content-section">
+            <h3>Niveaux de Maîtrise</h3>
+            <p>
+                <strong>Avancé :</strong> Active Directory avancée, GPO, PowerShell scripting, DNS, DHCP, Certificate Services, clustering, security hardening.
+            </p>
+        </div>
+    </div>
 </body>
 </html>

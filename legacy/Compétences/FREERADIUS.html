@@ -1,73 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeRADIUS - Rayan Said Farah</title>
-    <link rel="stylesheet" href="../main.css">
-    <link rel="stylesheet" href="../components.css">
-    <link rel="stylesheet" href="../sections.css">
-    <link rel="stylesheet" href="../responsive.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>FreeRADIUS</title>
+    <meta name="description" content="Compétence en FreeRADIUS - Authentification RADIUS">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(135deg, #ff6b00 0%, #1f2937 100%); color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; padding: 40px 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 50px; animation: fadeInDown 0.6s ease; }
+        .logo { font-size: 80px; margin-bottom: 20px; display: inline-block; animation: bounceIn 0.8s ease; }
+        h1 { font-size: 3rem; background: linear-gradient(135deg, #ff6b00, #ff8c42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+        .subtitle { font-size: 1.2rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 30px; }
+        .content-section { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 40px; margin-bottom: 30px; transition: all 0.3s ease; animation: fadeInUp 0.6s ease; }
+        .content-section:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 107, 0, 0.5); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 107, 0, 0.2); }
+        h2 { font-size: 1.8rem; margin-bottom: 20px; color: #ff8c42; display: flex; align-items: center; gap: 15px; }
+        h3 { font-size: 1.4rem; margin: 25px 0 15px 0; color: #ff8c42; }
+        p { font-size: 1.05rem; line-height: 1.8; color: rgba(255, 255, 255, 0.85); margin-bottom: 15px; text-align: justify; }
+        .skills-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+        .skill-item { background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); padding: 15px; border-radius: 10px; text-align: center; transition: all 0.3s ease; }
+        .skill-item:hover { background: rgba(255, 107, 0, 0.2); border-color: rgba(255, 107, 0, 0.6); transform: scale(1.05); }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceIn { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    </style>
 </head>
 <body>
-    <header style="height: auto; padding: 100px 20px 60px; text-align: center; background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
-        <nav style="position: static; background: transparent; padding: 0; box-shadow: none;">
-            <a href="../index.html" class="nav-icon" style="display: inline-block; margin-bottom: 20px;">
-                <i class="fas fa-arrow-left" style="color: white; font-size: 1.5rem;"></i>
-            </a>
-        </nav>
-        <h1 style="color: #00d4ff; margin-bottom: 0;">🔐 FreeRADIUS</h1>
-        <p style="color: rgba(234, 234, 234, 0.8); margin-top: 10px;">Authentification RADIUS Centralisée</p>
-    </header>
-
-    <section style="background: var(--bg-light); color: var(--text-dark);">
-        <div class="container">
-            <h2 style="color: #e94560; margin-bottom: 20px;">À Propos de FreeRADIUS</h2>
-            <p>
-                FreeRADIUS est un serveur RADIUS open-source hautement configurable. Je maîtrise sa configuration pour implémenter des systèmes d'authentification sécurisés pour les réseaux Wi-Fi d'entreprise, les VPN et les services d'accès réseau.
-            </p>
-
-            <h2 style="color: #e94560; margin-top: 30px; margin-bottom: 20px;">Compétences Maîtrisées</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Configuration RADIUS</h3>
-                        <p>Installation et configuration d'un serveur RADIUS pour l'authentification centralisée.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">WPA-Enterprise</h3>
-                        <p>Intégration avec WPA2-Enterprise pour la sécurisation des réseaux Wi-Fi.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Gestion d'Utilisateurs</h3>
-                        <p>Création et gestion des comptes utilisateurs, groupes et profils d'accès.</p>
-                    </div>
-                </div>
-                <div class="card" style="background: white; border-left: 4px solid #e94560;">
-                    <div class="card-body">
-                        <h3 style="color: #e94560;">Monitoring</h3>
-                        <p>Suivi des connexions, audit des tentatives d'authentification et alertes.</p>
-                    </div>
-                </div>
-            </div>
-
-            <h2 style="color: #e94560; margin-top: 30px; margin-bottom: 20px;">Projets Réalisés</h2>
-            <div style="background: rgba(233, 69, 96, 0.1); padding: 20px; border-radius: 10px; border-left: 4px solid #e94560;">
-                <h3 style="color: #e94560;">🏢 SAE501 - Architecture Wi-Fi Sécurisée</h3>
-                <p>Déploiement d'une infrastructure FreeRADIUS pour une chaîne multi-sites avec authentification WPA-Enterprise, gestion centralisée des utilisateurs et monitoring des connexions.</p>
-                <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Lien: <a href="../Projets/SAE501.html" style="color: #e94560;">Voir le projet</a></p>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🔑</div>
+            <h1>FreeRADIUS</h1>
+            <p class="subtitle">Authentification RADIUS</p>
+        </div>
+        <div class="content-section">
+            <h2>📋 Description</h2>
+            <p>FreeRADIUS est un serveur d'authentification open-source implémentant le protocole RADIUS. Il est utilisé pour l'authentification centralisée dans les réseaux d'entreprise, notamment pour WiFi 802.1X et VPN.</p>
+        </div>
+        <div class="content-section">
+            <h2>🏆 Compétences Associées</h2>
+            <div class="skills-list">
+                <div class="skill-item">Configuration</div>
+                <div class="skill-item">User Management</div>
+                <div class="skill-item">802.1X</div>
+                <div class="skill-item">EAP Methods</div>
+                <div class="skill-item">Accounting</div>
+                <div class="skill-item">Troubleshooting</div>
             </div>
         </div>
-    </section>
-
-    <footer>
-        <h3>Retour au Portfolio</h3>
-        <a href="../index.html#competences" style="color: #00d4ff; text-decoration: none; font-weight: 600;">← Retour aux Compétences</a>
-    </footer>
+    </div>
 </body>
 </html>
