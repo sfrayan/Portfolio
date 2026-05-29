@@ -28,9 +28,16 @@ const BRAND_SVGS = {
 };
 
 // ---- Lucide icon wrapper -------------------------------------
-// Renders <i data-lucide="name">; App calls lucide.createIcons()
-// in a useEffect after every render to swap them to <svg>.
+// Renders a React-OWNED <svg> built from Lucide's icon data
+// (window.lucide.icons.PascalName = [["path",{d}], ...]).
+// We deliberately do NOT use lucide.createIcons(): it replaces our
+// <i data-lucide> with an <svg> behind React's back, which makes
+// React's reconciler crash ("Failed to execute 'removeChild'") the
+// next time the surrounding component re-renders (e.g. Spotlight nav).
 // Brand icons (github/linkedin) are inlined since Lucide removed them.
+const _toPascal = (n) => n.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+const _camelKey = (k) => k.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+
 function Icon({ name, size = 16, color, stroke = 2, style = {} }) {
   if (BRAND_SVGS[name]) {
     return (
@@ -41,11 +48,20 @@ function Icon({ name, size = 16, color, stroke = 2, style = {} }) {
       >{BRAND_SVGS[name]}</svg>
     );
   }
+  const node = (typeof window !== 'undefined' && window.lucide && window.lucide.icons)
+    ? window.lucide.icons[_toPascal(name)] : null;
+  if (!node) return <span style={{ display: 'inline-block', width: size, height: size, flexShrink: 0, ...style }} />;
   return (
-    <i
-      data-lucide={name}
-      style={{ width: size, height: size, display: 'inline-flex', color, ['--lucide-stroke']: stroke, ...style }}
-    />
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24"
+      fill="none" stroke={color || 'currentColor'} strokeWidth={stroke}
+      strokeLinecap="round" strokeLinejoin="round"
+      style={{ display: 'inline-block', flexShrink: 0, ...style }}>
+      {node.map(([tag, attrs], i) => {
+        const props = { key: i };
+        for (const k in attrs) props[_camelKey(k)] = attrs[k];
+        return React.createElement(tag, props);
+      })}
+    </svg>
   );
 }
 
@@ -435,7 +451,6 @@ function ProjectsApp({ lang, intent, onIntentDone }) {
   const [sel, setSel] = useState(PROJECTS[0].id);
   const p = PROJECTS.find(x => x.id === sel);
   const meta = KIND_META[p.kind];
-  useEffect(() => { window.lucide && window.lucide.createIcons(); });  // hydrate icons on project switch
   useEffect(() => {  // deep-link from Spotlight / terminal
     if (intent && intent.kind === 'project' && PROJECTS.find(x => x.id === intent.id)) { setSel(intent.id); onIntentDone && onIntentDone(); }
   }, [intent]);
@@ -564,9 +579,6 @@ function SupervisionApp({ lang, intent, onIntentDone }) {
   const t = T[lang];
   const mobile = useIsMobile();
   const [sel, setSel] = useState(null);   // clicked skill → detail modal
-  // App's lucide hydration only fires on App re-renders; local state
-  // changes here (opening the modal) need their own pass.
-  useEffect(() => { window.lucide && window.lucide.createIcons(); });
   // deep-link from Spotlight / terminal: open a skill's detail
   useEffect(() => {
     if (!intent || intent.kind !== 'skill') return;
@@ -924,7 +936,6 @@ function ArchivesApp({ lang, intent, onIntentDone }) {
   const [info, setInfo] = useState(null); // currently opened project detail
   const base = import.meta.env.BASE_URL;  // '/Portfolio/' in prod, '/' in dev
   const pdfUrl = (f) => `${base}projets/pdf/${f}`;
-  useEffect(() => { window.lucide && window.lucide.createIcons(); });  // hydrate modal icons
   // deep-link from Spotlight / terminal: open a PDF or a project detail
   useEffect(() => {
     if (!intent) return;
@@ -1080,7 +1091,6 @@ function SpotlightSearch({ lang, onClose, onOpen }) {
   const [idx, setIdx] = useState(0);
   const inputRef = useRef(null);
   useEffect(() => { inputRef.current && inputRef.current.focus(); }, []);
-  useEffect(() => { window.lucide && window.lucide.createIcons(); });
 
   const all = [];
   PROJECTS.forEach(p => all.push({ type: 'project', id: p.id, group: 'proj', title: p.name, desc: p[lang], icon: (KIND_META[p.kind] || {}).icon || 'folder', hay: `${p.id} ${p.name} ${p[lang]} ${p.stack.join(' ')}` }));
@@ -1194,9 +1204,6 @@ function App() {
       accent: 'var(--gold)', w: 620, h: 520, render: (l) => <ArchivesApp lang={l} intent={intent && intent.app === 'archives' ? intent : null} onIntentDone={clearIntent} /> },
   ];
   const appById = (id) => APPS.find(a => a.id === id);
-
-  // lucide: re-render icons after every paint
-  useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
 
   const triggerKonami = useCallback(() => {
     setFlash(true); setTimeout(() => setFlash(false), 700);
