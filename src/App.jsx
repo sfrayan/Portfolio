@@ -238,7 +238,7 @@ function Clock({ lang }) {
 }
 
 // ---- Top menubar ---------------------------------------------
-function MenuBar({ lang, setLang, activeApp, onOpenAbout, mobile }) {
+function MenuBar({ lang, setLang, activeApp, onOpenAbout, onSpotlight, mobile }) {
   const t = T[lang];
   return (
     <div style={{
@@ -255,6 +255,12 @@ function MenuBar({ lang, setLang, activeApp, onOpenAbout, mobile }) {
         {!mobile && <span onClick={onOpenAbout} style={{ color: 'var(--fg-3)', cursor: 'pointer' }}>{t.menu_help}</span>}
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: mobile ? 10 : 14, color: 'var(--fg-2)' }}>
+        <button onClick={onSpotlight} title={lang === 'fr' ? 'Recherche (⌘K / Ctrl+K)' : 'Search (⌘K / Ctrl+K)'} style={{
+          fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', background: 'var(--os-surface-2)',
+          border: '1px solid var(--os-line)', borderRadius: 'var(--radius-pill)', padding: '3px 10px',
+          cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
+          <Icon name="search" size={13} />{!mobile && ' ⌘K'}
+        </button>
         <button onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} title="FR / EN" style={{
           fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', background: 'var(--os-surface-2)',
           border: '1px solid var(--os-line)', borderRadius: 'var(--radius-pill)', padding: '3px 10px',
@@ -423,13 +429,16 @@ const KIND_META = {
   iot: { icon: 'cpu', color: 'var(--noc-cyan)' },
 };
 
-function ProjectsApp({ lang }) {
+function ProjectsApp({ lang, intent, onIntentDone }) {
   const t = T[lang];
   const mobile = useIsMobile();
   const [sel, setSel] = useState(PROJECTS[0].id);
   const p = PROJECTS.find(x => x.id === sel);
   const meta = KIND_META[p.kind];
   useEffect(() => { window.lucide && window.lucide.createIcons(); });  // hydrate icons on project switch
+  useEffect(() => {  // deep-link from Spotlight / terminal
+    if (intent && intent.kind === 'project' && PROJECTS.find(x => x.id === intent.id)) { setSel(intent.id); onIntentDone && onIntentDone(); }
+  }, [intent]);
   return (
     <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', height: mobile ? 'auto' : 460, fontFamily: 'var(--font-display)' }}>
       {/* file list */}
@@ -551,13 +560,22 @@ Object.assign(window, { AboutApp, ProjectsApp, ContactApp, KIND_META });
 // ---- supervision.app : NOC dashboard -------------------------
 const NOC_ACCENT = { phosphor: 'var(--noc-phosphor)', cyan: 'var(--noc-cyan)', amber: 'var(--noc-amber)' };
 
-function SupervisionApp({ lang }) {
+function SupervisionApp({ lang, intent, onIntentDone }) {
   const t = T[lang];
   const mobile = useIsMobile();
   const [sel, setSel] = useState(null);   // clicked skill → detail modal
   // App's lucide hydration only fires on App re-renders; local state
   // changes here (opening the modal) need their own pass.
   useEffect(() => { window.lucide && window.lucide.createIcons(); });
+  // deep-link from Spotlight / terminal: open a skill's detail
+  useEffect(() => {
+    if (!intent || intent.kind !== 'skill') return;
+    for (const cat of SKILL_CATEGORIES) {
+      const f = cat.skills.find(([n]) => n === intent.id);
+      if (f) { setSel({ name: f[0], val: f[1], ac: NOC_ACCENT[cat.accent], cat: cat[lang] }); break; }
+    }
+    onIntentDone && onIntentDone();
+  }, [intent]);
   const scan = {
     position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.6, borderRadius: 'inherit',
     backgroundImage: 'repeating-linear-gradient(to bottom, rgba(91,242,168,0.03) 0px, rgba(91,242,168,0.03) 1px, transparent 1px, transparent 3px)',
@@ -734,20 +752,32 @@ function JumeauApp({ lang }) {
 }
 
 // ---- Terminal with easter eggs -------------------------------
-function TerminalApp({ lang, onKonami }) {
+function TerminalApp({ lang, onKonami, onOpen }) {
   const t = T[lang];
   const [history, setHistory] = useState([
     { type: 'sys', text: 'RayanOS terminal — bash 5.2' },
     { type: 'sys', text: t.terminal_hint },
   ]);
   const [input, setInput] = useState('');
+  const [cmdHist, setCmdHist] = useState([]);   // past inputs for ↑/↓
+  const [histIdx, setHistIdx] = useState(-1);
   const endRef = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => { if (endRef.current) endRef.current.scrollTop = endRef.current.scrollHeight; }, [history]);
 
   const COMMANDS = {
-    help: () => ['Commandes : help · whoami · ls · skills · projects · docs · contact · neofetch · matrix · konami · coffee · sudo · clear'],
+    help: () => [
+      'Commandes :',
+      '  help                  cette aide',
+      '  whoami · neofetch      présentation',
+      '  ls [projects|skills]   lister',
+      '  cat <slug>             afficher la description',
+      '  open <slug>            ouvrir la fenêtre',
+      '  pdf <slug>             ouvrir le rapport PDF',
+      '  skills·projects·docs·contact   listes rapides',
+      '  matrix · konami · coffee · sudo · clear',
+    ],
     whoami: () => ['rayan — curieux · ambitieux · créatif', 'Fullstack dev · cybersécurité · IA · Linux enjoyer'],
     ls: () => ['about.app  projets/  supervision.app  jumeau.app  archives/  contact.app  secrets/.hidden'],
     skills: () => SKILL_CATEGORIES.map(c => `${c[lang].padEnd(30)} ${c.skills.length} techs`),
@@ -774,22 +804,86 @@ function TerminalApp({ lang, onKonami }) {
     clear: () => '__CLEAR__',
   };
 
+  // resolve a slug to a project / skill / pdf (used by cat / open / pdf)
+  const resolve = (slug) => {
+    const s = (slug || '').trim().toLowerCase();
+    if (!s) return null;
+    const proj = PROJECTS.find(p => p.id.toLowerCase() === s || p.name.toLowerCase() === s);
+    if (proj) return { type: 'project', id: proj.id, title: proj.name, desc: proj[lang], pdfFile: proj.doc };
+    const ex = PROJECTS_EXTRA.find(p => p.id.toLowerCase() === s);
+    if (ex) return { type: 'project-extra', id: ex.id, title: ex[lang], desc: lang === 'fr' ? ex.dfr : ex.den };
+    const arc = ARCHIVES.find(a => a.id.toLowerCase() === s);
+    if (arc) return { type: 'pdf', id: arc.id, title: arc[lang], desc: lang === 'fr' ? arc.dfr : arc.den, pdfFile: arc.file };
+    for (const cat of SKILL_CATEGORIES) {
+      const f = cat.skills.find(([n]) => n.toLowerCase() === s || n.toLowerCase().split(/[ /]/)[0] === s);
+      if (f) return { type: 'skill', id: f[0], title: f[0], desc: SKILL_INFO[f[0]] && (SKILL_INFO[f[0]][lang] || SKILL_INFO[f[0]].fr) };
+    }
+    return null;
+  };
+
   const run = (raw) => {
-    const cmd = raw.trim().toLowerCase();
     const out = [{ type: 'cmd', text: raw }];
-    if (cmd === '') { setHistory(h => [...h, ...out]); return; }
+    const parts = raw.trim().split(/\s+/);
+    const cmd = (parts[0] || '').toLowerCase();
+    const arg = parts.slice(1).join(' ');
+    const push = (lines, type = 'out') => lines.forEach(l => out.push({ type, text: l }));
+    const done = () => setHistory(h => [...h, ...out]);
+
+    if (cmd === '') return done();
+
+    if (cmd === 'ls' && /^proje(c?t|)s?$/.test(arg.toLowerCase())) {
+      push([...PROJECTS, ...PROJECTS_EXTRA].map(p => `${p.id.padEnd(16)} ${p.name || p[lang]}`));
+      return done();
+    }
+    if (cmd === 'ls' && /^(skills?|comp)/.test(arg.toLowerCase())) {
+      push(SKILL_CATEGORIES.flatMap(c => c.skills.map(([n, v]) => `${n.padEnd(22)} ${v}%`)));
+      return done();
+    }
+    if (cmd === 'cat' || cmd === 'open' || cmd === 'pdf') {
+      if (!arg) { push([`usage: ${cmd} <slug> — ex: ${cmd} quiz-master`], 'err'); return done(); }
+      const r = resolve(arg);
+      if (!r) { push([`'${arg}' introuvable. Tape 'ls projects' ou 'ls skills'.`], 'err'); return done(); }
+      if (cmd === 'cat') { push([r.title, '─'.repeat(Math.min(r.title.length, 42)), r.desc || '—']); return done(); }
+      if (cmd === 'open') { onOpen && onOpen(r.type, r.id); push([`Ouverture de ${r.title}…`]); return done(); }
+      // pdf
+      if (r.type === 'pdf') { onOpen && onOpen('pdf', r.id); push([`Ouverture du rapport ${r.title}…`]); }
+      else if (r.pdfFile) { const a = ARCHIVES.find(x => x.file === r.pdfFile); if (a) { onOpen && onOpen('pdf', a.id); push([`Ouverture du rapport de ${r.title}…`]); } else push([`Aucun rapport PDF pour '${arg}'.`], 'err'); }
+      else push([`Aucun rapport PDF pour '${arg}'.`], 'err');
+      return done();
+    }
+
     const fn = COMMANDS[cmd];
     if (fn) {
       const res = fn();
       if (res === '__CLEAR__') { setHistory([]); return; }
-      res.forEach(line => out.push({ type: 'out', text: line }));
+      push(res);
     } else {
-      out.push({ type: 'err', text: `command not found: ${cmd} — tape 'help'` });
+      push([`command not found: ${cmd} — tape 'help'`], 'err');
     }
-    setHistory(h => [...h, ...out]);
+    done();
   };
 
-  const onKey = (e) => { if (e.key === 'Enter') { run(input); setInput(''); } };
+  const submit = () => {
+    if (input.trim()) setCmdHist(h => [...h, input]);
+    setHistIdx(-1);
+    run(input);
+    setInput('');
+  };
+  const onKey = (e) => {
+    if (e.key === 'Enter') { submit(); return; }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!cmdHist.length) return;
+      const ni = histIdx < 0 ? cmdHist.length - 1 : Math.max(0, histIdx - 1);
+      setHistIdx(ni); setInput(cmdHist[ni]);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (histIdx < 0) return;
+      const ni = histIdx + 1;
+      if (ni >= cmdHist.length) { setHistIdx(-1); setInput(''); }
+      else { setHistIdx(ni); setInput(cmdHist[ni]); }
+    }
+  };
 
   return (
     <div onClick={() => inputRef.current && inputRef.current.focus()} style={{ background: '#0C0A12', minHeight: 380, fontFamily: 'var(--font-mono)', cursor: 'text' }}>
@@ -823,7 +917,7 @@ const ARCHIVE_META = {
   web:   { icon: 'globe',         color: 'var(--noc-phosphor)' },
 };
 
-function ArchivesApp({ lang }) {
+function ArchivesApp({ lang, intent, onIntentDone }) {
   const t = T[lang];
   const mobile = useIsMobile();
   const [doc, setDoc] = useState(null);   // currently previewed PDF
@@ -831,6 +925,13 @@ function ArchivesApp({ lang }) {
   const base = import.meta.env.BASE_URL;  // '/Portfolio/' in prod, '/' in dev
   const pdfUrl = (f) => `${base}projets/pdf/${f}`;
   useEffect(() => { window.lucide && window.lucide.createIcons(); });  // hydrate modal icons
+  // deep-link from Spotlight / terminal: open a PDF or a project detail
+  useEffect(() => {
+    if (!intent) return;
+    if (intent.kind === 'pdf') { const a = ARCHIVES.find(x => x.id === intent.id); if (a) setDoc(a); }
+    else if (intent.kind === 'project') { const p = PROJECTS_EXTRA.find(x => x.id === intent.id); if (p) setInfo(p); }
+    onIntentDone && onIntentDone();
+  }, [intent]);
 
   return (
     <div style={{ padding: '22px 24px', fontFamily: 'var(--font-display)', minHeight: 420 }}>
@@ -973,6 +1074,91 @@ Object.assign(window, { SupervisionApp, JumeauApp, TerminalApp, ArchivesApp, ARC
 
 // ==== App (from ui_kits/portfolio/index.html inline script) ====
 
+// ---- Spotlight (Cmd+K) — global fuzzy launcher --------------
+function SpotlightSearch({ lang, onClose, onOpen }) {
+  const [q, setQ] = useState('');
+  const [idx, setIdx] = useState(0);
+  const inputRef = useRef(null);
+  useEffect(() => { inputRef.current && inputRef.current.focus(); }, []);
+  useEffect(() => { window.lucide && window.lucide.createIcons(); });
+
+  const all = [];
+  PROJECTS.forEach(p => all.push({ type: 'project', id: p.id, group: 'proj', title: p.name, desc: p[lang], icon: (KIND_META[p.kind] || {}).icon || 'folder', hay: `${p.id} ${p.name} ${p[lang]} ${p.stack.join(' ')}` }));
+  PROJECTS_EXTRA.forEach(p => all.push({ type: 'project-extra', id: p.id, group: 'proj', title: p[lang], desc: lang === 'fr' ? p.dfr : p.den, icon: (ARCHIVE_META[p.cat] || {}).icon || 'folder', hay: `${p.id} ${p[lang]} ${p.techs.join(' ')}` }));
+  SKILL_CATEGORIES.forEach(cat => cat.skills.forEach(([n]) => all.push({ type: 'skill', id: n, group: 'skill', title: n, desc: (SKILL_INFO[n] && (SKILL_INFO[n][lang] || SKILL_INFO[n].fr)) || cat[lang], icon: cat.icon, hay: `${n} ${cat[lang]}` })));
+  ARCHIVES.forEach(a => all.push({ type: 'pdf', id: a.id, group: 'pdf', title: a[lang], desc: a.file, icon: 'file-text', hay: `${a.id} ${a[lang]} ${a.file}` }));
+
+  const ql = q.trim().toLowerCase();
+  const items = ql ? all.filter(x => x.hay.toLowerCase().includes(ql)) : all;
+  const cur = items.length ? Math.min(idx, items.length - 1) : 0;
+  const groups = [
+    { key: 'proj', label: lang === 'fr' ? 'Projets' : 'Projects' },
+    { key: 'skill', label: lang === 'fr' ? 'Compétences' : 'Skills' },
+    { key: 'pdf', label: lang === 'fr' ? 'Rapports PDF' : 'PDF reports' },
+  ];
+  const select = (it) => { if (it) onOpen(it.type, it.id); };
+  const onKey = (e) => {
+    if (e.key === 'Escape') onClose();
+    else if (e.key === 'ArrowDown') { e.preventDefault(); setIdx(i => Math.min((items.length || 1) - 1, i + 1)); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setIdx(i => Math.max(0, i - 1)); }
+    else if (e.key === 'Enter') { e.preventDefault(); select(items[cur]); }
+  };
+  let flat = -1;
+
+  return (
+    <div onMouseDown={onClose} style={{
+      position: 'fixed', inset: 0, zIndex: 400, background: 'rgba(0,0,0,0.6)',
+      backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
+      display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: '12vh',
+    }}>
+      <div onMouseDown={e => e.stopPropagation()} style={{
+        width: 'min(580px, 92vw)', maxHeight: '70vh', display: 'flex', flexDirection: 'column',
+        background: 'var(--glass-bg)', backdropFilter: 'var(--blur-glass)', WebkitBackdropFilter: 'var(--blur-glass)',
+        border: '1px solid var(--os-line)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-window)', overflow: 'hidden',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px', height: 52, borderBottom: '1px solid var(--os-line)', flexShrink: 0 }}>
+          <Icon name="search" size={18} color="var(--fg-3)" />
+          <input ref={inputRef} value={q} onChange={e => { setQ(e.target.value); setIdx(0); }} onKeyDown={onKey}
+            placeholder={lang === 'fr' ? 'Rechercher projets, compétences, rapports…' : 'Search projects, skills, reports…'}
+            spellCheck={false} style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', color: 'var(--fg-1)', fontFamily: 'var(--font-display)', fontSize: 15 }} />
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--fg-3)', border: '1px solid var(--os-line)', borderRadius: 4, padding: '2px 6px' }}>ESC</span>
+        </div>
+        <div style={{ overflow: 'auto', padding: '8px 8px 10px' }}>
+          {items.length === 0 && <div style={{ padding: '20px 14px', fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--fg-3)' }}>{lang === 'fr' ? 'Aucun résultat' : 'No results'}</div>}
+          {groups.map(g => {
+            const gi = items.filter(x => x.group === g.key);
+            if (!gi.length) return null;
+            return (
+              <div key={g.key} style={{ marginBottom: 6 }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-3)', textTransform: 'uppercase', letterSpacing: '0.16em', padding: '8px 10px 4px' }}>{g.label}</div>
+                {gi.map(it => {
+                  flat++;
+                  const active = flat === cur;
+                  return (
+                    <button key={it.type + it.id} onMouseEnter={() => setIdx(items.indexOf(it))} onClick={() => select(it)} style={{
+                      width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 11, padding: '9px 10px',
+                      border: 'none', borderRadius: 8, cursor: 'pointer', background: active ? 'var(--coral-dim)' : 'transparent',
+                    }}>
+                      <span style={{ width: 30, height: 30, borderRadius: 8, background: 'var(--os-surface-2)', border: '1px solid var(--os-line)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <Icon name={it.icon} size={15} color={active ? 'var(--coral)' : 'var(--fg-2)'} />
+                      </span>
+                      <span style={{ minWidth: 0, flex: 1 }}>
+                        <span style={{ display: 'block', fontFamily: 'var(--font-display)', fontSize: 13.5, color: 'var(--fg-1)', fontWeight: 600, lineHeight: 1.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{it.title}</span>
+                        <span style={{ display: 'block', fontSize: 11.5, color: 'var(--fg-3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{(it.desc || '').slice(0, 60)}</span>
+                      </span>
+                      {active && <Icon name="corner-down-left" size={13} color="var(--fg-3)" />}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [lang, setLang] = useState('fr');
   const [booted, setBooted] = useState(false);
@@ -980,6 +1166,8 @@ function App() {
   const [flash, setFlash] = useState(false);
   const konamiBuf = useRef([]);
   const mobile = useIsMobile();
+  const [intent, setIntent] = useState(null);     // deep-link → an app opens its modal
+  const [spotlight, setSpotlight] = useState(false);
 
   // app registry
   const APPS = [
@@ -988,22 +1176,22 @@ function App() {
       accent: 'var(--coral)', w: 400, h: 600, render: (l) => <AboutApp lang={l} /> },
     { id: 'projects', icon: 'folder', bg: 'var(--os-surface-2)', fg: 'var(--gold)',
       label: { fr: 'Projets', en: 'Projects' }, title: { fr: 'projets — explorateur', en: 'projects — explorer' },
-      accent: 'var(--gold)', w: 580, h: 500, render: (l) => <ProjectsApp lang={l} /> },
+      accent: 'var(--gold)', w: 580, h: 500, render: (l) => <ProjectsApp lang={l} intent={intent && intent.app === 'projects' ? intent : null} onIntentDone={clearIntent} /> },
     { id: 'supervision', icon: 'radar', bg: '#08100C', fg: 'var(--noc-phosphor)',
       label: { fr: 'Supervision', en: 'Monitoring' }, title: { fr: 'supervision.app', en: 'supervision.app' },
-      accent: 'var(--noc-phosphor)', w: 640, h: 540, render: (l) => <SupervisionApp lang={l} /> },
+      accent: 'var(--noc-phosphor)', w: 640, h: 540, render: (l) => <SupervisionApp lang={l} intent={intent && intent.app === 'supervision' ? intent : null} onIntentDone={clearIntent} /> },
     { id: 'jumeau', icon: 'box', bg: '#0A1322', fg: 'var(--twin-signal)',
       label: { fr: 'Jumeau Numérique', en: 'Digital Twin' }, title: { fr: 'jumeau.app — blueprint', en: 'jumeau.app — blueprint' },
       accent: 'var(--twin-signal)', w: 640, h: 540, render: (l) => <JumeauApp lang={l} /> },
     { id: 'terminal', icon: 'square-terminal', bg: '#0C0A12', fg: 'var(--mint)',
       label: { fr: 'Terminal', en: 'Terminal' }, title: { fr: 'terminal — bash', en: 'terminal — bash' },
-      accent: 'var(--mint)', w: 540, h: 440, render: (l) => <TerminalApp lang={l} onKonami={triggerKonami} /> },
+      accent: 'var(--mint)', w: 540, h: 440, render: (l) => <TerminalApp lang={l} onKonami={triggerKonami} onOpen={openTarget} /> },
     { id: 'contact', icon: 'send', bg: 'var(--os-surface-2)', fg: 'var(--coral)',
       label: { fr: 'Contact', en: 'Contact' }, title: { fr: 'contact.app', en: 'contact.app' },
       accent: 'var(--coral)', w: 480, h: 360, render: (l) => <ContactApp lang={l} /> },
     { id: 'archives', icon: 'archive', bg: 'var(--os-surface-2)', fg: 'var(--gold)',
       label: { fr: 'Archives', en: 'Archives' }, title: { fr: 'archives — documents', en: 'archives — documents' },
-      accent: 'var(--gold)', w: 620, h: 520, render: (l) => <ArchivesApp lang={l} /> },
+      accent: 'var(--gold)', w: 620, h: 520, render: (l) => <ArchivesApp lang={l} intent={intent && intent.app === 'archives' ? intent : null} onIntentDone={clearIntent} /> },
   ];
   const appById = (id) => APPS.find(a => a.id === id);
 
@@ -1049,6 +1237,28 @@ function App() {
   };
   const closeApp = (id) => setWins(ws => ws.filter(w => w.id !== id));
 
+  const clearIntent = useCallback(() => setIntent(null), []);
+  // open the right app + tell it (via intent) which modal to pop.
+  const openTarget = (type, id) => {
+    let app, kind;
+    if (type === 'skill') { app = 'supervision'; kind = 'skill'; }
+    else if (type === 'project') { app = 'projects'; kind = 'project'; }
+    else if (type === 'project-extra') { app = 'archives'; kind = 'project'; }
+    else { app = 'archives'; kind = 'pdf'; }
+    openApp(app);
+    setIntent({ app, kind, id });
+    setSpotlight(false);
+  };
+
+  // Cmd+K / Ctrl+K → spotlight
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); setSpotlight(s => !s); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   const enter = () => { setBooted(true); setTimeout(() => { openApp('about'); }, 250); };
 
   const activeApp = wins.length ? appById([...wins].sort((a, b) => b.z - a.z)[0].id)?.label[lang] : null;
@@ -1060,7 +1270,7 @@ function App() {
       <Wallpaper />
       {!booted && <Boot lang={lang} onEnter={enter} />}
       {booted && <>
-        <MenuBar lang={lang} setLang={setLang} activeApp={activeApp} onOpenAbout={() => openApp('about')} mobile={mobile} />
+        <MenuBar lang={lang} setLang={setLang} activeApp={activeApp} onOpenAbout={() => openApp('about')} onSpotlight={() => setSpotlight(true)} mobile={mobile} />
 
         {/* desktop launcher icons (top-left) — hidden on phones (dock is enough) */}
         {!mobile && <div style={{ position: 'absolute', top: 54, left: 18, zIndex: 5, display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -1090,6 +1300,8 @@ function App() {
         })}
 
         <Dock lang={lang} apps={APPS} openIds={wins.map(w => w.id)} onOpen={openApp} mobile={mobile} />
+
+        {spotlight && <SpotlightSearch lang={lang} onClose={() => setSpotlight(false)} onOpen={openTarget} />}
       </>}
       {flash && <div style={{ position: 'absolute', bottom: 90, left: '50%', transform: 'translateX(-50%)', zIndex: 200,
         fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--os-bg-deep)', background: 'var(--coral)',
