@@ -1,5 +1,18 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
+// ---- Responsive hook ----------------------------------------
+// True when viewport is phone-sized. Drives full-screen windows,
+// single-column app grids and a slimmed menubar.
+function useIsMobile(bp = 768) {
+  const [m, setM] = useState(() => typeof window !== 'undefined' && window.innerWidth < bp);
+  useEffect(() => {
+    const on = () => setM(window.innerWidth < bp);
+    window.addEventListener('resize', on);
+    return () => window.removeEventListener('resize', on);
+  }, [bp]);
+  return m;
+}
+
 // ==== shared.jsx ====
 // ============================================================
 // RayanOS — shared.jsx
@@ -7,10 +20,26 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 // Exposes everything to window for the other babel scripts.
 // ============================================================
 
+// ---- Brand icons (Lucide dropped these for licensing) -------
+const BRAND_SVGS = {
+  github: <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.28-1.67-1.28-1.67-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.28 1.2-3.09-.12-.3-.52-1.49.12-3.1 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.5 3.18-1.18 3.18-1.18.64 1.61.24 2.8.12 3.1.75.81 1.2 1.84 1.2 3.09 0 4.43-2.7 5.4-5.26 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />,
+  linkedin: <><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z" /></>,
+};
+
 // ---- Lucide icon wrapper -------------------------------------
 // Renders <i data-lucide="name">; App calls lucide.createIcons()
 // in a useEffect after every render to swap them to <svg>.
+// Brand icons (github/linkedin) are inlined since Lucide removed them.
 function Icon({ name, size = 16, color, stroke = 2, style = {} }) {
+  if (BRAND_SVGS[name]) {
+    return (
+      <svg
+        width={size} height={size} viewBox="0 0 24 24"
+        fill={color || 'currentColor'} stroke="none"
+        style={{ display: 'inline-block', flexShrink: 0, ...style }}
+      >{BRAND_SVGS[name]}</svg>
+    );
+  }
   return (
     <i
       data-lucide={name}
@@ -140,7 +169,8 @@ const JOURNEY = [
 
 const SOCIALS = [
   { id: 'github', label: 'GitHub', handle: 'sfrayan', icon: 'github', url: 'https://github.com/sfrayan' },
-  { id: 'mail', label: 'Email', handle: 'rayan.saidfarah', icon: 'mail', url: '#' },
+  { id: 'mail', label: 'Email', handle: 'rsaidfarah@gmail.com', icon: 'mail', url: 'mailto:rsaidfarah@gmail.com' },
+  // TODO: remplacer '#' par l'URL LinkedIn réelle quand fournie
   { id: 'linkedin', label: 'LinkedIn', handle: 'Rayan Said Farah', icon: 'linkedin', url: '#' },
   { id: 'location', label: 'Localisation', handle: 'Paris, France', icon: 'map-pin', url: '#' },
 ];
@@ -262,7 +292,7 @@ function Clock({ lang }) {
 }
 
 // ---- Top menubar ---------------------------------------------
-function MenuBar({ lang, setLang, activeApp, onOpenAbout }) {
+function MenuBar({ lang, setLang, activeApp, onOpenAbout, mobile }) {
   const t = T[lang];
   return (
     <div style={{
@@ -276,18 +306,18 @@ function MenuBar({ lang, setLang, activeApp, onOpenAbout }) {
           <Icon name="hexagon" size={15} /> RayanOS
         </span>
         <span style={{ color: 'var(--fg-1)', fontWeight: 600 }}>{activeApp || t.menu_about}</span>
-        <span onClick={onOpenAbout} style={{ color: 'var(--fg-3)', cursor: 'pointer' }}>{t.menu_help}</span>
+        {!mobile && <span onClick={onOpenAbout} style={{ color: 'var(--fg-3)', cursor: 'pointer' }}>{t.menu_help}</span>}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, color: 'var(--fg-2)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: mobile ? 10 : 14, color: 'var(--fg-2)' }}>
         <button onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} title="FR / EN" style={{
           fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--fg-1)', background: 'var(--os-surface-2)',
           border: '1px solid var(--os-line)', borderRadius: 'var(--radius-pill)', padding: '3px 10px',
           cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
           <Icon name="languages" size={13} /> {lang.toUpperCase()}
         </button>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><StatusDot color="var(--mint)" size={7} /> {t.online}</span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="wifi" size={14} /></span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="battery-medium" size={15} /> 87%</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><StatusDot color="var(--mint)" size={7} />{!mobile && ` ${t.online}`}</span>
+        {!mobile && <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="wifi" size={14} /></span>}
+        {!mobile && <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="battery-medium" size={15} /> 87%</span>}
         <Clock lang={lang} />
       </div>
     </div>
@@ -295,21 +325,23 @@ function MenuBar({ lang, setLang, activeApp, onOpenAbout }) {
 }
 
 // ---- Dock ----------------------------------------------------
-function Dock({ lang, apps, openIds, onOpen }) {
+function Dock({ lang, apps, openIds, onOpen, mobile }) {
+  const sz = mobile ? 42 : 46;
   return (
-    <div style={{ position: 'absolute', bottom: 14, left: '50%', transform: 'translateX(-50%)', zIndex: 60 }}>
+    <div style={{ position: 'absolute', bottom: mobile ? 10 : 14, left: '50%', transform: 'translateX(-50%)', zIndex: 60, maxWidth: mobile ? 'calc(100vw - 16px)' : 'none' }}>
       <div style={{
-        display: 'flex', gap: 8, padding: '9px 12px', background: 'var(--glass-bg)',
+        display: 'flex', gap: mobile ? 6 : 8, padding: mobile ? '8px 10px' : '9px 12px', background: 'var(--glass-bg)',
         backdropFilter: 'var(--blur-glass)', WebkitBackdropFilter: 'var(--blur-glass)',
         border: '1px solid var(--os-line)', borderRadius: 18, boxShadow: 'var(--shadow-lg)',
+        overflowX: mobile ? 'auto' : 'visible', maxWidth: '100%',
       }}>
         {apps.map(a => (
           <button key={a.id} onClick={() => onOpen(a.id)} title={a.label[lang]} className="ros-dock-item" style={{
-            width: 46, height: 46, borderRadius: 13, border: '1px solid var(--os-line)',
+            width: sz, height: sz, borderRadius: 13, border: '1px solid var(--os-line)', flexShrink: 0,
             background: a.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', position: 'relative', color: a.fg, transition: 'transform var(--dur-base) var(--ease-snap)',
           }}>
-            <Icon name={a.icon} size={21} stroke={2} />
+            <Icon name={a.icon} size={mobile ? 19 : 21} stroke={2} />
             {openIds.includes(a.id) && <span style={{ position: 'absolute', bottom: -5, left: '50%', transform: 'translateX(-50%)', width: 4, height: 4, borderRadius: '50%', background: 'var(--fg-2)' }} />}
           </button>
         ))}
@@ -319,11 +351,12 @@ function Dock({ lang, apps, openIds, onOpen }) {
 }
 
 // ---- Draggable window ----------------------------------------
-function Window({ win, focused, onFocus, onClose, lang, children }) {
+function Window({ win, focused, onFocus, onClose, lang, mobile, children }) {
   const [pos, setPos] = useState({ x: win.x, y: win.y });
   const drag = useRef(null);
 
   const onDown = (e) => {
+    if (mobile) return;            // no dragging on phones — windows are full-screen sheets
     onFocus(win.id);
     const startX = e.clientX, startY = e.clientY, ox = pos.x, oy = pos.y;
     drag.current = { startX, startY, ox, oy };
@@ -335,17 +368,26 @@ function Window({ win, focused, onFocus, onClose, lang, children }) {
     window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
   };
 
+  const frame = mobile
+    ? {
+        position: 'absolute', left: 0, top: 38, width: '100%',
+        height: 'calc(100dvh - 38px - 86px)', zIndex: win.z,
+        background: 'var(--os-surface)', borderTop: '1px solid var(--os-line)',
+        boxShadow: 'none', overflow: 'hidden', display: 'flex', flexDirection: 'column',
+      }
+    : {
+        position: 'absolute', left: pos.x, top: pos.y, width: win.w, zIndex: win.z,
+        background: 'var(--os-surface)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-lg)',
+        boxShadow: focused ? 'var(--shadow-window)' : 'var(--shadow-md)', overflow: 'hidden',
+        display: 'flex', flexDirection: 'column',
+        maxHeight: win.h || 560,
+      };
+
   return (
-    <div onMouseDown={() => onFocus(win.id)} className="ros-window" style={{
-      position: 'absolute', left: pos.x, top: pos.y, width: win.w, zIndex: win.z,
-      background: 'var(--os-surface)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-lg)',
-      boxShadow: focused ? 'var(--shadow-window)' : 'var(--shadow-md)', overflow: 'hidden',
-      display: 'flex', flexDirection: 'column',
-      maxHeight: win.h || 560,
-    }}>
+    <div onMouseDown={() => onFocus(win.id)} className="ros-window" style={frame}>
       {/* title bar */}
       <div onMouseDown={onDown} style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '0 12px', height: 40, cursor: 'grab',
+        display: 'flex', alignItems: 'center', gap: 8, padding: '0 12px', height: 40, cursor: mobile ? 'default' : 'grab',
         background: 'var(--os-surface-2)', borderBottom: '1px solid var(--os-line)', flexShrink: 0,
       }}>
         <div style={{ display: 'flex', gap: 7 }}>
@@ -437,13 +479,16 @@ const KIND_META = {
 
 function ProjectsApp({ lang }) {
   const t = T[lang];
+  const mobile = useIsMobile();
   const [sel, setSel] = useState(PROJECTS[0].id);
   const p = PROJECTS.find(x => x.id === sel);
   const meta = KIND_META[p.kind];
   return (
-    <div style={{ display: 'flex', height: 460, fontFamily: 'var(--font-display)' }}>
+    <div style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', height: mobile ? 'auto' : 460, fontFamily: 'var(--font-display)' }}>
       {/* file list */}
-      <div style={{ width: 234, borderRight: '1px solid var(--os-line)', background: 'var(--os-bg)', flexShrink: 0, overflow: 'auto' }}>
+      <div style={{ width: mobile ? '100%' : 234, maxHeight: mobile ? 168 : 'none',
+        borderRight: mobile ? 'none' : '1px solid var(--os-line)', borderBottom: mobile ? '1px solid var(--os-line)' : 'none',
+        background: 'var(--os-bg)', flexShrink: 0, overflow: 'auto' }}>
         <div style={{ padding: '12px 14px', fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', borderBottom: '1px solid var(--os-line-soft)', display: 'flex', alignItems: 'center', gap: 7 }}>
           <Icon name="folder-open" size={14} color="var(--gold)" /> ~/projets
         </div>
@@ -504,17 +549,24 @@ function ProjectsApp({ lang }) {
 // ---- Contact -------------------------------------------------
 function ContactApp({ lang }) {
   const t = T[lang];
+  const mobile = useIsMobile();
   return (
     <div style={{ padding: '24px 26px', fontFamily: 'var(--font-display)' }}>
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--mint)', marginBottom: 4 }}>$ ./connect.sh</div>
       <div style={{ fontWeight: 700, fontSize: 21, color: 'var(--fg-1)', marginBottom: 4 }}>{t.contact_title}</div>
       <div style={{ fontSize: 13, color: 'var(--fg-3)', marginBottom: 22 }}>{t.contact_sub}</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-        {SOCIALS.map(s => (
-          <a key={s.id} href={s.url} target="_blank" rel="noopener noreferrer" className="ros-contact" style={{
+      <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 12 }}>
+        {SOCIALS.map(s => {
+          const dead = !s.url || s.url === '#';        // placeholder link → not yet wired
+          const external = !dead && s.url.startsWith('http');
+          return (
+          <a key={s.id} href={dead ? undefined : s.url}
+            target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}
+            className="ros-contact" style={{
             display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', textDecoration: 'none',
             background: 'var(--os-surface-2)', border: '1px solid var(--os-line)', borderRadius: 'var(--radius-md)',
             transition: 'all var(--dur-base) var(--ease-out)',
+            opacity: dead ? 0.55 : 1, cursor: dead ? 'default' : 'pointer', pointerEvents: dead ? 'none' : 'auto',
           }}>
             <div style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--os-surface-3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <Icon name={s.icon} size={19} color="var(--coral)" />
@@ -524,7 +576,8 @@ function ContactApp({ lang }) {
               <div style={{ fontSize: 13.5, color: 'var(--fg-1)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.handle}</div>
             </div>
           </a>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -543,6 +596,7 @@ const NOC_ACCENT = { phosphor: 'var(--noc-phosphor)', cyan: 'var(--noc-cyan)', a
 
 function SupervisionApp({ lang }) {
   const t = T[lang];
+  const mobile = useIsMobile();
   const scan = {
     position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.6, borderRadius: 'inherit',
     backgroundImage: 'repeating-linear-gradient(to bottom, rgba(91,242,168,0.03) 0px, rgba(91,242,168,0.03) 1px, transparent 1px, transparent 3px)',
@@ -565,7 +619,7 @@ function SupervisionApp({ lang }) {
         </div>
       </div>
       {/* subsystem grid */}
-      <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 12 }}>
         {SKILL_CATEGORIES.map(cat => {
           const ac = NOC_ACCENT[cat.accent];
           return (
@@ -597,6 +651,7 @@ function SupervisionApp({ lang }) {
 // ---- jumeau.app : living blueprint ---------------------------
 function JumeauApp({ lang }) {
   const t = T[lang];
+  const mobile = useIsMobile();
   const ink = 'var(--twin-blue)', sig = 'var(--twin-signal)', teal = 'var(--twin-teal)';
   const grid = {
     position: 'absolute', inset: 0, opacity: 0.5,
@@ -635,7 +690,7 @@ function JumeauApp({ lang }) {
 
       {/* module schematics */}
       <div style={{ position: 'relative', fontSize: 10.5, color: '#6E86A8', letterSpacing: '0.16em', marginBottom: 10 }}>MODULES DU SYSTÈME</div>
-      <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+      <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr 1fr', gap: 12 }}>
         {modules.map((m, i) => (
           <div key={m.id} style={{ border: `1.5px solid ${ink}`, borderRadius: 3, background: 'rgba(13,28,48,0.55)', padding: 13, position: 'relative' }}>
             <div style={{ position: 'absolute', top: -1, left: -1, width: 12, height: 12, borderTop: `2px solid ${sig}`, borderLeft: `2px solid ${sig}` }} />
@@ -742,6 +797,7 @@ function App() {
   const [wins, setWins] = useState([]);
   const [flash, setFlash] = useState(false);
   const konamiBuf = useRef([]);
+  const mobile = useIsMobile();
 
   // app registry
   const APPS = [
@@ -819,10 +875,10 @@ function App() {
       <Wallpaper />
       {!booted && <Boot lang={lang} onEnter={enter} />}
       {booted && <>
-        <MenuBar lang={lang} setLang={setLang} activeApp={activeApp} onOpenAbout={() => openApp('about')} />
+        <MenuBar lang={lang} setLang={setLang} activeApp={activeApp} onOpenAbout={() => openApp('about')} mobile={mobile} />
 
-        {/* desktop launcher icons (top-left) */}
-        <div style={{ position: 'absolute', top: 54, left: 18, zIndex: 5, display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {/* desktop launcher icons (top-left) — hidden on phones (dock is enough) */}
+        {!mobile && <div style={{ position: 'absolute', top: 54, left: 18, zIndex: 5, display: 'flex', flexDirection: 'column', gap: 6 }}>
           {deskIcons.map(id => { const a = appById(id); return (
             <button key={id} onDoubleClick={() => openApp(id)} onClick={() => openApp(id)} className="ros-desk-icon" style={{
               width: 78, padding: '10px 6px', background: 'transparent', border: 'none', borderRadius: 10,
@@ -834,20 +890,21 @@ function App() {
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--fg-2)', textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{a.label[lang]}</span>
             </button>
           ); })}
-        </div>
+        </div>}
 
-        {/* windows */}
+        {/* windows — on phones only the focused window is shown (full-screen sheet) */}
         {wins.map(w => {
           const a = appById(w.id);
           const focused = [...wins].sort((x, y) => y.z - x.z)[0].id === w.id;
+          if (mobile && !focused) return null;
           return (
-            <Window key={w.id} win={w} focused={focused} onFocus={focus} onClose={closeApp} lang={lang}>
+            <Window key={w.id} win={w} focused={focused} onFocus={focus} onClose={closeApp} lang={lang} mobile={mobile}>
               {a.render(lang)}
             </Window>
           );
         })}
 
-        <Dock lang={lang} apps={APPS} openIds={wins.map(w => w.id)} onOpen={openApp} />
+        <Dock lang={lang} apps={APPS} openIds={wins.map(w => w.id)} onOpen={openApp} mobile={mobile} />
       </>}
       {flash && <div style={{ position: 'absolute', bottom: 90, left: '50%', transform: 'translateX(-50%)', zIndex: 200,
         fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--os-bg-deep)', background: 'var(--coral)',

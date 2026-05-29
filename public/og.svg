@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="RayanOS — Rayan SAID FARAH">
+  <defs>
+    <linearGradient id="r" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF6B4A"/>
+      <stop offset="1" stop-color="#C9402A"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="80%" cy="0%" r="70%">
+      <stop offset="0" stop-color="#FF6B4A" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FF6B4A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="8%" cy="100%" r="70%">
+      <stop offset="0" stop-color="#6EE7B7" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#6EE7B7" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" fill="none" stroke="#ffffff" stroke-opacity="0.025" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0F0E15"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- monogram tile -->
+  <g transform="translate(96,120)">
+    <rect width="132" height="132" rx="30" fill="url(#r)"/>
+    <text x="66" y="94" text-anchor="middle" fill="#fff"
+      font-family="'Sora','Segoe UI',system-ui,sans-serif" font-size="84" font-weight="800">R</text>
+  </g>
+
+  <!-- terminal prompt eyebrow -->
+  <text x="100" y="312" fill="#6EE7B7"
+    font-family="'JetBrains Mono',ui-monospace,monospace" font-size="26" letter-spacing="2">rayan@rayanos:~$ whoami</text>
+
+  <!-- name -->
+  <text x="98" y="392" fill="#E9E4F2"
+    font-family="'Sora','Segoe UI',system-ui,sans-serif" font-size="76" font-weight="800" letter-spacing="-1.5">Rayan SAID FARAH</text>
+
+  <!-- role -->
+  <text x="100" y="452" fill="#A79FB8"
+    font-family="'Sora','Segoe UI',system-ui,sans-serif" font-size="34" font-weight="500">Développeur fullstack · Cybersécurité · Réseaux · IA</text>
+
+  <!-- chips -->
+  <g font-family="'JetBrains Mono',ui-monospace,monospace" font-size="24" fill="#A79FB8">
+    <rect x="100" y="500" width="180" height="50" rx="25" fill="#262232" stroke="#332E42"/>
+    <text x="190" y="533" text-anchor="middle">Next.js · React</text>
+    <rect x="300" y="500" width="150" height="50" rx="25" fill="#262232" stroke="#332E42"/>
+    <text x="375" y="533" text-anchor="middle">Pentesting</text>
+    <rect x="470" y="500" width="210" height="50" rx="25" fill="#262232" stroke="#332E42"/>
+    <text x="575" y="533" text-anchor="middle">Réseaux · Linux</text>
+  </g>
+
+  <!-- brand mark bottom-right -->
+  <text x="1100" y="556" text-anchor="end" fill="#FF6B4A"
+    font-family="'Sora','Segoe UI',system-ui,sans-serif" font-size="30" font-weight="800">RayanOS</text>
+</svg>
