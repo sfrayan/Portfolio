@@ -10,7 +10,7 @@ export const SKILL_CATEGORIES = [
   { id: 'net', fr: 'Administration Réseaux', en: 'Network Administration', icon: 'network', accent: 'cyan',
     skills: [['Wireshark', 96], ['FreeRADIUS', 88], ['Azure', 84], ['DHCP / DNS', 90]] },
   { id: 'web', fr: 'Développement Web & Backend', en: 'Web & Backend Dev', icon: 'code-xml', accent: 'phosphor',
-    skills: [['React', 92], ['Next.js', 90], ['TypeScript', 86], ['Node.js / Express', 88], ['Python', 90], ['JavaScript', 94], ['C++', 78]] },
+    skills: [['React', 92], ['Next.js', 90], ['TypeScript', 86], ['Node.js / Express', 88], ['Python', 90], ['JavaScript', 94], ['HTML5', 90], ['CSS3', 88], ['C++', 78]] },
   { id: 'db', fr: 'Bases de Données', en: 'Databases', icon: 'database', accent: 'cyan',
     skills: [['PostgreSQL', 84], ['MongoDB', 82], ['MySQL', 86]] },
   { id: 'devops', fr: 'DevOps & Infrastructure', en: 'DevOps & Infra', icon: 'container', accent: 'phosphor',
@@ -20,7 +20,7 @@ export const SKILL_CATEGORIES = [
   { id: 'sim', fr: 'Simulation Réseau', en: 'Network Simulation', icon: 'route', accent: 'cyan',
     skills: [['Cisco Packet Tracer', 88]] },
   { id: 'sec', fr: 'Cybersécurité & Pentesting', en: 'Cybersecurity & Pentest', icon: 'shield-half', accent: 'amber',
-    skills: [['Scapy', 84], ['Metasploit', 80], ['Nessus', 82], ['OpenSSL', 78]] },
+    skills: [['Scapy', 84], ['Metasploit', 80], ['Nessus', 82], ['OpenSSL', 78], ['Burp Suite', 82]] },
   { id: 'mon', fr: 'Monitoring & Détection', en: 'Monitoring & Detection', icon: 'activity', accent: 'amber',
     skills: [['Zabbix', 86], ['Snort', 82], ['Fail2ban', 84], ['Wazuh', 80]] },
 ];
@@ -243,6 +243,15 @@ export const SKILL_INFO = {
   "Wazuh": {
     fr: "Wazuh est une plateforme XDR open-source pour la détection de menaces et la réponse aux incidents, combinant SIEM, IDS et EDR en une solution unifiée.",
     en: "Wazuh is an open-source XDR platform for threat detection and incident response, combining SIEM, IDS and EDR in a unified solution." },
+  "Burp Suite": {
+    fr: "Burp Suite est l'outil de référence pour le test de sécurité des applications web : proxy/intercepteur, scanner automatisé, Intruder, Repeater et extensions, pour identifier les vulnérabilités de l'OWASP Top 10.",
+    en: "Burp Suite is the reference tool for web application security testing: proxy/interceptor, automated scanner, Intruder, Repeater and extensions, to identify OWASP Top 10 vulnerabilities." },
+  "HTML5": {
+    fr: "HTML5 est le standard actuel du web : structure sémantique, accessibilité (normes WCAG), formulaires interactifs et APIs natives (Canvas, SVG, Geolocation, localStorage, Web Workers).",
+    en: "HTML5 is the current web standard: semantic structure, accessibility (WCAG), interactive forms and native APIs (Canvas, SVG, Geolocation, localStorage, Web Workers)." },
+  "CSS3": {
+    fr: "CSS3 permet de créer des interfaces modernes et animées : layouts Flexbox et Grid, animations et transitions, design responsive mobile-first et variables CSS pour la maintenabilité.",
+    en: "CSS3 enables modern, animated interfaces: Flexbox and Grid layouts, animations and transitions, mobile-first responsive design and CSS variables for maintainability." },
 };
 
 // ---- Full legacy skill pages (extracted from legacy/Compétences) ----
